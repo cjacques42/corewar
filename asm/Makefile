@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/02 14:34:19 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/04 10:18:36 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 OBJ_PATH = obj/
 SRC_PATH = srcs/
 SHELL = /bin/bash
+LIB = ../libft/
 
 SRC_NAME =	main.c
 
@@ -26,8 +27,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo -e "\033[32mCompile...\033[0m"
-	@make -C libft/ all
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -I includes -L ../libft -lft
+	@make -C $(LIB) all
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -I includes -L $(LIB) -lft
 	@echo -e "\033[32mDone\033[0m"
 
 $(OBJ_PATH)%.o:$(SRC_PATH)%.c
@@ -36,11 +37,11 @@ $(OBJ_PATH)%.o:$(SRC_PATH)%.c
 
 clean:
 	@echo -e "\033[32mClean\033[0m"
-	@make -C libft/ clean
+	@make -C $(LIB) clean
 	@/bin/rm -rf $(OBJ_PATH)
 
 fclean: clean
-	@make -C libft/ fclean
+	@make -C $(LIB) fclean
 	@/bin/rm -f $(NAME)
 
 re: fclean all

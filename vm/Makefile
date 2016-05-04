@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+         #
+#    By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/22 21:11:26 by stoussay          #+#    #+#              #
-#    Updated: 2016/05/02 15:55:24 by jcornill         ###   ########.fr        #
+#    Updated: 2016/05/03 18:33:16 by stoussay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = corewar
 SRC = corewar.c live.c init_player.c debug.c game.c processes_manager.c \
 op_parser.c zjmp.c fork.c lfork.c add.c aff.c and.c ld.c ldi.c lld.c lldi.c \
-or.c st.c sti.c sub.c xor.c utils.c ncurse_manager.c
+or.c st.c sti.c sub.c xor.c utils.c ncurse_manager.c args.c
 OBJ = $(SRC:.c=.o)
 FLAGS = -Wall -Wextra -Werror -Iincludes -g
 

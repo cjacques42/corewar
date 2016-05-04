@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:35:32 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 18:32:27 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/03 18:58:02 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void				exe_op(t_op *op, t_processes *proc);
 */
 
 void				print(void);
+
+/*
+**	args.c
+*/
+
+void	store_args(int nb_args, char **args);
 
 /*
 **	ncurse_manager.c

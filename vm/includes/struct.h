@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:57:46 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 17:22:45 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/03 19:48:55 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ typedef struct		s_data
 	int				nb_processes;
 	int				cycle_die;
 	int				check_left;
+	int				dump;
+	int				n[4];
+	unsigned char	arg;
 	char			inc;
 	unsigned char	vm[MEM_SIZE];
 	unsigned short	vm_color[MEM_SIZE];

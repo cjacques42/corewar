@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 17:16:30 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/03 19:48:46 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,15 @@ void			init_player(int nb_player, char **players)
 	if (nb_player > MAX_PLAYERS)
 		err_exit("Too many players");
 	g_data->nb_player = nb_player;
+	store_args(nb_player, players);
 	while (++i < nb_player)
 	{
+		printf("arg === %s\n\n", players[i]);
+		if (!ft_strcmp(players[i + 1], "-dump"))
+			i += 2;
+			printf("arg === %s\n\n", players[i]);
+		if (!players[i + 1])
+			break ;
 		if ((fd = open(players[i + 1], O_RDONLY)) == -1)
 			err_exit("error when open player file");
 		if ((r = read(fd, line, 5000)) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:02:31 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 18:35:40 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/03 19:03:14 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ static void		play_processes(t_list *elem)
 	proc = (t_processes *)elem->content;
 	if (proc->pc >= MEM_SIZE)
 		proc->pc -= MEM_SIZE;
-	move(proc->pc * 3 / (64 * 3) + 1, proc->pc * 3 % (64 * 3) + 1);
-	attron(COLOR_PAIR(7));
-	addstr("  ");
-	attroff(COLOR_PAIR(7));
-	refresh();
+//	move(proc->pc * 3 / (64 * 3) + 1, proc->pc * 3 % (64 * 3) + 1);
+//	attron(COLOR_PAIR(7));
+//	addstr("  ");
+//	attroff(COLOR_PAIR(7));
+//	refresh();
 	if (proc->op == NULL)
 	{
 		new_op = parse_op(proc->pc);
@@ -98,7 +98,9 @@ void			game(void)
 	i = -1;
 	while (++i < 75000)
 	{
-		usleep(100000);
+	//	usleep(100000);
+		if (g_data->arg & 1 && i == g_data->dump)
+			return ;
 		ft_lstiter(g_data->processes, play_processes);
 		if (g_data->cycle_die != 0 && i >= g_data->cycle_die)
 		{
