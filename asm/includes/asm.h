@@ -20,4 +20,14 @@
 #include "stdlib.h"
 #include <fcntl.h>
 
+typedef enum	s_error
+{
+		ER_OPEN,
+		ER_CLOSE,
+		ER_FORMAT,
+		ER_EMPTY
+}				t_error;
+
+void			ft_exit_error(t_error err, char *str);
+
 #endif

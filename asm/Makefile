@@ -18,7 +18,8 @@ SRC_PATH = srcs/
 SHELL = /bin/bash
 LIB = ../libft/
 
-SRC_NAME =	main.c
+SRC_NAME =	main.c		\
+			error.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -16,30 +16,20 @@ int main(int ac, char **av)
 {
 	char	*line;
 	int		fd;
-	int		nb = 4294967289;
 
-	ft_printf("\n%d\n", nb);
 	if (ac <= 1)
-	{
-		ft_putstr_fd("Usage: ./examples/asm [-a] <sourcefile.s>\
-\n    -a : Instead of creating a .cor file, outputs a stripped and \
-annotated version of the code to the standard output\n", 2);
-		exit(0);
-	}
+		ft_exit_error(ER_EMPTY, NULL);
 	if ((fd = open(av[ac - 1], O_RDONLY)) == -1)
+		ft_exit_error(ER_OPEN, av[ac - 1]);
+	if (ft_strcmp(&av[ac - 1][ft_strlen(av[ac - 1]) - 2], ".s") != 0)
 	{
-		ft_putstr_fd("Can't read source file ", 2);
-		ft_putstr_fd(av[ac - 1], 2);
-		ft_putstr_fd("\n", 2);
-		exit (0);
+		if (close(fd) == -1)
+			ft_exit_error(ER_CLOSE, av[ac - 1]);
+		ft_exit_error(ER_FORMAT, NULL);
 	}
 	while (get_next_line(fd, &line) > 0)
 		ft_printf("%s\n", line);
 	if (close(fd) == -1)
-	{
-		ft_putstr_fd("Can't close source file ", 2);
-		ft_putstr_fd(av[ac - 1], 2);
-		ft_putstr_fd("\n", 2);
-	}
-	return (0);
+		ft_exit_error(ER_CLOSE, av[ac - 1]);
+	return (EXIT_SUCCESS);
 }
