@@ -100,6 +100,7 @@ SRC_NAME =	ft_memset.c				\
 			ft_lstnew.c				\
 			ft_lstdel.c				\
 			ft_lstiter.c			\
+			ft_puterr.c				\
 			ft_lstpush.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

@@ -55,6 +55,7 @@ void				ft_putwstr_fd(wchar_t *wstr, int fd);
 size_t				ft_wstrlen(wchar_t *wstr);
 size_t				ft_wcharlen(wchar_t wchar);
 char				*ft_strtok(char *str, const char *sep);
+void	ft_puterr(char *str);
 
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
