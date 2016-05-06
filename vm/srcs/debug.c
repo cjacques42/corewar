@@ -62,11 +62,16 @@ static void		print_vm(int boolo)
 	if (boolo == 1)
 	{
 		ft_putstr("printing VM\n");
+		printf("0x%04x : ", i);
 		while (i < MEM_SIZE)
 		{
 			printf("%02x ", g_data->vm[i]);
 			if (i % 64 == 63)
+			{
 				printf("\n");
+				if (i < 4095)
+					printf("%#.04x : ", i + 1);
+			}
 			i++;
 		}
 		printf("\n");

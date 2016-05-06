@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:34:59 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/03 13:07:58 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/04 16:30:31 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void		print_winner(void)
 	t_player	winner;
 
 	winner = g_data->last_live;
-//	printf("The winner is player %d, %s : %s\n", -winner.id, winner.name, winner.comment);
+	printf("The winner is player %d, %s : %s\n", -winner.id, winner.name, winner.comment);
 }
 
 void			err_exit(char *comment)

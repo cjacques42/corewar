@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:57:46 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/03 19:48:55 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/04 18:29:41 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef struct		s_player
 {
 	unsigned int	id;
+	unsigned char	pos;
 	char			*name;
 	char			*comment;
 	unsigned char	*raw;

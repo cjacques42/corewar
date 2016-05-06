@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:02:31 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/03 19:03:14 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/04 16:49:58 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,26 @@ static void		play_processes(t_list *elem)
 void			game(void)
 {
 	int		i;
+	int		cycles;
 
 	g_data->cycle_die = CYCLE_TO_DIE;
 	g_data->check_left = MAX_CHECKS;
 	i = -1;
+	cycles = i;
 	while (++i < 75000)
 	{
+		cycles++;
 	//	usleep(100000);
-		if (g_data->arg & 1 && i == g_data->dump)
+		if (g_data->arg & 1 && cycles >= g_data->dump)
 			return ;
 		ft_lstiter(g_data->processes, play_processes);
 		if (g_data->cycle_die != 0 && i >= g_data->cycle_die)
 		{
-			i = -1;
+				i = -1;
 			//printf("Alive processe : %d\n", g_data->nb_processes);
 			g_data->inc = 0;
 			ft_lstiter(g_data->processes, check_processes_alive);
-			if (g_data->nb_processes == 0)
+				if (g_data->nb_processes == 0)
 				break ;
 			if (g_data->inc == 0)
 				g_data->check_left--;

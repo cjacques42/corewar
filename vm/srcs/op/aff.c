@@ -19,6 +19,6 @@ void	aff(t_processes *current)
 
 	rg = g_data->vm[current->pc + 2];
 	val = current->reg[rg - 1] % 256;
-	write(1, &val, 1);
+	write(1, &rg, 1);
 	current->pc += 3;
 }

@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/03 19:48:46 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/04 18:32:54 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		load_player(t_player *player)
 	int		player_pos;
 	int		j;
 
-	player_pos = MEM_SIZE / (g_data->nb_player) * ((-player->id) - 1);
+	player_pos = MEM_SIZE / (g_data->nb_player) * ((player->pos) - 1);
 	i = player_pos;
 	j = 0;
 	while (i < player->size + player_pos)
@@ -77,28 +77,30 @@ void			init_player(int nb_player, char **players)
 	char		line[5000];
 	int			r;
 
-	i = -1;
+	i = 0;
+	store_args(&nb_player, players);
+		g_data->nb_player = nb_player;
 	if (nb_player > MAX_PLAYERS)
 		err_exit("Too many players");
-	g_data->nb_player = nb_player;
-	store_args(nb_player, players);
-	while (++i < nb_player)
+	players++;
+	while (*players)
 	{
-		printf("arg === %s\n\n", players[i]);
-		if (!ft_strcmp(players[i + 1], "-dump"))
-			i += 2;
-			printf("arg === %s\n\n", players[i]);
-		if (!players[i + 1])
+		if (!ft_strcmp(*players, "-dump") || !ft_strcmp(*players, "-n"))
+			players += 2;
+		if (!*players)
 			break ;
-		if ((fd = open(players[i + 1], O_RDONLY)) == -1)
+		if ((fd = open(*players, O_RDONLY)) == -1)
 			err_exit("error when open player file");
 		if ((r = read(fd, line, 5000)) == -1)
 			err_exit("read error");
 		player.raw = (unsigned char*)line;
-		player.id = -(i + 1);
+		player.id = -(g_data->n[i]);
+		player.pos = i + 1;
 		if (close(fd) == -1)
 			err_exit("error when close player file");
 		setup_player(&player, r);
 		g_data->players[i] = player;
+		i++;
+		players++;
 	}
 }

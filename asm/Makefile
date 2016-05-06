@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/04 10:18:36 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/06 17:33:03 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,10 @@ SRC_PATH = srcs/
 SHELL = /bin/bash
 LIB = ../libft/
 
-SRC_NAME =	main.c		\
-			error.c
+SRC_NAME =	main.c			\
+			error.c			\
+			lex.c			\
+			utils.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

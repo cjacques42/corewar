@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 12:48:17 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/04 13:53:35 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/06 17:40:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int main(int ac, char **av)
 {
-	char	*line;
 	int		fd;
 
 	if (ac <= 1)
@@ -27,8 +26,7 @@ int main(int ac, char **av)
 			ft_exit_error(ER_CLOSE, av[ac - 1]);
 		ft_exit_error(ER_FORMAT, NULL);
 	}
-	while (get_next_line(fd, &line) > 0)
-		ft_printf("%s\n", line);
+	start_lex(fd);
 	if (close(fd) == -1)
 		ft_exit_error(ER_CLOSE, av[ac - 1]);
 	return (EXIT_SUCCESS);
