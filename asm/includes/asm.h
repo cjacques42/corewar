@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/06 17:40:14 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/06 17:54:56 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void			ft_exit_error(t_error err, char *str);
 void			start_lex(int fd);
 t_header		*init_header(void);
 int				ft_isspace(int c);
+int				ft_comment(int c)
 
 #endif
