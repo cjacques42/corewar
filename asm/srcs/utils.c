@@ -25,3 +25,16 @@ int		ft_comment(int c)
 		return (1);
 	return (0);
 }
+
+int		ft_empty(char *str)
+{
+	while (*str)
+	{
+		if (ft_comment(*str) == 1)
+			return (1);
+		if (ft_isspace(*str) == 0)
+			return (0);
+		str++;
+	}
+	return (1);
+}

@@ -12,47 +12,49 @@
 
 #include "asm.h"
 
-int			token(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strchr(LABEL_CHARS, str[i]) != NULL)
-			;
-	}
-	return (0);
-}
-
 t_header	*init_header(void)
 {
 	t_header	*header;
 
-	header = (t_header*)malloc(sizeof(header));
+	header = (t_header*)malloc(sizeof(*header));
 	header->magic = COREWAR_EXEC_MAGIC;
-	printf("\nmagic = %u\n", header->magic);
-	printf("\nmagic = %08x\n", header->magic);
-	ft_bzero(header->prog_name, PROG_NAME_LENGTH + 1);
 	header->prog_size = 0;
-	ft_bzero(header->comment, COMMENT_LENGTH + 1);
+	ft_bzero(header->prog_name, PROG_NAME_LENGTH);
+	ft_bzero(header->comment, COMMENT_LENGTH);
 	return (header);
 }
 
-int			header_cmp(char *str, char *line, int len)
+int			get_header(char *str, char *line, int len)
 {
-	char	*tmp;
 	int		i;
 
+	while (*line && *line != '"')
+	{
+		if (ft_isspace(*line) != 1)
+			ft_exit_mess(0);
+		line++;
+	}
+	line++;
 	i = 0;
-	tmp = ft_strchr(line, '"') + 1;
-	while (tmp[i] && tmp[i] != '"')
+	while (*line && *line != '"' && i < len)
+	{
+		str[i] = *line;
+		line++;
 		i++;
-	ft_strcpy(str, tmp);
-	ft_printf("name = %s\nlen = %d\n", tmp, i);
-	if (i > len)
-		return (1);
-	return (0);
+	}
+	if (i >= len)
+		ft_exit_mess(1);
+	if (*(line++) != '"')
+		ft_exit_mess(4);
+	while (*line)
+	{
+		if (ft_comment(*line) == 1)
+			return (1);
+		if (ft_isspace(*line) != 1)
+			ft_exit_mess(0);
+		line++;
+	}
+	return (1);
 }
 
 void		start_lex(int fd)
@@ -61,27 +63,40 @@ void		start_lex(int fd)
 	t_header	*header;
 	int			name;
 	int			comment;
+	char		*tmp;
 
-	name = 0;
-	comment = 0;
+	name = FALSE;
+	comment = FALSE;
 	header = init_header();
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (ft_strstr(line, NAME_CMD_STRING) != NULL)
+		g_data.line++;
+		tmp = line;
+		line = ft_strtrim(line);
+		free(tmp);
+		if (ft_strncmp(line, NAME_CMD_STRING, 5) == 0)
 		{
-			header_cmp(header->prog_name, line, PROG_NAME_LENGTH);
-//			name++;
+			if (name == TRUE)
+				ft_exit_mess(2);
+			name = get_header(header->prog_name, line + 5, PROG_NAME_LENGTH);
 		}
-		else if (ft_strstr(line, COMMENT_CMD_STRING) != NULL)
+		else if (ft_strncmp(line, COMMENT_CMD_STRING, 8) == 0)
 		{
-			header_cmp(header->comment, line, COMMENT_LENGTH);
-//			comment++;
+			if (comment == TRUE)
+				ft_exit_mess(2);
+			comment = get_header(header->comment, line + 8, COMMENT_LENGTH);
 		}
 		else
-			ft_printf("!\n");
-//		if (name > 1 || comment > 1)
-//			ft_printf("Error Header !!!!!!\n");
+		{
+			if (name == TRUE && comment == TRUE)
+			{
+				ft_printf("%s\n", header->prog_name);
+				ft_putstr(header->comment);
+				return;
+			}
+			if (ft_empty(line) == 0)
+				ft_exit_mess(3);
+		}
+		free(line);
 	}
-	ft_printf("%s\n", header->prog_name);
-	ft_putstr(header->comment);
 }

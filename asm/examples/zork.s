@@ -1,7 +1,7 @@
-.name"zork"
-.comment"I'M ALIIIIVE"  #lol
+.name"zork" #lol
+.comment	"I'M ALIIIIIIVE"
 
-entry:		sti r1,%:zork,%1
+entry:		sti r1, %:zork, %1
 			ld %0, r16
 
 zork:		live %2

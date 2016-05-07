@@ -12,10 +12,18 @@
 
 #include "asm.h"
 
+t_data	g_data;
+
+void	global_init(void)
+{
+	g_data.line = 0;
+}
+
 int main(int ac, char **av)
 {
 	int		fd;
 
+	global_init();
 	if (ac <= 1)
 		ft_exit_error(ER_EMPTY, NULL);
 	if ((fd = open(av[ac - 1], O_RDONLY)) == -1)

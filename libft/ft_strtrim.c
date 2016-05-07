@@ -31,8 +31,8 @@ char	*ft_strtrim(char const *s)
 	end++;
 	if (start == len)
 		return (ft_strdup("\0"));
-	if (len - end != 0 && start != 0)
-		return (ft_strsub(s, start, end - start));
-	else
+	if (len - end == 0 && start == 0)
 		return (ft_strdup(s));
+	else
+		return (ft_strsub(s, start, end - start));
 }
