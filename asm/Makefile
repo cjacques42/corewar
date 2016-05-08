@@ -20,7 +20,8 @@ LIB = ../libft/
 
 SRC_NAME =	main.c			\
 			error.c			\
-			lex.c			\
+			parse_header.c	\
+			parse_body.c	\
 			utils.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

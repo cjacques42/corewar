@@ -46,34 +46,22 @@ int			get_header(char *str, char *line, int len)
 		ft_exit_mess(1);
 	if (*(line++) != '"')
 		ft_exit_mess(4);
-	while (*line)
-	{
-		if (ft_comment(*line) == 1)
-			return (1);
-		if (ft_isspace(*line) != 1)
-			ft_exit_mess(0);
-		line++;
-	}
+	check_eol(line);
 	return (1);
 }
 
-void		start_lex(int fd)
+void		parse_header(int fd)
 {
 	char		*line;
 	t_header	*header;
 	int			name;
 	int			comment;
-	char		*tmp;
 
 	name = FALSE;
 	comment = FALSE;
 	header = init_header();
-	while (get_next_line(fd, &line) > 0)
+	while (read_line(fd, &line) > 0)
 	{
-		g_data.line++;
-		tmp = line;
-		line = ft_strtrim(line);
-		free(tmp);
 		if (ft_strncmp(line, NAME_CMD_STRING, 5) == 0)
 		{
 			if (name == TRUE)
@@ -86,17 +74,20 @@ void		start_lex(int fd)
 				ft_exit_mess(2);
 			comment = get_header(header->comment, line + 8, COMMENT_LENGTH);
 		}
-		else
-		{
-			if (name == TRUE && comment == TRUE)
-			{
-				ft_printf("%s\n", header->prog_name);
-				ft_putstr(header->comment);
-				return;
-			}
-			if (ft_empty(line) == 0)
+		else if (ft_empty(line) == 0)
 				ft_exit_mess(3);
+		if (name == TRUE && comment == TRUE)
+		{
+			ft_printf("%s\n", header->prog_name);
+			ft_putstr(header->comment);
+			return;
 		}
 		free(line);
 	}
+}
+
+void	parse_file(int fd)
+{
+	parse_header(fd);
+	parse_body(fd);
 }

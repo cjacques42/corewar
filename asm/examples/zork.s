@@ -1,6 +1,6 @@
 .name"zork" #lol
-.comment	"I'M ALIIIIIIVE"
-
+.comment	"I'M ALIIIIIIVE" ;lol
+;
 entry:		sti r1, %:zork, %1
 			ld %0, r16
 

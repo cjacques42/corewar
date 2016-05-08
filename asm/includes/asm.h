@@ -42,9 +42,16 @@ static t_mess						g_err[] =
 {
 	{"Bad syntax"},
 	{"String is too long"},
-	{"Command already used"},
-	{"Bad command"},
-	{"String without end"},
+	{"Header command already used"},
+	{"Bad header command"},
+	{"String without endif, symbol '\"' is missing"},
+	{"Bad registry syntax"},
+	{"Bad Direct syntax"},
+	{"Bad Indirect syntax"},
+	{"Command not found"},
+	{"Bad syntax at the end of line"},
+	{"Invalid label"},
+	{"Label not found"},
 	{0}
 };
 
@@ -56,11 +63,14 @@ typedef struct		s_data
 extern t_data		g_data;
 
 void			ft_exit_error(t_error err, char *str);
-void			start_lex(int fd);
+void			parse_file(int fd);
 t_header		*init_header(void);
 int				ft_isspace(int c);
 int				ft_comment(int c);
 int				ft_empty(char *str);
 void			ft_exit_mess(int errno);
+void			parse_body(int fd);
+int				read_line(int fd, char **line);
+void			check_eol(char *line);
 
 #endif

@@ -34,7 +34,7 @@ int main(int ac, char **av)
 			ft_exit_error(ER_CLOSE, av[ac - 1]);
 		ft_exit_error(ER_FORMAT, NULL);
 	}
-	start_lex(fd);
+	parse_file(fd);
 	if (close(fd) == -1)
 		ft_exit_error(ER_CLOSE, av[ac - 1]);
 	return (EXIT_SUCCESS);
