@@ -77,11 +77,7 @@ void		parse_header(int fd)
 		else if (ft_empty(line) == 0)
 				ft_exit_mess(3);
 		if (name == TRUE && comment == TRUE)
-		{
-			ft_printf("%s\n", header->prog_name);
-			ft_putstr(header->comment);
 			return;
-		}
 		free(line);
 	}
 }

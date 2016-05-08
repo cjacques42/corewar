@@ -25,20 +25,41 @@
 # include "../../utils/op.h"
 #include "stdio.h"
 
-typedef enum	s_error
+typedef enum		s_error
 {
-		ER_OPEN,
-		ER_CLOSE,
-		ER_FORMAT,
-		ER_EMPTY
-}				t_error;
+				ER_OPEN,
+				ER_CLOSE,
+				ER_FORMAT,
+				ER_EMPTY
+}					t_error;
 
-typedef struct						s_mess
+
+typedef struct		s_mess
 {
-	char							*str;
-}									t_mess;
+	char		*str;
+}					t_mess;
 
-static t_mess						g_err[] =
+typedef struct		s_lbl
+{
+	char		*lbl_name;
+	int			adress;
+}					t_lbl;
+
+typedef struct		s_arg
+{
+	t_arg_type	type;
+}					t_arg;
+
+typedef struct		s_cmd
+{
+	char		*str;
+	int			addr;
+	int			size;
+	int			nbr;
+	t_list		*arg;
+}					t_cmd;
+
+static t_mess		g_err[] =
 {
 	{"Bad syntax"},
 	{"String is too long"},
@@ -58,19 +79,20 @@ static t_mess						g_err[] =
 typedef struct		s_data
 {
 	int		line;
+	int		addr;
 }					t_data;
 
 extern t_data		g_data;
 
-void			ft_exit_error(t_error err, char *str);
-void			parse_file(int fd);
-t_header		*init_header(void);
-int				ft_isspace(int c);
-int				ft_comment(int c);
-int				ft_empty(char *str);
-void			ft_exit_mess(int errno);
-void			parse_body(int fd);
-int				read_line(int fd, char **line);
-void			check_eol(char *line);
+void				ft_exit_error(t_error err, char *str);
+void				parse_file(int fd);
+t_header			*init_header(void);
+int					ft_isspace(int c);
+int					ft_comment(int c);
+int					ft_empty(char *str);
+void				ft_exit_mess(int errno);
+void				parse_body(int fd);
+int					read_line(int fd, char **line);
+void				check_eol(char *line);
 
 #endif

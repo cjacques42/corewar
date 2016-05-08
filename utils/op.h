@@ -45,7 +45,12 @@
 # define NBR_LIVE					21
 # define MAX_CHECKS					10   // default : 10
 
-typedef char						t_arg_type;
+typedef enum		s_arg_type
+{
+				T_REG,
+				T_DIR,
+				T_IND
+}					t_arg_type;
 
 # define T_REG						1
 # define T_DIR						2

@@ -17,6 +17,7 @@ t_data	g_data;
 void	global_init(void)
 {
 	g_data.line = 0;
+	g_data.addr = 0;
 }
 
 int main(int ac, char **av)
