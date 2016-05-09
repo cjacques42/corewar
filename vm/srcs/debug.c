@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 18:31:44 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 15:50:13 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/06 16:08:59 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void		print_vm(int boolo)
 	i = 0;
 	if (boolo == 1)
 	{
-		ft_putstr("printing VM\n");
+//		ft_putstr("printing VM\n");
 		printf("0x%04x : ", i);
 		while (i < MEM_SIZE)
 		{

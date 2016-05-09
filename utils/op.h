@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2016/05/06 12:32:48 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:14:24 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,7 @@
 # define NBR_LIVE					21
 # define MAX_CHECKS					10   // default : 10
 
-typedef enum		s_arg_type
-{
-				T_REG,
-				T_DIR,
-				T_IND
-}					t_arg_type;
+typedef char		t_arg_type;
 
 # define T_REG						1
 # define T_DIR						2

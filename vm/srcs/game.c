@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:02:31 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/04 16:49:58 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/09 17:06:18 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static void		play_processes(t_list *elem)
 	t_op			*new_op;
 
 	proc = (t_processes *)elem->content;
-	if (proc->pc >= MEM_SIZE)
-		proc->pc -= MEM_SIZE;
+	proc->pc %= MEM_SIZE;
 //	move(proc->pc * 3 / (64 * 3) + 1, proc->pc * 3 % (64 * 3) + 1);
 //	attron(COLOR_PAIR(7));
 //	addstr("  ");

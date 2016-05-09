@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 21:24:41 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 18:34:17 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/06 19:13:36 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void	ld(t_processes *current)
 		current->reg[p2 - 1] = p1;
 		current->carry = 1;
 	}
+//	printf("currentpc == %x\n", current->pc);
+	printf("ld %d r%d\n", p1, p2);
 	current->pc = place + 1;
 }

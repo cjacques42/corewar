@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 17:27:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/01 14:18:51 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:33:09 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void	sti(t_processes *current)
 		p2 += current->pc;
 		write_int(&g_data->vm[p2], current->reg[p1 - 1]);
 	}
+//	printf("currentpc == %x\n", current->pc);
+//	printf("sti r%d %d %d\n", p1, p2, p3);
 	current->pc = place + 1;
 }

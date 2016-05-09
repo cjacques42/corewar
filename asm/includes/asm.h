@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/06 17:54:56 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/09 18:33:29 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef enum		s_error
 				ER_EMPTY
 }					t_error;
 
+typedef enum		s_type
+{
+				REG,
+				DIR,
+				IND
+}					t_type;
 
 typedef struct		s_mess
 {
@@ -47,7 +53,7 @@ typedef struct		s_lbl
 
 typedef struct		s_arg
 {
-	t_arg_type	type;
+	t_type		type;
 }					t_arg;
 
 typedef struct		s_cmd
@@ -73,13 +79,15 @@ static t_mess		g_err[] =
 	{"Bad syntax at the end of line"},
 	{"Invalid label"},
 	{"Label not found"},
+	{"Selector missing"},
+	{"too much separator"},
 	{0}
 };
 
 typedef struct		s_data
 {
-	int		line;
-	int		addr;
+	int			line;
+	int			addr;
 }					t_data;
 
 extern t_data		g_data;
@@ -94,5 +102,10 @@ void				ft_exit_mess(int errno);
 void				parse_body(int fd);
 int					read_line(int fd, char **line);
 void				check_eol(char *line);
+int					check_line(char *line, t_list **cmds, t_list **lbls);
+char				*check_reg(char *line, t_list **args);
+char				*check_dir(char *line, t_list **args);
+char				*check_ind(char *line, t_list **args);
+void				ft_add_args_to_cmd(t_list **cmds, t_list *args);
 
 #endif
