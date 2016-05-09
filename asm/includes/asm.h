@@ -80,7 +80,8 @@ static t_mess		g_err[] =
 	{"Invalid label"},
 	{"Label not found"},
 	{"Selector missing"},
-	{"too much separator"},
+	{"Too much separator"},
+	{"Invalid parameter"},
 	{0}
 };
 

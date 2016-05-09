@@ -2,9 +2,9 @@
 .comment	"I'M ALIIIIIIVE" ;lol
 ;
 ntry:
-nitry:		#lol
-entry:		sti				r1, %:zork, %1
-			ld %0, , r16
+2nitry:		#lol
+entry:		sti			r1, %:zork, %1
+			ld %0, r16
 #l
 zork2:
 zork:		live %2

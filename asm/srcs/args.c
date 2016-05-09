@@ -23,6 +23,7 @@ char	*check_reg(char *line, t_list **args)
 {
 	(void)line;
 	(void)args;
+	printf("Reg - ");
 	return (NULL);
 }
 
@@ -30,6 +31,7 @@ char	*check_dir(char *line, t_list **args)
 {
 	(void)line;
 	(void)args;
+	printf("Dir - ");
 	return (NULL);
 }
 
@@ -37,5 +39,6 @@ char	*check_ind(char *line, t_list **args)
 {
 	(void)line;
 	(void)args;
+	printf("Ind - ");
 	return (NULL);
 }

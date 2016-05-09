@@ -48,49 +48,63 @@ int		check_mnemo(char *line, t_list **cmds, t_list **lbls)
 	return (-1);
 }
 
-char	*is_selector(char *line, int *sep)
+int		ft_selector(char **line)
 {
-	*sep = FALSE;
-	while (*line)
+	int		sep;
+
+	sep = FALSE;
+	while (**line)
 	{
-		if (*line == SEPARATOR_CHAR)
+		if (**line == SEPARATOR_CHAR)
 		{
-			if (*sep == TRUE)
+			if (sep == TRUE)
 				ft_exit_mess(13);
-			*sep = TRUE;
+			sep = TRUE;
 		}
-		else if (ft_isspace(*line) != 0)
-			return (line);
-		line++;
+		else if (ft_isspace(**line) == 0)
+		{
+			if (sep == TRUE)
+				return (1);
+			return (0);
+		}
+		(*line)++;
 	}
-	return (NULL);
+	if (sep == TRUE)
+		return (1);
+	return (0);
 }
 
 int		check_arg(char *line, t_list **cmds)
 {
-	int		i;
-	int		sep;
-	char	*tmp;
 	t_list	*args;
+	int		sep;
+	int		i;
 
 	(void)cmds;
-	i = 0;
-	while (line[i])
+	i = 1;
+	while (*line)
 	{
-		if ((tmp = is_selector(line + i, &sep)) != NULL || i == 0)
-			sep = TRUE;
-		printf("sep = %d\n", sep);
-		if (*tmp == 'r' && sep == TRUE)
-			line = check_reg(line, &args);
-		else if (*tmp == DIRECT_CHAR && sep == TRUE)
-			line = check_dir(line, &args);
-		else if ((*tmp == LABEL_CHAR || ft_isdigit(*tmp)) && sep == TRUE)
-			line = check_ind(line, &args);
-		else if (sep == FALSE && ft_empty(line) == 0)
+		sep = FALSE;
+		if (ft_empty(line) == 1)
+			break;
+		else if ((sep = ft_selector(&line)) || i == 1)
+		{
+			i = 0;
+			printf("sep = %d\n", sep);
+			printf("----%s\n", line);
+			if (*line == 'r')
+				check_reg(line, &args);
+			else if (*line == DIRECT_CHAR)
+				check_dir(line, &args);
+			else if ((*line == LABEL_CHAR || ft_isdigit(*line)))
+				check_ind(line, &args);
+			else
+				ft_exit_mess(14);
+		}
+		else
 			ft_exit_mess(12);
-		i++;
 	}
-	printf("-------------------------------------\n");
+	printf("\n-------------------------------------\n");
 	ft_add_args_to_cmd(cmds, args);
 	return (0);
 }
