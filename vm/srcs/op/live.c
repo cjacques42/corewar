@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:44:26 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/09 18:34:26 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/10 12:32:35 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	live(t_processes *current)
 		g_data->last_live = player;
 	//	printf("un processus dit que le joueur %d(%s) est en vie %d\n", player.id, player.name, current->live);
 	}
-//	printf("live %d\n", param);
+	printf("live %d\n", param);
 	current->pc += 5;
-//	printf("(%#06x -> %#06x)\n", current->pc - 5, current->pc);
+	current->pc %= MEM_SIZE;
+	printf("(%#06x -> %#06x)\n", current->pc - 5, current->pc);
 }

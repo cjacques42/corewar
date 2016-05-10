@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 21:24:41 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/06 19:13:36 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/10 12:32:20 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	ld(t_processes *current)
 	}
 //	printf("currentpc == %x\n", current->pc);
 	printf("ld %d r%d\n", p1, p2);
+	printf("(%#06x -> ", current->pc);
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
+	printf(" %#06x)\n", current->pc);
 }

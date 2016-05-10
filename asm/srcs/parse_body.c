@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 17:39:14 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:56:37 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,28 @@ int		check_lbl(char *line, t_list **cmds, t_list **lbls)
 	return (0);
 }
 
+//int		ft_size(t_list *cmds)
+//{
+	//
+//}
+
 void	parse_body(int fd)
 {
 	char	*line;
 	t_list	*lbls;
 	t_list	*cmds;
+	int		ret_line;
+	int		ret_lbl;
 
 	lbls = NULL;
 	cmds = NULL;
 	while (read_line(fd, &line) > 0)
 	{
-		if (check_line(line, &cmds, &lbls) == 1)
-			printf("MNEMO\n");
-		else if (check_lbl(line, &cmds, &lbls) == 1)
-			printf("LABEL\n");
-		else if (ft_empty(line) == 0)
-			ft_exit_mess(0);
-		printf("-- %s\n", line);
+		ret_line = check_line(line, &cmds, &lbls);
+		ret_lbl = check_lbl(line, &cmds, &lbls);
+		if (ft_empty(line) == 0 && ret_lbl == 0 && ret_line == 0)
+			ft_exit_mess(8);
+//		ft_size(cmds);
 		free(line);
 	}
 }

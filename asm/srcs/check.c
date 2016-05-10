@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:10:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 19:21:50 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:18:00 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int		check_mnemo(char *line, t_list **cmds, t_list **lbls)
 	while (g_op_tab[i].label != NULL)
 	{
 		len = ft_strlen(g_op_tab[i].label);
-		if (ft_strncmp(g_op_tab[i].label, line, len) == 0 && ft_isspace(line[len]))
+		if (ft_strncmp(g_op_tab[i].label, line, len) == 0
+				&& ft_isspace(line[len]))
 		{
 			cmd = create_init_cmd(i);
 			ft_lstaddback(cmds, ft_lstnew((void*)cmd, sizeof(cmd)));
@@ -80,24 +81,22 @@ int		check_arg(char *line, t_list **cmds)
 	int		sep;
 	int		i;
 
-	(void)cmds;
 	i = 1;
+	args = NULL;
 	while (*line)
 	{
 		sep = FALSE;
 		if (ft_empty(line) == 1)
-			break;
-		else if ((sep = ft_selector(&line)) || i == 1)
+			break ;
+		else if (i == 1 || (sep = ft_selector(&line)))
 		{
 			i = 0;
-			printf("sep = %d\n", sep);
-			printf("----%s\n", line);
 			if (*line == 'r')
-				check_reg(line, &args);
+				check_reg(&line, &args);
 			else if (*line == DIRECT_CHAR)
-				check_dir(line, &args);
+				check_dir(&line, &args, cmds);
 			else if ((*line == LABEL_CHAR || ft_isdigit(*line)))
-				check_ind(line, &args);
+				check_ind(&line, &args, cmds);
 			else
 				ft_exit_mess(14);
 		}

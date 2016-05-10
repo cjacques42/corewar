@@ -6,13 +6,13 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 09:43:06 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:20:26 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-t_header	*init_header(void)
+t_header		*init_header(void)
 {
 	t_header	*header;
 
@@ -24,7 +24,7 @@ t_header	*init_header(void)
 	return (header);
 }
 
-int			get_header(char *str, char *line, int len)
+int				get_header(char *str, char *line, int len)
 {
 	int		i;
 
@@ -50,7 +50,7 @@ int			get_header(char *str, char *line, int len)
 	return (1);
 }
 
-void		parse_header(int fd)
+void			parse_header(int fd)
 {
 	char		*line;
 	t_header	*header;
@@ -75,14 +75,14 @@ void		parse_header(int fd)
 			comment = get_header(header->comment, line + 8, COMMENT_LENGTH);
 		}
 		else if (ft_empty(line) == 0)
-				ft_exit_mess(3);
+			ft_exit_mess(3);
 		if (name == TRUE && comment == TRUE)
-			return;
+			return ;
 		free(line);
 	}
 }
 
-void	parse_file(int fd)
+void			parse_file(int fd)
 {
 	parse_header(fd);
 	parse_body(fd);

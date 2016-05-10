@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 14:59:39 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 11:01:54 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:17:06 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void				ft_putwstr_fd(wchar_t *wstr, int fd);
 size_t				ft_wstrlen(wchar_t *wstr);
 size_t				ft_wcharlen(wchar_t wchar);
 char				*ft_strtok(char *str, const char *sep);
-void	ft_puterr(char *str);
+void				ft_puterr(char *str);
 
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
@@ -99,6 +99,5 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstaddback(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstpush(t_list **alst, t_list *new);
-
 
 #endif

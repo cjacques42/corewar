@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/09 18:31:13 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/10 09:15:38 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,10 @@ SRC_NAME =	main.c			\
 			parse_body.c	\
 			utils.c			\
 			check.c			\
-			args.c
+			args.c			\
+			check_reg.c		\
+			check_dir.c		\
+			check_ind.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

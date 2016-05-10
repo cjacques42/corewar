@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 18:33:29 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:12:39 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,14 @@
 # include "../../utils/op.h"
 #include "stdio.h"
 
-typedef enum		s_error
+typedef enum		e_error
 {
-				ER_OPEN,
-				ER_CLOSE,
-				ER_FORMAT,
-				ER_EMPTY
+	ER_OPEN, ER_CLOSE, ER_FORMAT, ER_EMPTY
 }					t_error;
 
-typedef enum		s_type
+typedef enum		e_type
 {
-				REG,
-				DIR,
-				IND
+	REG, DIR, IND
 }					t_type;
 
 typedef struct		s_mess
@@ -54,6 +49,8 @@ typedef struct		s_lbl
 typedef struct		s_arg
 {
 	t_type		type;
+	long		nb;
+	char		*str;
 }					t_arg;
 
 typedef struct		s_cmd
@@ -82,6 +79,9 @@ static t_mess		g_err[] =
 	{"Selector missing"},
 	{"Too much separator"},
 	{"Invalid parameter"},
+	{"Any sign"},
+	{"Any number"},
+	{"registry number not beetween 1 and 16"},
 	{0}
 };
 
@@ -104,9 +104,12 @@ void				parse_body(int fd);
 int					read_line(int fd, char **line);
 void				check_eol(char *line);
 int					check_line(char *line, t_list **cmds, t_list **lbls);
-char				*check_reg(char *line, t_list **args);
-char				*check_dir(char *line, t_list **args);
-char				*check_ind(char *line, t_list **args);
+void				check_reg(char **line, t_list **args);
+void				check_dir(char **line, t_list **args, t_list **cmds);
+void				check_ind(char **line, t_list **args, t_list **cmds);
 void				ft_add_args_to_cmd(t_list **cmds, t_list *args);
+int					check_nbr(char **str, long nbr, int errno);
+void				ft_addarg(t_list **args, t_type type, long nb, char *str);
+int					ft_search(char **line, t_list **cmds, long *nb, char **str);
 
 #endif

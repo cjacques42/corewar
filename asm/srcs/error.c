@@ -6,13 +6,13 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 09:43:13 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:16:28 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	ft_exit_error(t_error err, char *str)
+void		ft_exit_error(t_error err, char *str)
 {
 	if (err == ER_OPEN)
 	{
@@ -31,10 +31,10 @@ void	ft_exit_error(t_error err, char *str)
 \n    -a : Instead of creating a .cor file, outputs a stripped and \
 annotated version of the code to the standard output\n");
 	ft_puterr("\n");
-	exit(0);
+	exit(1);
 }
 
-void	ft_exit_mess(int errno)
+void		ft_exit_mess(int errno)
 {
 	ft_puterr("Error at line ");
 	ft_putnbr_fd(g_data.line, 2);

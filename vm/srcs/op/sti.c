@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 17:27:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/09 18:33:09 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/10 12:32:54 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,16 @@ void	sti(t_processes *current)
 			p2 += MEM_SIZE;
 		p2 %= IDX_MOD;
 		p2 += current->pc;
-		write_int(&g_data->vm[p2], current->reg[p1 - 1]);
+		g_data->vm[p2] = current->reg[p1 - 1] >> 24;
+		g_data->vm[(p2 + 1) % 4096] = current->reg[p1 - 1] >> 16;
+		g_data->vm[(p2 + 2) % 4096] = current->reg[p1 - 1] >> 8;
+		g_data->vm[(p2 + 3) % 4096] = current->reg[p1 - 1];
+		//	write_int(&g_data->vm[p2], current->reg[p1 - 1]);
 	}
 //	printf("currentpc == %x\n", current->pc);
-//	printf("sti r%d %d %d\n", p1, p2, p3);
+	printf("sti r%d %d %d\n", p1, p2, p3);
+	printf("(%#06x -> ", current->pc);
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
+	printf(" %#06x)\n", current->pc);
 }

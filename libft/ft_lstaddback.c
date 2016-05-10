@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:41:28 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 11:15:54 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:21:12 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstaddback(t_list **alst, t_list *new)
 {
-	t_list*		lst;
+	t_list		*lst;
 
 	lst = *alst;
 	if (new == NULL || alst == NULL)

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 17:28:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/09 17:59:30 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:18:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	check_eol(char *line)
 	while (*line)
 	{
 		if (ft_comment(*line) == 1)
-			return;
+			return ;
 		if (ft_isspace(*line) != 1)
 			ft_exit_mess(9);
 		line++;

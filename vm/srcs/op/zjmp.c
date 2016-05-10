@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:21:16 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/09 18:32:16 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/10 14:46:12 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ void	zjmp(t_processes *current)
 	if (current->carry == 1)
 	{
 		current->pc += addr;
+		current->pc %= MEM_SIZE;
 		//printf("currentpc == %x\n", current->pc);
-//		printf("zjmp %d\n", addr);
+		printf("zjmp %d\n", addr);
 	}
 	else
 	{
 		current->pc += 3;
-//		printf("zjmp %d failed\n", addr);
+		current->pc %= MEM_SIZE;
+		printf("zjmp %d failed\n", addr);
+		printf("(%#06x -> %#06x)\n", current->pc - 3, current->pc);
 	}
 }
