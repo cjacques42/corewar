@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:56:37 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:37:09 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,87 @@ int		check_lbl(char *line, t_list **cmds, t_list **lbls)
 	return (0);
 }
 
-//int		ft_size(t_list *cmds)
-//{
-	//
-//}
+int		ft_lbl_exist(t_list *lbls, char *str)
+{
+	t_lbl	*tmp;
 
-void	parse_body(int fd)
+	while (lbls != NULL)
+	{
+		tmp = lbls->content;
+		if (ft_strcmp(str, tmp->lbl_name) == 0)
+		{
+			printf("lbl : %s && addr :%d\n", tmp->lbl_name, tmp->adress);
+			return (tmp->adress);
+		}
+		lbls = lbls->next;
+	}
+	ft_exit_mess(10);
+	return (-1);
+}
+
+void	ft_opc(t_cmd *cmd, t_arg *arg, int decal)
+{
+	unsigned char		reg;
+	unsigned char		dir;
+	unsigned char		ind;
+
+	reg = 0x01;
+	dir = 0x02;
+	ind = 0x03;
+	if (arg->type == T_REG)
+		cmd->opc = cmd->opc | (reg << decal);
+	if (arg->type == T_DIR)
+		cmd->opc = cmd->opc | (dir << decal);
+	if (arg->type == T_IND)
+		cmd->opc = cmd->opc | (ind << decal);
+}
+
+void	ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
+{
+	t_list	*tmp;
+	t_arg	*arg;
+	int		addr_cur;
+	int		i;
+
+	while (cmds != NULL)
+	{
+		i = 6;
+		tmp = ((t_cmd*)(cmds->content))->arg;
+		while (tmp != NULL)
+		{
+			arg = tmp->content;
+			ft_opc(((t_cmd*)(cmds->content)), arg, i);
+			if (arg->str != NULL)
+			{
+				addr_cur = ((t_cmd*)(cmds->content))->addr;
+				g_data.line = ((t_cmd*)(cmds->content))->line;
+				arg->nb = ft_lbl_exist(lbls, arg->str) - addr_cur;
+				printf("------->%ld\n", arg->nb);
+				printf("%s\n", arg->str);
+			}
+			i -= 2;
+			tmp = tmp->next;
+		}
+		printf("%#06x\n", ((t_cmd*)(cmds->content))->opc);
+		cmds = cmds->next;
+	}
+}
+
+void	parse_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 {
 	char	*line;
-	t_list	*lbls;
-	t_list	*cmds;
 	int		ret_line;
 	int		ret_lbl;
 
-	lbls = NULL;
-	cmds = NULL;
 	while (read_line(fd, &line) > 0)
 	{
-		ret_line = check_line(line, &cmds, &lbls);
-		ret_lbl = check_lbl(line, &cmds, &lbls);
+		ret_line = check_line(line, cmds, lbls);
+		ret_lbl = check_lbl(line, cmds, lbls);
 		if (ft_empty(line) == 0 && ret_lbl == 0 && ret_line == 0)
 			ft_exit_mess(8);
-//		ft_size(cmds);
 		free(line);
 	}
+	ft_refresh_lbl_addr(*lbls, *cmds);
+	header->prog_size = g_data.addr;
+	printf("prog_size = %d\n", header->prog_size);
 }

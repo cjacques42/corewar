@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/24 21:20:13 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/10 12:33:16 by stoussay         ###   ########.fr       */
+/*   Created: 2016/05/11 15:50:45 by jcornill          #+#    #+#             */
+/*   Updated: 2016/05/11 15:50:47 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	op_fork(t_processes *current)
 	ft_lstadd(&g_data->processes,
 	ft_lstnew(create_process(addr, current, NULL, 0),
 	sizeof(t_processes)));
-	printf("fork %d\n", addr);
+//	printf("P%5d | fork %d\n", current->id + 1, addr);
+//	printf("fork %d\n", addr);
 	current->pc += 3;
 	current->pc %= MEM_SIZE;
-	printf("(%#06x -> %#06x)\n", current->pc - 3, current->pc);
+//	printf("(%#06x -> %#06x)\n", current->pc - 3, current->pc);
 }

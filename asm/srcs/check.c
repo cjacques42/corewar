@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:10:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:18:00 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/11 16:18:38 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ t_cmd	*create_init_cmd(int i)
 		exit(0);
 	cmd->str = ft_strdup(g_op_tab[i].label);
 	cmd->addr = g_data.addr;
+	cmd->size = 1;
 	cmd->nbr = i;
 	cmd->arg = NULL;
+	cmd->line = g_data.line;
+	cmd->opc = 0;
 	return (cmd);
 }
 
@@ -112,12 +115,12 @@ int		check_line(char *line, t_list **cmds, t_list **lbls)
 {
 	int		ret;
 
-	(void)lbls;
 	if ((ret = check_mnemo(line, cmds, lbls)) > -1)
 	{
 		line += ret + 1;
 		line = ft_strtrim(line);
 		check_arg(line, cmds);
+		ft_count(*cmds);
 		return (1);
 	}
 	return (0);

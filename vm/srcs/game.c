@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:02:31 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/09 17:06:18 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:46:39 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,6 @@ static void		check_processes_alive(t_list *elem)
 		g_data->nb_processes--;
 		return ;
 	}
-	else if (proc->live >= NBR_LIVE && g_data->inc == 0)
-	{
-		g_data->cycle_die -= CYCLE_DELTA;
-		g_data->check_left = MAX_CHECKS;
-		g_data->inc = 1;
-	}
 	proc->live = 0;
 }
 
@@ -60,11 +54,11 @@ static void		play_processes(t_list *elem)
 
 	proc = (t_processes *)elem->content;
 	proc->pc %= MEM_SIZE;
-//	move(proc->pc * 3 / (64 * 3) + 1, proc->pc * 3 % (64 * 3) + 1);
-//	attron(COLOR_PAIR(7));
-//	addstr("  ");
-//	attroff(COLOR_PAIR(7));
-//	refresh();
+	if (proc->print == 0)
+	{
+		ncur_print_char(proc->pc, 1, 1);
+		proc->print = 1;
+	}
 	if (proc->op == NULL)
 	{
 		new_op = parse_op(proc->pc);
@@ -75,13 +69,19 @@ static void		play_processes(t_list *elem)
 			//ft_printf("Create op %s for %d at %d\n", proc->op->label, proc->id, proc->pc);
 		}
 		if (new_op == NULL)
+		{
+			ncur_print_char(proc->pc, 0, 1);
+			proc->print = 0;
 			proc->pc++;
+		}
 	}
 	else
 	{
 		proc->cycle_left--;
 		if (proc->cycle_left == 0)
 		{
+			ncur_print_char(proc->pc, 0, 1);
+			proc->print = 0;
 			exe_op(proc->op, proc);
 			proc->op = NULL;
 		}
@@ -99,26 +99,43 @@ void			game(void)
 	cycles = i;
 	while (++i < 75000)
 	{
+		timeout(10);
+		move(0, 200);
+		g_data->pause = 1;
+		while (g_data->pause == 1)
+		{
+			if (getch() == 'p')
+				g_data->pause = 0;
+			move(0, 200);
+		}
+		move(1, 200);
+		printw("%d", cycles + 1);
+		move(2, 200);
+		printw("%d", g_data->nb_processes);
+		move(3, 200);
+		printw("%d", g_data->cycle_die);
+		move(4, 200);
+		printw("%d", g_data->check_left);
 		cycles++;
-	//	usleep(100000);
 		if (g_data->arg & 1 && cycles >= g_data->dump)
 			return ;
 		ft_lstiter(g_data->processes, play_processes);
 		if (g_data->cycle_die != 0 && i >= g_data->cycle_die)
 		{
-				i = -1;
+			i = -1;
 			//printf("Alive processe : %d\n", g_data->nb_processes);
-			g_data->inc = 0;
 			ft_lstiter(g_data->processes, check_processes_alive);
-				if (g_data->nb_processes == 0)
+			if (g_data->nb_processes == 0)
 				break ;
-			if (g_data->inc == 0)
+			if (g_data->t_live < NBR_LIVE)
 				g_data->check_left--;
-			if (g_data->check_left == 0)
+			if (g_data->check_left == 0 || g_data->t_live >= NBR_LIVE)
 			{
+				g_data->pause = 1;
 				g_data->cycle_die -= CYCLE_DELTA;
 				g_data->check_left = MAX_CHECKS;
 			}
+			g_data->t_live = 0;
 			//printf("%s, cycle_die: %d, check_left: %d\n", "check if process alive", g_data->cycle_die, g_data->check_left);
 		}
 	}

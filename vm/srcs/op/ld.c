@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 21:24:41 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/10 12:32:20 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 15:51:23 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	ld(t_processes *current)
 		current->carry = 1;
 	}
 //	printf("currentpc == %x\n", current->pc);
-	printf("ld %d r%d\n", p1, p2);
-	printf("(%#06x -> ", current->pc);
+//	printf("P%5d | ld %d r%d\n", current->id + 1, p1, p2);
+//	printf("(%#06x -> ", current->pc);
+//	printf("ld %d r%d\n", p1, p2);
+//	printf("(%#06x -> ", current->pc);
 	current->pc = place + 1;
 	current->pc %= MEM_SIZE;
-	printf(" %#06x)\n", current->pc);
+//	printf(" %#06x)\n", current->pc);
 }

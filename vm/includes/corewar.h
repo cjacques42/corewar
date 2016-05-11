@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:35:32 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/04 15:59:30 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 15:12:20 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	store_args(int *nb_args, char **args);
 
 void				create_ncurse(void);
 void				update_print_vm(void);
+void				ncur_print_char(int cursor, int font, int move_to_cursor);
 
 /*
 **	Global variable

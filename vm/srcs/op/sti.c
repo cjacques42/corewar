@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sti.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 17:27:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/10 12:32:54 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:21:52 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	sti(t_processes *current)
 {
-	int		ocp;
-	int		p1;
-	int		p2;
-	int		p3;
-	int		place;
+	int					ocp;
+	int					p1;
+	int					p2;
+	int					p3;
+	int					place;
+	unsigned short		color;
 
 	place = current->pc;
 	ocp = g_data->vm[place += 1];
@@ -42,15 +43,29 @@ void	sti(t_processes *current)
 		p2 %= IDX_MOD;
 		p2 += current->pc;
 		g_data->vm[p2] = current->reg[p1 - 1] >> 24;
-		g_data->vm[(p2 + 1) % 4096] = current->reg[p1 - 1] >> 16;
-		g_data->vm[(p2 + 2) % 4096] = current->reg[p1 - 1] >> 8;
-		g_data->vm[(p2 + 3) % 4096] = current->reg[p1 - 1];
+		g_data->vm[(p2 + 1) % MEM_SIZE] = current->reg[p1 - 1] >> 16;
+		g_data->vm[(p2 + 2) % MEM_SIZE] = current->reg[p1 - 1] >> 8;
+		g_data->vm[(p2 + 3) % MEM_SIZE] = current->reg[p1 - 1];
+		color = 1;
+		color = color << 8;
+		color += 1;
+		g_data->vm_color[p2] = color;
+		g_data->vm_color[(p2 + 1) % MEM_SIZE] = color;
+		g_data->vm_color[(p2 + 2) % MEM_SIZE] = color;
+		g_data->vm_color[(p2 + 3) % MEM_SIZE] = color;
+		ncur_print_char(p2, 0, 1);
+		ncur_print_char((p2 + 1) % MEM_SIZE, 0, 1);
+		ncur_print_char((p2 + 2) % MEM_SIZE, 0, 1);
+		ncur_print_char((p2 + 3) % MEM_SIZE, 0, 1);
 		//	write_int(&g_data->vm[p2], current->reg[p1 - 1]);
 	}
 //	printf("currentpc == %x\n", current->pc);
-	printf("sti r%d %d %d\n", p1, p2, p3);
-	printf("(%#06x -> ", current->pc);
+//	printf("P%5d | sti r%d %d %d\n", current->id + 1, p1, p2, p3);
+//	printf("(%#06x -> ", current->pc);
+//	printf("P%5d | sti r%d %d %d\n", current->id + 1, p1, p2, p3);
+//	printf("sti r%d %d %d\n", p1, p2, p3);
+//	printf("(%#06x -> ", current->pc);
 	current->pc = place + 1;
 	current->pc %= MEM_SIZE;
-	printf(" %#06x)\n", current->pc);
+//	printf(" %#06x)\n", current->pc);
 }

@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:04 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/02 18:26:03 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:20:15 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,33 @@ static int	setup_color(unsigned short color_code)
 	return (1);
 }
 
+void	ncur_print_char(int cursor, int font, int move_to_cursor)
+{
+	if (move_to_cursor == 1)
+		move(cursor * 3 / (64 * 3) + 1, cursor * 3 % (64 * 3) + 1);
+	if (font == 0)
+	{
+		if (setup_color(g_data->vm_color[cursor]))
+		{
+			printw("%02x ", g_data->vm[cursor]);
+			reset_color(g_data->vm_color[cursor]);
+		}
+		else
+		{
+			attron(COLOR_PAIR(6));
+			printw("%02x ", g_data->vm[cursor]);
+			attroff(COLOR_PAIR(6));
+		}
+	}
+	else
+	{
+		attron(COLOR_PAIR(7));
+		printw("%02x", g_data->vm[cursor]);
+		attroff(COLOR_PAIR(7));
+	}
+	refresh();
+}
+
 void	update_print_vm(void)
 {
 	int		i;
@@ -90,9 +117,10 @@ void	create_ncurse(void)
 	WINDOW	*boite;
 
 	initscr();
+	curs_set(0);
 	start_color();
 	init_color(COLOR_MAGENTA, 500, 500, 500);
-	init_color(COLOR_WHITE, 500, 500, 500);
+	init_color(COLOR_WHITE, 750, 750, 750);
 	init_color(COLOR_GREEN, 0, 1000, 0);
 	init_color(COLOR_BLUE, 0, 0, 1000);
 	init_pair(5, COLOR_MAGENTA, COLOR_MAGENTA);

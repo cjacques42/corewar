@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:57:46 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/04 18:29:41 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:17:29 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ typedef struct		s_data
 	int				cycle_die;
 	int				check_left;
 	int				dump;
+	unsigned char	verbose;
 	int				n[4];
 	unsigned char	arg;
-	char			inc;
 	unsigned char	vm[MEM_SIZE];
 	unsigned short	vm_color[MEM_SIZE];
 	t_player		last_live;
+	char			pause;
+	int				t_live;
 }					t_data;
 
 typedef struct		s_processes
@@ -53,6 +55,7 @@ typedef struct		s_processes
 	int				reg[REG_NUMBER];
 	char			live;
 	int				cycle_left;
+	char			print;
 }					t_processes;
 
 #endif

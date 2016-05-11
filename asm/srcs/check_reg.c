@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 09:12:42 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:15:44 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/11 10:43:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int				check_nbr(char **str, long nbr, int errno)
 	return (total);
 }
 
-void			ft_addarg(t_list **args, t_type type, long nb, char *str)
+void			ft_addarg(t_list **args, int type, long nb, char *str)
 {
 	t_arg		*arg;
 
@@ -74,5 +74,5 @@ void			check_reg(char **line, t_list **args)
 	(*line)++;
 	nb = nb_reg(line);
 	printf("Reg %d - ", nb);
-	ft_addarg(args, REG, nb, NULL);
+	ft_addarg(args, T_REG, nb, NULL);
 }

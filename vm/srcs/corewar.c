@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:34:59 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/04 16:30:31 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:48:26 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int				main(int ac, char **av)
 {
 	if (!(g_data = (t_data *)ft_memalloc(sizeof(t_data))))
 		err_exit("malloc error");
+	g_data->pause = 0;
 	init_player(ac - 1, av);
 	g_data->last_live = g_data->players[0];
-//	create_ncurse();
+	create_ncurse();
 	game();
 	print();
 	print_winner();
-//	getch();
-//	endwin();
+	getch();
+	endwin();
 	return (0);
 }

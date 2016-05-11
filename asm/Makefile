@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/10 09:15:38 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/11 17:12:13 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_NAME =	main.c			\
 			args.c			\
 			check_reg.c		\
 			check_dir.c		\
-			check_ind.c
+			check_ind.c		\
+			print.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
@@ -53,6 +54,13 @@ fclean: clean
 	@make -C $(LIB) fclean
 	@/bin/rm -f $(NAME)
 
+save:
+	@make fclean
+	git pull
+	git add --all
+	git commit -m "auto update"
+	git push
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean save re

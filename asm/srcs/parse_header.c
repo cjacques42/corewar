@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:20:26 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/11 18:35:34 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				get_header(char *str, char *line, int len)
 	return (1);
 }
 
-void			parse_header(int fd)
+t_header		*parse_header(int fd)
 {
 	char		*line;
 	t_header	*header;
@@ -77,13 +77,25 @@ void			parse_header(int fd)
 		else if (ft_empty(line) == 0)
 			ft_exit_mess(3);
 		if (name == TRUE && comment == TRUE)
-			return ;
+			return (header);
 		free(line);
 	}
+	return (header);
 }
 
-void			parse_file(int fd)
+void			parse_file(int fd, char *str, int arg)
 {
-	parse_header(fd);
-	parse_body(fd);
+	t_header	*header;
+	t_list		*lbls;
+	t_list		*cmds;
+
+	header = NULL;
+	lbls = NULL;
+	cmds = NULL;
+	header = parse_header(fd);
+	parse_body(fd, header, &lbls, &cmds);
+	if (arg > 0)
+		print_information(header, lbls, cmds);
+	else
+		ft_printf("Writing output program to %s\n", str);
 }
