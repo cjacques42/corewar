@@ -43,10 +43,7 @@ int		ft_lbl_exist(t_list *lbls, char *str)
 	{
 		tmp = lbls->content;
 		if (ft_strcmp(str, tmp->lbl_name) == 0)
-		{
-			printf("lbl : %s && addr :%d\n", tmp->lbl_name, tmp->adress);
 			return (tmp->adress);
-		}
 		lbls = lbls->next;
 	}
 	ft_exit_mess(10);
@@ -90,13 +87,10 @@ void	ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
 				addr_cur = ((t_cmd*)(cmds->content))->addr;
 				g_data.line = ((t_cmd*)(cmds->content))->line;
 				arg->nb = ft_lbl_exist(lbls, arg->str) - addr_cur;
-				printf("------->%ld\n", arg->nb);
-				printf("%s\n", arg->str);
 			}
 			i -= 2;
 			tmp = tmp->next;
 		}
-		printf("%#06x\n", ((t_cmd*)(cmds->content))->opc);
 		cmds = cmds->next;
 	}
 }
@@ -117,5 +111,4 @@ void	parse_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 	}
 	ft_refresh_lbl_addr(*lbls, *cmds);
 	header->prog_size = g_data.addr;
-	printf("prog_size = %d\n", header->prog_size);
 }

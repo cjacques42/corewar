@@ -32,26 +32,34 @@ char		*change_name(char *str)
 	return (tmp);
 }
 
-int			main(int ac, char **av)
+int			ft_count_arg(char **str, char **av, int ac)
 {
-	int		fd;
 	int		i;
 	int		arg;
-	char	*str;
 
-	arg = 0;
 	i = 1;
-	global_init();
-	if (ac <= 1)
-		ft_exit_error(ER_EMPTY, NULL);
+	arg = 0;
 	while (i < ac)
 	{
 		if (ft_strcmp(av[i], "-a") == 0)
 			arg++;
 		else
-			str = av[i];
+			*str = av[i];
 		i++;
 	}
+	return (arg);
+}
+
+int			main(int ac, char **av)
+{
+	int		fd;
+	int		arg;
+	char	*str;
+
+	global_init();
+	if (ac <= 1)
+		ft_exit_error(ER_EMPTY, NULL);
+	arg = ft_count_arg(&str, av, ac);
 	if (ac - arg <= 1)
 		ft_exit_error(ER_OPEN, "(null)");
 	if ((fd = open(str, O_RDONLY)) == -1)
@@ -62,8 +70,10 @@ int			main(int ac, char **av)
 			ft_exit_error(ER_CLOSE, str);
 		ft_exit_error(ER_FORMAT, NULL);
 	}
-	parse_file(fd, change_name(str), arg);
+	str = change_name(str);
+	parse_file(fd, str, arg);
 	if (close(fd) == -1)
-		ft_exit_error(ER_CLOSE, str);
+		ft_exit_error(ER_CLOSE, NULL);
+	free(str);
 	return (EXIT_SUCCESS);
 }

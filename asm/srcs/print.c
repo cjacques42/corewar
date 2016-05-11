@@ -12,40 +12,79 @@
 
 #include "asm.h"
 
-void		print_first(t_arg *arg)
+void		print_first(t_arg *arg, int opc)
 {
-	(void)arg;
-	ft_printf("%-18s", "test");
+	(void)opc;
+	ft_printf("%-18s", arg->key);
 }
 
-void		print_second(t_arg *arg)
+void		print_second(t_arg *arg, int opc)
 {
-	ft_printf("\t\t\t\t\t%-4d", arg->nb - 1);
+	unsigned char	*octet;
+
+	octet = (unsigned char*)&arg->nb;
+	if (arg->type == T_REG)
+		ft_printf("%-18d", arg->nb);
+	else if (arg->type == T_DIR)
+	{
+		if (g_op_tab[opc].dir_size == 0)
+			ft_printf("%-4d%-4d%-4d%-6d", octet[3], octet[2], octet[1], octet[0]);
+		else
+			ft_printf("%-4d%-14d", octet[1], octet[0]);
+	}
+	else
+		ft_printf("%-4d%-14d", octet[1], octet[0]);
 }
 
-void		print_third(t_arg *arg)
+void		print_third(t_arg *arg, int opc)
 {
-	(void)arg;
+	(void)opc;
+	ft_printf("%-18d", arg->nb);
+}
+
+void		add_key(t_arg *arg)
+{
+	char	*prefix;
+
+	prefix = NULL;
+	if (arg->type == T_REG)
+		prefix = ft_strdup("r");
+	else if (arg->type == T_DIR && arg->str != NULL)
+		prefix = ft_strdup("%:");
+	else if (arg->type == T_DIR)
+		prefix = ft_strdup("%");
+	else if (arg->type == T_IND && arg->str != NULL)
+		prefix = ft_strdup(":");
+	if (prefix == NULL)
+		arg->key = ft_itoa((int)arg->nb);
+	else if (arg->str == NULL)
+		arg->key = ft_strjoin(prefix, ft_itoa((int)arg->nb));
+	else
+		arg->key = ft_strjoin(prefix, arg->str);
 }
 
 void		print_cmd(t_cmd *cmd)
 {
 	t_list		*tmp;
 	int			i;
-	void		(*ptr_funct[3])(t_arg *);
+	void		(*ptr_funct[3])(t_arg *, int opc);
 
 	ptr_funct[0] = &print_first;
 	ptr_funct[1] = &print_second;
 	ptr_funct[2] = &print_third;
-	ft_printf("%-5d(%-3d) :\t\t%-10s", cmd->addr, cmd->size, cmd->str);
+	ft_printf("%-5d(%-3d) :        %-10s", cmd->addr, cmd->size, cmd->str);
 	i = 0;
 	while (i < 3)
 	{
 		tmp = cmd->arg;
-		ft_printf("\t\t\t\t\t%-4d", cmd->nbr + 1);
+		if (i > 0 && g_op_tab[cmd->nbr].ocp == 1)
+			ft_printf("                    %-10d", cmd->nbr + 1);
+		else if (i > 0)
+			ft_printf("                    %-4d%-6d", cmd->nbr + 1, cmd->opc);
 		while (tmp != NULL)
 		{
-			(*ptr_funct)(tmp->content);
+			add_key(tmp->content);
+			(*ptr_funct[i])(tmp->content, cmd->nbr);
 			tmp = tmp->next;
 		}
 		ft_putchar('\n');

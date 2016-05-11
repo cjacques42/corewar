@@ -20,10 +20,7 @@ void		ft_exit_error(t_error err, char *str)
 		ft_puterr(str);
 	}
 	else if (err == ER_CLOSE)
-	{
-		ft_puterr("Can't close source file ");
-		ft_puterr(str);
-	}
+		ft_puterr("Can't close source file");
 	else if (err == ER_FORMAT)
 		ft_puterr("Can't open this file, extention isn't .s");
 	else if (err == ER_EMPTY)

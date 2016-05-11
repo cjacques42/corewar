@@ -42,6 +42,7 @@ void			ft_addarg(t_list **args, int type, long nb, char *str)
 	arg->type = type;
 	arg->nb = nb;
 	arg->str = str;
+	arg->key = NULL;
 	ft_lstaddback(args, ft_lstnew((void*)arg, sizeof(arg)));
 }
 
@@ -73,6 +74,5 @@ void			check_reg(char **line, t_list **args)
 
 	(*line)++;
 	nb = nb_reg(line);
-	printf("Reg %d - ", nb);
 	ft_addarg(args, T_REG, nb, NULL);
 }

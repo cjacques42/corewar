@@ -23,17 +23,11 @@
 # include "stdlib.h"
 # include <fcntl.h>
 # include "../../utils/op.h"
-#include "stdio.h"
 
 typedef enum		e_error
 {
 	ER_OPEN, ER_CLOSE, ER_FORMAT, ER_EMPTY
 }					t_error;
-
-typedef enum		e_type
-{
-	REG, DIR, IND
-}					t_type;
 
 typedef struct		s_mess
 {
@@ -48,6 +42,7 @@ typedef struct		s_lbl
 
 typedef struct		s_arg
 {
+	char		*key;
 	int			type;
 	long		nb;
 	char		*str;

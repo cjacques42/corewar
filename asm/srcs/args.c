@@ -67,7 +67,6 @@ int		ft_count(t_list *cmd)
 	}
 	if (g_op_tab[index].ocp == 0)
 		((t_cmd*)(cmd)->content)->size++;
-	printf("> >%d (%d)\n", ((t_cmd*)(cmd)->content)->addr, ((t_cmd*)(cmd)->content)->size);
 	g_data.addr += ((t_cmd*)(cmd)->content)->size;
 	if (g_op_tab[index].nb_arg < i)
 		ft_exit_mess(18);

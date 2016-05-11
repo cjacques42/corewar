@@ -27,7 +27,6 @@ int			ft_search(char **line, t_list **cmds, long *nb, char **str)
 			*nb = check_nbr(line, 65536, 0);
 		else
 			*nb = check_nbr(line, 4294967296, 0);
-		printf("%ld ", *nb);
 	}
 	else
 	{
@@ -40,7 +39,6 @@ int			ft_search(char **line, t_list **cmds, long *nb, char **str)
 				(*line)[i] != SEPARATOR_CHAR && (*line)[i] != 0)
 			ft_exit_mess(10);
 		*line += i;
-		printf("%s ", *str);
 	}
 	return (0);
 }
@@ -54,5 +52,4 @@ void		check_ind(char **line, t_list **args, t_list **cmds)
 	str = NULL;
 	ft_search(line, cmds, &nb, &str);
 	ft_addarg(args, T_IND, nb, str);
-	printf("Ind - ");
 }

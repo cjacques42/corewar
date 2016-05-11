@@ -44,7 +44,6 @@ int		check_mnemo(char *line, t_list **cmds, t_list **lbls)
 		{
 			cmd = create_init_cmd(i);
 			ft_lstaddback(cmds, ft_lstnew((void*)cmd, sizeof(cmd)));
-			printf("%s\n", g_op_tab[i].label);
 			return (len);
 		}
 		i++;
@@ -106,7 +105,6 @@ int		check_arg(char *line, t_list **cmds)
 		else
 			ft_exit_mess(12);
 	}
-	printf("\n-------------------------------------\n");
 	ft_add_args_to_cmd(cmds, args);
 	return (0);
 }
