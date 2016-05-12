@@ -12,18 +12,20 @@
 
 #include "asm.h"
 
-void	bin_arg(t_list *lst_arg)
+void	bin_arg(t_list *lst_arg, void *data)
 {
 	t_arg	*arg;
+	t_cmd	*cmd;
 	int		fd;
 
+	cmd = data;
 	fd = g_data.fd;
 	arg = lst_arg->content;
 	if (arg->type == T_REG)
 		bin_uchar_f_long(arg->nb, 1, fd);
 	else if (arg->type == T_DIR)
 	{
-		if (g_op_tab[0].dir_size == 0)
+		if (g_op_tab[cmd->nbr].dir_size == 0)
 			bin_uchar_f_long(arg->nb, 4, fd);
 		else
 			bin_uchar_f_long(arg->nb, 2, fd);
@@ -42,7 +44,7 @@ void	bin_cmd(t_list *lst_cmd)
 	bin_uchar_f_int(cmd->nbr + 1, fd);
 	if (g_op_tab[cmd->nbr].ocp == 0)
 		bin_uchar_f_int(cmd->opc, fd);
-	ft_lstiter(cmd->arg, bin_arg);
+	ft_lstloop(cmd->arg, cmd, bin_arg);
 }
 
 void	binary(t_header *header, t_list *cmds, char *str)

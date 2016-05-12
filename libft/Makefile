@@ -102,7 +102,8 @@ SRC_NAME =	ft_memset.c				\
 			ft_lstiter.c			\
 			ft_puterr.c				\
 			ft_lstpush.c			\
-			ft_lstaddback.c
+			ft_lstaddback.c			\
+			ft_lstloop.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 	OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 14:59:39 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:17:06 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/10 17:21:37 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstaddback(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+void				ft_lstloop(t_list *lst, void *data
+		, void (*f)(t_list *elem, void *data));
 void				ft_lstpush(t_list **alst, t_list *new);
 
 #endif
