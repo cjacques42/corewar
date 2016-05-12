@@ -91,6 +91,7 @@ void		print_information(t_header *header, t_list *lbls, t_list *cmds)
 	ft_printf("Program size : %d bytes\n", header->prog_size);
 	ft_printf("Name : \"%s\"\n", header->prog_name);
 	ft_printf("Comment : \"%s\"\n\n", header->comment);
+	ft_printf("Test : \"%s\"\n\n", ((t_lbl*)(lbls->content))->lbl_name);
 	while (lbls != NULL || cmds != NULL)
 	{
 		if (cmds != NULL)

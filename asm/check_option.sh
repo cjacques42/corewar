@@ -20,5 +20,5 @@ do
 	./asm -a $file > r2
 	diff -s r1 r2
 	rm r1 r2
-#	read -n1 -r -p "Press key to continue..." key
+	read -n1 -r -p "Press key to continue..." key
 done
