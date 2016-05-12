@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lldi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 18:37:39 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 18:41:15 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 16:00:22 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	lldi(t_processes *current)
 	{
 		p2 += p1;
 		current->reg[p3 - 1] = get_val_from_addr(p2, 1, current);
-		current->carry = 1;
+		current->carry = change_carry(get_val_from_addr(p2, 1, current));
 	}
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
 }

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 09:11:39 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 10:00:57 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/12 11:11:47 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void		check_dir(char **line, t_list **args, t_list **cmds)
 {
-	char	*str;
-	long	nb;
+	t_arg	*arg;
+	t_list	*tmp;
+	int		index;
 
-	nb = -1;
-	str = NULL;
-	(*line)++;
-	ft_search(line, cmds, &nb, &str);
-	ft_addarg(args, T_DIR, nb, str);
+	index = 1;
+	tmp = *cmds;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	arg = ft_addarg(args, T_DIR);
+	ft_search(line, tmp, arg, index);
 }

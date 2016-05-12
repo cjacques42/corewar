@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   binary.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/12 17:08:18 by cjacques          #+#    #+#             */
+/*   Updated: 2016/05/12 17:35:26 by cjacques         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "asm.h"
+
+void	bin_uint(unsigned int nb)
+{
+	unsigned char	*c;
+
+	c = (unsigned char*)&nb
+}
+
+void	binary(t_header *header, t_list *lbls, t_list *cmds, char *str)
+{
+	int				fd;
+	size_t			i;
+	unsigned char	*c;
+
+	(void)header;
+	(void)lbls;
+	(void)cmds;
+	i = 0;
+	c = (unsigned char*)header;
+	fd = open(str, O_WRONLY | O_CREAT | O_TRUNC);
+	ft_printf("Writing output program to %s\n", str);
+	while (i < sizeof(*header))
+	{
+		ft_putchar_fd(c[i], fd);
+		i++;
+	}
+	close(fd);
+}

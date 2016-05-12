@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 15:50:45 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 15:50:47 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 17:34:27 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	op_fork(t_processes *current)
 {
 	int		addr;
+	int		debug;
 
 //	printf("current->id === %d\n", current->id);
 	addr = ft_char_to_short(&g_data->vm[current->pc + 1]);
@@ -30,5 +31,12 @@ void	op_fork(t_processes *current)
 //	printf("fork %d\n", addr);
 	current->pc += 3;
 	current->pc %= MEM_SIZE;
-//	printf("(%#06x -> %#06x)\n", current->pc - 3, current->pc);
+//	printf("(%#06x -> %#06x) ", current->pc - 3, current->pc);
+	debug = 3;
+	while (debug)
+	{
+//		printf("%02x ", g_data->vm[current->pc - debug]);
+		debug--;
+	}
+//	printf("\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aff.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 13:27:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 14:59:04 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/11 20:18:12 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	aff(t_processes *current)
 	val = current->reg[rg - 1] % 256;
 	write(1, &rg, 1);
 	current->pc += 3;
+	current->pc %= MEM_SIZE;
 }

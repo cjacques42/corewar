@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:35:32 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 15:12:20 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 17:21:52 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,27 @@ void				print(void);
 **	args.c
 */
 
-void	store_args(int *nb_args, char **args);
+void				store_args(int *nb_args, char **args);
+
+/*
+**	utils2.c
+*/
+
+int		change_carry(int val);
 
 /*
 **	ncurse_manager.c
 */
 
-void				create_ncurse(void);
-void				update_print_vm(void);
-void				ncur_print_char(int cursor, int font, int move_to_cursor);
+void				create_ncurse(int enabled);
+void				ncur_print_char(int cursor, int font, int move);
+
+/*
+**	ncurse_printing.c
+*/
+
+void				ncur_print_data(int cycles);
+void				ncur_init_color(void);
 
 /*
 **	Global variable

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lld.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 21:22:25 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 18:40:11 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 15:59:21 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void lld(t_processes *current)
 	check_type(ocp, 4) == 'r' && check_reg(p2))
 	{
 		current->reg[p2 - 1] = p1;
-		current->carry = 1;
+		current->carry = change_carry(p1);
 	}
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
 }

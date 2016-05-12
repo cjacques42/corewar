@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   or.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:27:03 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 18:42:09 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 16:00:55 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	or(t_processes *current)
 	if (check_type(ocp, 2) == 'r' && check_reg(p3))
 	{
 		current->reg[p3 - 1] = p1 | p2;
-		current->carry = 1;
+		current->carry = change_carry(p1 | p2);
 	}
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
 }

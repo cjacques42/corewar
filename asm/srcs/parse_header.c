@@ -6,11 +6,22 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 18:35:34 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/12 18:01:49 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+char			*ft_beg_trim(char *str)
+{
+	int			index;
+
+	index = 0;
+	while ((str[index] == ' ' || str[index] == '\t'
+		|| str[index] == '\n') && str[index])
+		index++;
+	return (str + index);
+}
 
 t_header		*init_header(void)
 {
@@ -24,29 +35,40 @@ t_header		*init_header(void)
 	return (header);
 }
 
-int				get_header(char *str, char *line, int len)
+int				get_header(char *str, char *line, int len, int fd)
 {
 	int		i;
+	int		size;
+	char	*tmp;
 
-	while (*line && *line != '"')
+	tmp = line;
+	while (*tmp && *tmp != '"')
 	{
-		if (ft_isspace(*line) != 1)
+		if (ft_isspace(*tmp) != 1)
 			ft_exit_mess(0);
-		line++;
+		tmp++;
 	}
-	line++;
-	i = 0;
-	while (*line && *line != '"' && i < len)
+	i = 1;
+	size = 0;
+	while (tmp[i] != '"' && size < len)
 	{
-		str[i] = *line;
-		line++;
+		if (tmp[i] == 0)
+		{
+			i = 0;
+			str[size++] = '\n';
+			get_next_line(fd, &tmp);
+			g_data.line++;
+			continue ;
+		}
+		str[size] = tmp[i];
+		size++;
 		i++;
 	}
 	if (i >= len)
 		ft_exit_mess(1);
-	if (*(line++) != '"')
+	if (tmp[i++] != '"')
 		ft_exit_mess(4);
-	check_eol(line);
+	check_eol(tmp + i);
 	return (1);
 }
 
@@ -56,29 +78,32 @@ t_header		*parse_header(int fd)
 	t_header	*header;
 	int			name;
 	int			comment;
+	char		*tmp;
 
 	name = FALSE;
 	comment = FALSE;
 	header = init_header();
-	while (read_line(fd, &line) > 0)
+	while (get_next_line(fd, &line) > 0)
 	{
-		if (ft_strncmp(line, NAME_CMD_STRING, 5) == 0)
+		tmp = ft_beg_trim(line);
+		if (ft_strncmp(tmp, NAME_CMD_STRING, 5) == 0)
 		{
 			if (name == TRUE)
 				ft_exit_mess(2);
-			name = get_header(header->prog_name, line + 5, PROG_NAME_LENGTH);
+			name = get_header(header->prog_name, tmp + 5, PROG_NAME_LENGTH, fd);
 		}
-		else if (ft_strncmp(line, COMMENT_CMD_STRING, 8) == 0)
+		else if (ft_strncmp(tmp, COMMENT_CMD_STRING, 8) == 0)
 		{
 			if (comment == TRUE)
 				ft_exit_mess(2);
-			comment = get_header(header->comment, line + 8, COMMENT_LENGTH);
+			comment = get_header(header->comment, tmp + 8, COMMENT_LENGTH, fd);
 		}
 		else if (ft_empty(line) == 0)
 			ft_exit_mess(3);
 		if (name == TRUE && comment == TRUE)
 			return (header);
 		free(line);
+		g_data.line++;
 	}
 	return (header);
 }
@@ -97,5 +122,5 @@ void			parse_file(int fd, char *str, int arg)
 	if (arg > 0)
 		print_information(header, lbls, cmds);
 	else
-		ft_printf("Writing output program to %s\n", str);
+		binary(header, cmds, str);
 }

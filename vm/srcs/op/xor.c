@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:09:00 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 19:05:33 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 17:34:27 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	xor(t_processes *current)
 	int		p2;
 	int		p3;
 	int		place;
+	int		debug;
 
 	place = current->pc;
 	ocp = g_data->vm[place += 1];
@@ -36,7 +37,18 @@ void	xor(t_processes *current)
 	if (check_type(ocp, 2) == 'r' && check_reg(p3))
 	{
 		current->reg[p3 - 1] = p1 ^ p2;
-		current->carry = 1;
+		current->carry = change_carry(p1 ^ p2);
 	}
+//	printf("P%5d | xor %d %d r%d\n", current->id + 1, p1, p2, p3);
+//	printf("ADV 5 (%#06x -> ", current->pc);
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
+//	printf("%#06x) ", current->pc);
+	debug = 5;
+	while (debug)
+	{
+//		printf("%02x ", g_data->vm[current->pc - debug]);
+		debug--;
+	}
+//	printf("\n");
 }

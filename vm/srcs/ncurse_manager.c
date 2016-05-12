@@ -6,91 +6,94 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:04 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 18:20:15 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 18:05:43 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static void	reset_color(unsigned short color_code)
+static void		reset_color(unsigned short color_code)
 {
 	unsigned char	color;
-	unsigned char	ligth;
 
 	color = color_code & 255;
-	ligth = color_code >> 8;
-	if (color == 1 && ligth == 0)
+	if (color == 1)
 		attroff(COLOR_PAIR(1));
-	else if (color == 1 && ligth == 1)
-		attroff(COLOR_PAIR(1) | A_BOLD);
-	else if (color == 2 && ligth == 0)
+	else if (color == 2)
 		attroff(COLOR_PAIR(2));
-	else if (color == 2 && ligth == 1)
-		attroff(COLOR_PAIR(2) | A_BOLD);
-	else if (color == 3 && ligth == 0)
+	else if (color == 3)
 		attroff(COLOR_PAIR(3));
-	else if (color == 3 && ligth == 1)
-		attroff(COLOR_PAIR(3) | A_BOLD);
+	else if (color == 4)
+		attroff(COLOR_PAIR(4));
 }
 
-static int	setup_color(unsigned short color_code)
+static int		setup_color(unsigned short color_code)
 {
 	unsigned char	color;
-	unsigned char	ligth;
 
 	color = color_code & 255;
-	ligth = color_code >> 8;
-	if (color == 1 && ligth == 0)
+	if (color == 1)
 		attron(COLOR_PAIR(1));
-	else if (color == 1 && ligth == 1)
-		attron(COLOR_PAIR(1) | A_BOLD);
-	else if (color == 2 && ligth == 0)
+	else if (color == 2)
 		attron(COLOR_PAIR(2));
-	else if (color == 2 && ligth == 1)
-		attron(COLOR_PAIR(2) | A_BOLD);
-	else if (color == 3 && ligth == 0)
+	else if (color == 3)
 		attron(COLOR_PAIR(3));
-	else if (color == 3 && ligth == 1)
-		attron(COLOR_PAIR(3) | A_BOLD);
+	else if (color == 4)
+		attron(COLOR_PAIR(4));
 	else
-		return(0);
+		return (0);
 	return (1);
 }
 
-void	ncur_print_char(int cursor, int font, int move_to_cursor)
+void			ncur_print_char(int cursor, int font, int move)
 {
-	if (move_to_cursor == 1)
-		move(cursor * 3 / (64 * 3) + 1, cursor * 3 % (64 * 3) + 1);
-	if (font == 0)
+	static int	enable = 1;
+
+	enable = (cursor == -1) ? 0 : enable;
+	if (enable == 1 && move != -10)
 	{
-		if (setup_color(g_data->vm_color[cursor]))
+		move(cursor * 3 / (64 * 3) + 1, cursor * 3 % (64 * 3) + 1);
+		if (font == 0)
 		{
-			printw("%02x ", g_data->vm[cursor]);
-			reset_color(g_data->vm_color[cursor]);
+			if (setup_color(g_data->vm_color[cursor]))
+			{
+				printw("%02x ", g_data->vm[cursor]);
+				reset_color(g_data->vm_color[cursor]);
+			}
+			else
+			{
+				attron(COLOR_PAIR(6));
+				printw("%02x ", g_data->vm[cursor]);
+				attroff(COLOR_PAIR(6));
+			}
 		}
 		else
 		{
-			attron(COLOR_PAIR(6));
-			printw("%02x ", g_data->vm[cursor]);
-			attroff(COLOR_PAIR(6));
+			attron(COLOR_PAIR(7));
+			printw("%02x", g_data->vm[cursor]);
+			attroff(COLOR_PAIR(7));
 		}
+		refresh();
 	}
-	else
-	{
-		attron(COLOR_PAIR(7));
-		printw("%02x", g_data->vm[cursor]);
-		attroff(COLOR_PAIR(7));
-	}
-	refresh();
 }
 
-void	update_print_vm(void)
+static void		print_vm(void)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 1;
+	move(1, 200);
+	printw("Cycles :");
+	move(2, 200);
+	printw("Processes :");
+	move(3, 200);
+	printw("Cycles die :");
+	move(4, 200);
+	printw("Check left :");
+	move(5, 200);
+	printw("Cycles par seconds :");
 	move(j, 1);
 	while (i < MEM_SIZE)
 	{
@@ -112,29 +115,23 @@ void	update_print_vm(void)
 	}
 }
 
-void	create_ncurse(void)
+void			create_ncurse(int enabled)
 {
-	WINDOW	*boite;
-
-	initscr();
-	curs_set(0);
-	start_color();
-	init_color(COLOR_MAGENTA, 500, 500, 500);
-	init_color(COLOR_WHITE, 750, 750, 750);
-	init_color(COLOR_GREEN, 0, 1000, 0);
-	init_color(COLOR_BLUE, 0, 0, 1000);
-	init_pair(5, COLOR_MAGENTA, COLOR_MAGENTA);
-	init_pair(6, COLOR_WHITE, COLOR_BLACK);
-	init_pair(7, COLOR_WHITE, COLOR_MAGENTA);
-	init_pair(1, COLOR_GREEN, COLOR_BLACK);
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);
-	init_pair(3, COLOR_RED, COLOR_BLACK);
-	init_pair(4, COLOR_CYAN, COLOR_BLACK);
-	attron(COLOR_PAIR(5));
-	boite = subwin(stdscr, 66, 64*3 + 2, 0, 0);
-    wborder(boite, '*', '*', '*', '*', '*', '*', '*', '*');
-	attroff(COLOR_PAIR(5));
-    wrefresh(boite);
-	refresh();
-	update_print_vm();
+	WINDOW * boite;
+	if (enabled == 1)
+	{
+		initscr();
+		curs_set(0);
+		ncur_init_color();
+		attron(COLOR_PAIR(5));
+		boite = subwin(stdscr, 66, 64 * 3 + 2, 0, 0);
+		wborder(boite, '*', '*', '*', '*', '*', '*', '*', '*');
+		attroff(COLOR_PAIR(5));
+		wrefresh(boite);
+		ncur_print_data(0);
+		refresh();
+		print_vm();
+	}
+	else
+		ncur_print_char(-1, -1, -1);
 }

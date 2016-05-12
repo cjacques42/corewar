@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:57:46 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 18:17:29 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 17:22:48 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ typedef struct		s_data
 	t_player		last_live;
 	char			pause;
 	int				t_live;
+	int				ncurse;
+	int				cycle_seconds;
+	int				id_processes;
 }					t_data;
 
 typedef struct		s_processes

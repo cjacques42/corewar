@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 17:09:46 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 19:24:12 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/12 14:26:17 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,18 @@ void		print_second(t_arg *arg, int opc)
 
 void		print_third(t_arg *arg, int opc)
 {
+	int		i;
+
+	i = 0;
 	(void)opc;
-	ft_printf("%-18d", arg->nb);
-}
-
-void		add_key(t_arg *arg)
-{
-	char	*prefix;
-
-	prefix = NULL;
-	if (arg->type == T_REG)
-		prefix = ft_strdup("r");
-	else if (arg->type == T_DIR && arg->str != NULL)
-		prefix = ft_strdup("%:");
-	else if (arg->type == T_DIR)
-		prefix = ft_strdup("%");
-	else if (arg->type == T_IND && arg->str != NULL)
-		prefix = ft_strdup(":");
-	if (prefix == NULL)
-		arg->key = ft_itoa((int)arg->nb);
-	else if (arg->str == NULL)
-		arg->key = ft_strjoin(prefix, ft_itoa((int)arg->nb));
+	if (arg->str != NULL || arg->type == T_REG)
+		ft_printf("%-18d", arg->nb);
 	else
-		arg->key = ft_strjoin(prefix, arg->str);
+	{
+		while (arg->key[i] && !ft_isdigit(arg->key[i]) && arg->key[i] != '-')
+			i++;
+		ft_printf("%-18d", ft_atoi(arg->key + i));
+	}
 }
 
 void		print_cmd(t_cmd *cmd)
@@ -83,7 +72,6 @@ void		print_cmd(t_cmd *cmd)
 			ft_printf("                    %-4d%-6d", cmd->nbr + 1, cmd->opc);
 		while (tmp != NULL)
 		{
-			add_key(tmp->content);
 			(*ptr_funct[i])(tmp->content, cmd->nbr);
 			tmp = tmp->next;
 		}

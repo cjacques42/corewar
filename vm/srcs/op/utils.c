@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 19:09:48 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/10 14:31:12 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/12 12:21:58 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ int		get_val_from_addr(int p, char mod, t_processes *current)
 	if (mod == 1)
 		p %= IDX_MOD;
 	p += current->pc;
-	if (p >= MEM_SIZE)
-		p -= MEM_SIZE;
-	else if (p < 0)
+	p %= MEM_SIZE;
+	while (p < 0)
 		p += MEM_SIZE;
 	return (ft_char_to_int(&g_data->vm[p]));
 }

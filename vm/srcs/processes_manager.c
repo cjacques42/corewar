@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:06:14 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 18:23:19 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 15:40:46 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_processes		*create_process(int pc, t_processes *parent, t_op *op, int pid)
 		result->live = 0;
 	}
 	result->cycle_left = 0;
-	result->id = g_data->nb_processes;
+	result->id = g_data->id_processes;
 	g_data->nb_processes++;
+	g_data->id_processes++;
 	return (result);
 }

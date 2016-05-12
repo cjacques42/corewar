@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 16:42:13 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 19:06:07 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 16:01:42 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	sub(t_processes *current)
 		if (check_reg(p1) && check_reg(p2) && check_reg(p3))
 		{
 			current->reg[p3 - 1] = current->reg[p1 - 1] - current->reg[p2 - 1];
-			current->carry = 0;
+			current->carry = change_carry(current->reg[p1 - 1] - current->reg[p2 - 1]);
 		}
 	}
 	current->pc = place + 1;
+	current->pc %= MEM_SIZE;
 }

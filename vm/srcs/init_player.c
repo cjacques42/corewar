@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/11 18:32:48 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 14:44:02 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			init_player(int nb_player, char **players)
 
 	i = 0;
 	store_args(&nb_player, players);
-		g_data->nb_player = nb_player;
+	g_data->nb_player = nb_player;
 	if (nb_player > MAX_PLAYERS)
 		err_exit("Too many players");
 	players++;
@@ -87,6 +87,8 @@ void			init_player(int nb_player, char **players)
 	{
 		if (!ft_strcmp(*players, "-dump") || !ft_strcmp(*players, "-n"))
 			players += 2;
+		if (*players)
+			players += (!ft_strcmp(*players, "-nc")) ? 1 : 0;
 		if (!*players)
 			break ;
 		if ((fd = open(*players, O_RDONLY)) == -1)

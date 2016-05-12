@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 13:18:46 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/11 18:47:00 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 18:10:30 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	st(t_processes *current)
 	int				p1;
 	int				p2;
 	int				place;
+	int				debug;
 	unsigned short	color;
 
 	place = current->pc;
@@ -43,9 +44,7 @@ void	st(t_processes *current)
 			g_data->vm[(p2 + 1) % MEM_SIZE] = current->reg[p1 - 1] >> 16;
 			g_data->vm[(p2 + 2) % MEM_SIZE] = current->reg[p1 - 1] >> 8;
 			g_data->vm[(p2 + 3) % MEM_SIZE] = current->reg[p1 - 1];
-			color = 1;
-			color = color << 8;
-			color += 1;
+			color = -current->player_id;
 			g_data->vm_color[p2] = color;
 			g_data->vm_color[(p2 + 1) % MEM_SIZE] = color;
 			g_data->vm_color[(p2 + 2) % MEM_SIZE] = color;
@@ -54,19 +53,19 @@ void	st(t_processes *current)
 			ncur_print_char((p2 + 1) % MEM_SIZE, 0, 1);
 			ncur_print_char((p2 + 2) % MEM_SIZE, 0, 1);
 			ncur_print_char((p2 + 3) % MEM_SIZE, 0, 1);
-		//	write_int(&g_data->vm[p2], current->reg[p1 - 1]);
+			current->pc = place + 1;
 		}
 	}
 //	printf("P%5d | st r%d %d\n", current->id + 1, p1, paff);
 //	printf("ADV 5 (%#06x -> ", current->pc);
-//	current->pc = place + 1;
-//	current->pc %= MEM_SIZE;
+	current->pc += 1;
+	current->pc %= MEM_SIZE;
 //	printf("%#06x) ", current->pc);
-//	debug = 5;
-//	while (debug)
-//	{
+	debug = 5;
+	while (debug)
+	{
 //		printf("%02x ", g_data->vm[current->pc - debug]);
-//		debug--;
-//	}
+		debug--;
+	}
 //	printf("\n");
 }

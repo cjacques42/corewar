@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 19:24:13 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/12 18:51:48 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct		s_data
 {
 	int			line;
 	int			addr;
+	int			fd;
 }					t_data;
 
 extern t_data		g_data;
@@ -109,11 +110,19 @@ void				check_reg(char **line, t_list **args);
 void				check_dir(char **line, t_list **args, t_list **cmds);
 void				check_ind(char **line, t_list **args, t_list **cmds);
 void				ft_add_args_to_cmd(t_list **cmds, t_list *args);
-int					check_nbr(char **str, long nbr, int errno);
-void				ft_addarg(t_list **args, int type, long nb, char *str);
-int					ft_search(char **line, t_list **cmds, long *nb, char **str);
+int					check_nbr(char **str, long nbr, int errno, int *index);
+t_arg				*ft_addarg(t_list **args, int type);
+int					ft_search(char **line, t_list *cmd, t_arg *arg, int index);
 int					ft_count(t_list *cmd);
 void				print_information(t_header *header, t_list *lbls
 		, t_list *cmds);
+void				binary(t_header *header, t_list *cmds, char *str);
+
+
+void				bin_header(t_header *header, int fd);
+void				bin_str(char *str, int len, int fd);
+void				bin_uint(unsigned int nb, int fd);
+void				bin_uchar_f_int(int var, int fd);
+void				bin_uchar_f_long(long var, int len, int fd);
 
 #endif

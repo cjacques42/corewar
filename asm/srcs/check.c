@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:10:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 16:18:38 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/12 14:03:07 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		check_arg(char *line, t_list **cmds)
 				check_reg(&line, &args);
 			else if (*line == DIRECT_CHAR)
 				check_dir(&line, &args, cmds);
-			else if ((*line == LABEL_CHAR || ft_isdigit(*line)))
+			else if ((*line == LABEL_CHAR || ft_isdigit(*line) || *line == '-'))
 				check_ind(&line, &args, cmds);
 			else
 				ft_exit_mess(14);
