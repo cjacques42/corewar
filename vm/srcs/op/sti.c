@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sti.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 17:27:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 18:10:05 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:17:42 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ void	sti(t_processes *current)
 	int					p2;
 	int					p3;
 	int					place;
-	unsigned short		color;
-	int					debug;
 
 	place = current->pc;
-	ocp = g_data->vm[place += 1];
+	ocp = get_vm_value(&place, 1);
 	p1 = check_ocp(ocp, 6, &place, 0);
 	p2 = check_ocp(ocp, 4, &place, 1);
+	// penser a check si p2 et p3 quand c'est des registre si c'est bien entre 1 et 16
 	if (check_type(ocp, 4) == 'i')
 		p2 = get_val_from_addr(p2, 1, current);
 	else if (check_type(ocp, 4) == 'r' && check_reg(p2))
@@ -37,50 +36,21 @@ void	sti(t_processes *current)
 	check_type(ocp, 6) == 'r' && check_type(ocp, 4) != 0 && check_reg(p1))
 	{
 		p2 += p3;
-		while (p2 >= MEM_SIZE)
-			p2 -= MEM_SIZE;
-		while (p2 < 0)
-			p2 += MEM_SIZE;
 		p2 %= IDX_MOD;
 		p2 += current->pc;
+		p2 %= MEM_SIZE;
+		while (p2 < 0)
+			p2 += MEM_SIZE;
 		g_data->vm[p2] = current->reg[p1 - 1] >> 24;
-		g_data->vm[(p2 + 1) % MEM_SIZE] = current->reg[p1 - 1] >> 16;
-		g_data->vm[(p2 + 2) % MEM_SIZE] = current->reg[p1 - 1] >> 8;
-		g_data->vm[(p2 + 3) % MEM_SIZE] = current->reg[p1 - 1];
-		color = -current->player_id;
-		g_data->vm_color[p2] = color;
-		g_data->vm_color[(p2 + 1) % MEM_SIZE] = color;
-		g_data->vm_color[(p2 + 2) % MEM_SIZE] = color;
-		g_data->vm_color[(p2 + 3) % MEM_SIZE] = color;
-		ncur_print_char(p2, 0, 1);
-		ncur_print_char((p2 + 1) % MEM_SIZE, 0, 1);
-		ncur_print_char((p2 + 2) % MEM_SIZE, 0, 1);
-		ncur_print_char((p2 + 3) % MEM_SIZE, 0, 1);
-		current->pc = place + 1;
+		write_val(p2, current->reg[p1 - 1], current->player_id);
+		current->pc = place;
 	}
-	// printf("P%5d | sti r%d %d %d\n", current->id + 1, p1, p2, p3);
-	// printf("ADV 7 (%#06x -> ", current->pc);
-	// current->pc = place + 1;
-	// current->pc %= MEM_SIZE;
-	// printf(" %#06x) ", current->pc);
-	// debug = 7;
-	// while (debug)
-	// {
-	// 	printf("%02x ", g_data->vm[current->pc - debug]);
-	// 	debug--;
-	// }
-	// printf("\n");
-//	printf("P%5d | sti r%d %d %d\n", current->id + 1, p1, p2 - (p3 + current->pc), p3);
-//	printf("       | -> store to %d + %d = %d (with pc and mod %d) \n", p2 - (p3 + current->pc), p3, p2 - (p3 + current->pc) + p3, p2);
-//	printf("ADV 6 (%#06x -> ", current->pc);
-	current->pc += 1;
-	current->pc %= MEM_SIZE;
-//	printf(" %#06x) ", current->pc);
-	debug = 6;
-	while (debug)
+	if (g_data->arg & 4)
 	{
-//		printf("%02x ", g_data->vm[current->pc - debug]);
-		debug--;
+		ft_printf("P%5d | sti r%d %d %d\n", current->id + 1, p1,
+		 p2 - (p3 + current->pc - 5), p3);
+		ft_printf("       | -> store to %d + %d = %d (with pc and mod %d) \n",
+		 p2 - (p3 + current->pc - 5), p3, p2 - (p3 + current->pc - 5) + p3, p2);
 	}
-//	printf("\n");
+	debug_op(current, place, 6);
 }

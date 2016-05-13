@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 18:37:09 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 15:06:22 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int		check_lbl(char *line, t_list **cmds, t_list **lbls)
 {
 	int		i;
+	int		ret;
 	t_lbl	*label;
 
 	i = 0;
-	while (ft_strchr(LABEL_CHARS, line[i]) != NULL)
+	label = NULL;
+	while (line[i] && ft_strchr(LABEL_CHARS, line[i]) != NULL)
 		i++;
 	if (line[i] == LABEL_CHAR)
 	{
@@ -29,8 +31,11 @@ int		check_lbl(char *line, t_list **cmds, t_list **lbls)
 		ft_lstaddback(lbls, ft_lstnew((void*)label, sizeof(label)));
 		line = ft_strtrim(line + i + 1);
 		if (ft_empty(line) == 1)
-			return (1);
-		return (check_line(line, cmds, lbls));
+			ret = 1;
+		else
+			ret = check_line(line, cmds, lbls);
+		free(line);
+		return (ret);
 	}
 	return (0);
 }
@@ -101,6 +106,7 @@ void	parse_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 	int		ret_line;
 	int		ret_lbl;
 
+	line = NULL;
 	while (read_line(fd, &line) > 0)
 	{
 		ret_line = check_line(line, cmds, lbls);

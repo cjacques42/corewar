@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ldi.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:31:20 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 17:34:27 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:22:08 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ldi(t_processes *current)
 	int		p2;
 	int		p3;
 	int		place;
-	int		debug;
 
 	place = current->pc;
 	ocp = g_data->vm[place += 1];
@@ -39,17 +38,12 @@ void	ldi(t_processes *current)
 		p2 += current->pc;
 		current->reg[p3 - 1] = get_val_from_addr(p2, 1, current);
 	}
-//	printf("P%5d | ldi %d %d r%d\n", current->id + 1, p1, p2 - (p1 + current->pc), p3);
-//	printf("       | -> load from %d + %d = %d (with pc and mod %d) \n", p1, p2 - (p1 + current->pc), p2 - (p1 + current->pc) + p1, p2);
-//	printf("ADV 6 (%#06x -> ", current->pc);
-	current->pc = place + 1;
-	current->pc %= MEM_SIZE;
-//	printf(" %#06x) ", current->pc);
-	debug = 6;
-	while (debug)
+	if (g_data->arg & 4)
 	{
-//		printf("%02x ", g_data->vm[current->pc - debug]);
-		debug--;
-	}
-//	printf("\n");
+		ft_printf("P%5d | ldi %d %d r%d\n", current->id + 1, p1,
+		 p2 - (p1 + current->pc), p3);
+		 ft_printf("       | -> load from %d + %d = %d (with pc and mod %d) \n",
+		  p1, p2 - (p1 + current->pc), p2 - (p1 + current->pc) + p1, p2);
+	 }
+	debug_op(current, place, 6);
 }

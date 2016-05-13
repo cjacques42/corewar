@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 14:44:02 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:39:01 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void		load_player(t_player *player)
 	int		i;
 	int		player_pos;
 	int		j;
-
 	player_pos = MEM_SIZE / (g_data->nb_player) * ((player->pos) - 1);
 	i = player_pos;
 	j = 0;
@@ -85,8 +84,12 @@ void			init_player(int nb_player, char **players)
 	players++;
 	while (*players)
 	{
-		if (!ft_strcmp(*players, "-dump") || !ft_strcmp(*players, "-n"))
+		if (*players && !ft_strcmp(*players, "-dump"))
 			players += 2;
+		if (*players && !ft_strcmp(*players, "-n"))
+			players += 2;
+		if (*players)
+			players += (!ft_strcmp(*players, "-v")) ? 1 : 0;
 		if (*players)
 			players += (!ft_strcmp(*players, "-nc")) ? 1 : 0;
 		if (!*players)

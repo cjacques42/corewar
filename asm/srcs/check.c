@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:10:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 14:03:07 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 15:57:35 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int		check_line(char *line, t_list **cmds, t_list **lbls)
 		line = ft_strtrim(line);
 		check_arg(line, cmds);
 		ft_count(*cmds);
+		free(line);
 		return (1);
 	}
 	return (0);

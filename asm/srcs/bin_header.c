@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/12 17:56:56 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 19:10:07 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 15:15:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	bin_str(char *str, int len, int fd)
 void	bin_header(t_header *header, int fd)
 {
 	bin_uint(header->magic, fd);
-	bin_str(header->prog_name, PROG_NAME_LENGTH,fd);
+	bin_str(header->prog_name, PROG_NAME_LENGTH, fd);
 	bin_uint(0, fd);
 	bin_uint(header->prog_size, fd);
-	bin_str(header->comment, COMMENT_LENGTH,fd);
+	bin_str(header->comment, COMMENT_LENGTH, fd);
 	bin_uint(0, fd);
 }

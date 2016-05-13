@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 18:51:48 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 13:25:54 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 typedef enum		e_error
 {
-	ER_OPEN, ER_CLOSE, ER_FORMAT, ER_EMPTY
+	ER_OPEN, ER_CLOSE, ER_FORMAT, ER_EMPTY, ER_WRITE
 }					t_error;
 
 typedef struct		s_mess
@@ -116,13 +116,16 @@ int					ft_search(char **line, t_list *cmd, t_arg *arg, int index);
 int					ft_count(t_list *cmd);
 void				print_information(t_header *header, t_list *lbls
 		, t_list *cmds);
+
 void				binary(t_header *header, t_list *cmds, char *str);
-
-
 void				bin_header(t_header *header, int fd);
 void				bin_str(char *str, int len, int fd);
 void				bin_uint(unsigned int nb, int fd);
 void				bin_uchar_f_int(int var, int fd);
 void				bin_uchar_f_long(long var, int len, int fd);
+
+void				free_header(t_header *header);
+void				free_cmd(void *cmds, size_t size);
+void				free_lbl(void *lbls, size_t size);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/09 11:07:18 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/13 10:50:27 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ SRC_NAME =	ft_memset.c				\
 			ft_lstadd.c				\
 			ft_lstnew.c				\
 			ft_lstdel.c				\
+			ft_lstdelone.c			\
 			ft_lstiter.c			\
 			ft_puterr.c				\
 			ft_lstpush.c			\

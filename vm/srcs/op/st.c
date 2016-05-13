@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/27 13:18:46 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 18:10:30 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:23:57 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,12 @@ void	st(t_processes *current)
 	int				p1;
 	int				p2;
 	int				place;
-	int				debug;
-	unsigned short	color;
+	int				paff;
 
 	place = current->pc;
-	ocp = g_data->vm[place += 1];
+	ocp = get_vm_value(&place, 1);
 	p1 = check_ocp(ocp, 6, &place, 0);
 	p2 = check_ocp(ocp, 4, &place, 0);
-	int paff;
-	paff = p2;
 	if ((check_type(ocp, 4) == 'r' || check_type(ocp, 4) == 'i') &&
 	check_type(ocp, 6) == 'r' && check_reg(p1))
 	{
@@ -41,31 +38,11 @@ void	st(t_processes *current)
 			while (p2 < 0)
 				p2 += MEM_SIZE;
 			g_data->vm[p2] = current->reg[p1 - 1] >> 24;
-			g_data->vm[(p2 + 1) % MEM_SIZE] = current->reg[p1 - 1] >> 16;
-			g_data->vm[(p2 + 2) % MEM_SIZE] = current->reg[p1 - 1] >> 8;
-			g_data->vm[(p2 + 3) % MEM_SIZE] = current->reg[p1 - 1];
-			color = -current->player_id;
-			g_data->vm_color[p2] = color;
-			g_data->vm_color[(p2 + 1) % MEM_SIZE] = color;
-			g_data->vm_color[(p2 + 2) % MEM_SIZE] = color;
-			g_data->vm_color[(p2 + 3) % MEM_SIZE] = color;
-			ncur_print_char(p2, 0, 1);
-			ncur_print_char((p2 + 1) % MEM_SIZE, 0, 1);
-			ncur_print_char((p2 + 2) % MEM_SIZE, 0, 1);
-			ncur_print_char((p2 + 3) % MEM_SIZE, 0, 1);
-			current->pc = place + 1;
+			write_val(p2, current->reg[p1 - 1], current->player_id);
+			current->pc = place;
 		}
 	}
-//	printf("P%5d | st r%d %d\n", current->id + 1, p1, paff);
-//	printf("ADV 5 (%#06x -> ", current->pc);
-	current->pc += 1;
-	current->pc %= MEM_SIZE;
-//	printf("%#06x) ", current->pc);
-	debug = 5;
-	while (debug)
-	{
-//		printf("%02x ", g_data->vm[current->pc - debug]);
-		debug--;
-	}
-//	printf("\n");
+	if (g_data->arg & 4)
+		ft_printf("P%5d | st r%d %d\n", current->id + 1, p1, paff);
+	debug_op(current, current->pc, 5);
 }

@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:35:32 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 17:21:52 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/12 18:49:36 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ void				store_args(int *nb_args, char **args);
 **	utils2.c
 */
 
-int		change_carry(int val);
+int					change_carry(int val);
+unsigned char		get_vm_value(int *place, int add);
+int					char_to_nbr(int *place, const int len);
 
 /*
 **	ncurse_manager.c

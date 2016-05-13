@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 10:41:28 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:21:12 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 15:32:47 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	ft_lstaddback(t_list **alst, t_list *new)
 	{
 		while (lst->next)
 			lst = lst->next;
-		lst->next = new;
-		new->previous = lst;
+		(*alst)->previous->next = new;
+		new->previous = (*alst)->previous;
 	}
 	else
 		*alst = new;
+	(*alst)->previous = new;
 }

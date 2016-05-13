@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:05:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 17:34:27 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:19:13 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	add(t_processes *current)
 	int		p2;
 	int		p3;
 	int		place;
-	int		debug;
 
 	place = current->pc;
 	ocp = g_data->vm[place += 1];
@@ -31,19 +30,11 @@ void	add(t_processes *current)
 		if (check_reg(p1) && check_reg(p2) && check_reg(p3))
 		{
 			current->reg[p3 - 1] = current->reg[p1 - 1] + current->reg[p2 - 1];
-			current->carry = change_carry(current->reg[p1 - 1] + current->reg[p2 - 1]);
+			current->carry = change_carry(current->reg[p1 - 1] +
+				current->reg[p2 - 1]);
 		}
-//		printf("P%5d | add r%d r%d r%d\n", current->id + 1, p1, p2, p3);
+		if (g_data->arg & 4)
+			ft_printf("P%5d | add r%d r%d r%d\n", current->id + 1, p1, p2, p3);
 	}
-//	printf("ADV 5 (%#06x -> ", current->pc);
-	current->pc = place + 1;
-	current->pc %= MEM_SIZE;
-//	printf("%#06x) ", current->pc);
-	debug = 5;
-	while (debug)
-	{
-//		printf("%02x ", g_data->vm[current->pc - debug]);
-		debug--;
-	}
-	printf("\n");
+	debug_op(current, place, 5);
 }

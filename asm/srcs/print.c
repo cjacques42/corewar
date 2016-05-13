@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/11 17:09:46 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 14:26:17 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 16:07:06 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void		print_information(t_header *header, t_list *lbls, t_list *cmds)
 	ft_printf("Program size : %d bytes\n", header->prog_size);
 	ft_printf("Name : \"%s\"\n", header->prog_name);
 	ft_printf("Comment : \"%s\"\n\n", header->comment);
-	ft_printf("Test : \"%s\"\n\n", ((t_lbl*)(lbls->content))->lbl_name);
 	while (lbls != NULL || cmds != NULL)
 	{
 		if (cmds != NULL)

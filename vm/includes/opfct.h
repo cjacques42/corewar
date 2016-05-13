@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opfct.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:58:06 by stoussay          #+#    #+#             */
-/*   Updated: 2016/04/28 18:32:57 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 13:16:20 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	sti(t_processes *current);
 void	sub(t_processes *current);
 void	xor(t_processes *current);
 void	zjmp(t_processes *current);
-void	write_int(unsigned char *vm, int nbr);
+void	write_val(int pc, int nbr, int player_id);
+void	debug_op(t_processes *current, int place, int adv);
 
 #endif

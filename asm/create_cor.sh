@@ -1,30 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    check.sh                                           :+:      :+:    :+:    #
+#    create_cor.sh                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/05/12 12:20:01 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/13 14:19:37 by cjacques         ###   ########.fr        #
+#    Created: 2016/05/13 10:10:40 by cjacques          #+#    #+#              #
+#    Updated: 2016/05/13 10:13:47 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
-make all >/dev/null
 for file in examples/*.s
 do
-	echo "file: $file"
-	./examples/asm -a $file > r1
-	./asm -a $file > r2
-	ret=$(diff -s r1 r2)
-	if [ "$ret" = "Files r1 and r2 are identical" ]
-	then
-		echo "\033[32mOK\033[0m"
-	else
-		echo "\033[31mKO\033[0m"
-	fi
-	rm r1 r2
-	#read -n1 -r -p "Press key to continue..." key
+	echo file: $file
+	./examples/asm $file
+#	read -n1 -r -p "Press key to continue..." key
 done

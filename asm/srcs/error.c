@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:16:28 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 15:57:01 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,21 @@ void		ft_exit_error(t_error err, char *str)
 		ft_puterr("Can't read source file ");
 		ft_puterr(str);
 	}
+	else if (err == ER_WRITE)
+	{
+		ft_puterr("Can't write source file ");
+		ft_puterr(str);
+	}
 	else if (err == ER_CLOSE)
 		ft_puterr("Can't close source file");
 	else if (err == ER_FORMAT)
 		ft_puterr("Can't open this file, extention isn't .s");
 	else if (err == ER_EMPTY)
-		ft_puterr("Usage: ./examples/asm [-a] <sourcefile.s>\
-\n    -a : Instead of creating a .cor file, outputs a stripped and \
-annotated version of the code to the standard output\n");
+	{
+		ft_puterr("Usage: ./examples/asm [-a] <sourcefile.s>\n    -a : ");
+		ft_puterr("Instead of creating a .cor file, outputs a stripped");
+		ft_puterr("and annotated version of the code to the standard output\n");
+	}
 	ft_puterr("\n");
 	exit(1);
 }

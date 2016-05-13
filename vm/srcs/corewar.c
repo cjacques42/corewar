@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:34:59 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 18:05:56 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/13 14:56:06 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ int				main(int ac, char **av)
 	g_data->last_live = g_data->players[0];
 	create_ncurse(g_data->ncurse);
 	game();
-	print();
+	if (g_data->arg & 1)
+		print();
 	print_winner();
 	if (g_data->ncurse)
 	{
+		timeout(-1);
 		getch();
 		endwin();
 	}

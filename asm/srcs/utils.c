@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 17:28:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/10 17:18:13 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 13:30:32 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ int		read_line(int fd, char **line)
 	int		ret;
 	char	*tmp;
 
-	ret = get_next_line(fd, line);
+	ret = get_next_line(fd, &tmp);
 	if (ret > 0)
 	{
 		g_data.line++;
-		tmp = *line;
-		*line = ft_strtrim(*line);
+		*line = ft_strtrim(tmp);
 		free(tmp);
 	}
 	return (ret);
