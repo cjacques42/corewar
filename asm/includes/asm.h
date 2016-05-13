@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/13 13:25:54 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:36:12 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ static t_mess		g_err[] =
 	{"Bad syntax at the end of line"},
 	{"Invalid label"},
 	{"Label not found"},
-	{"Selector missing"},
+	{"Separator missing"},
 	{"Too much separator"},
 	{"Invalid parameter"},
 	{"Any sign"},
-	{"Any number"},
+	{"Any valid number"},
 	{"registry number not beetween 1 and 16"},
 	{"Too much parameter"},
 	{"Too few parameter"},

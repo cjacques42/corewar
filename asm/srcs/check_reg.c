@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 09:12:42 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 14:20:42 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:58:02 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int		nb_reg(char **str, char **key)
 		ft_exit_mess(15);
 	if (ft_isdigit((*str)[i]) == 0)
 		ft_exit_mess(16);
+	while ((*str)[i] == '0')
+		i++;
 	while ((*str)[i] >= '0' && (*str)[i] <= '9')
 	{
 		total = total * 10 + ((*str)[i] - '0');

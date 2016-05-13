@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 09:13:28 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 13:53:52 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:06:46 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ int			ft_search(char **line, t_list *cmd, t_arg *arg, int index)
 		i = index;
 		while (ft_strchr(LABEL_CHARS, (*line)[index]) != NULL && (*line)[index])
 			index++;
-		arg->str = ft_strsub(*line, i, index - i);
-		if (ft_isspace((*line)[index]) == 0 && ft_comment((*line)[index]) == 0
+		if ((ft_isspace((*line)[index]) == 0 && ft_comment((*line)[index]) == 0
 				&& (*line)[index] != SEPARATOR_CHAR && (*line)[index] != 0)
+				|| index - i == 0)
 			ft_exit_mess(10);
+		arg->str = ft_strsub(*line, i, index - i);
 	}
 	arg->key = ft_strsub(*line, 0, index);
 	*line += index;

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 17:59:43 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/11 17:25:49 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 18:12:17 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		ft_count(t_list *cmd)
 	arg = ((t_cmd*)(cmd)->content)->arg;
 	while (arg != NULL)
 	{
+		if (g_op_tab[index].nb_arg <= i)
+			ft_exit_mess(18);
 		if (ft_check_type(cmd, index, arg, i) != 1)
 			ft_exit_mess(20);
 		arg = arg->next;
@@ -68,8 +70,6 @@ int		ft_count(t_list *cmd)
 	if (g_op_tab[index].ocp == 0)
 		((t_cmd*)(cmd)->content)->size++;
 	g_data.addr += ((t_cmd*)(cmd)->content)->size;
-	if (g_op_tab[index].nb_arg < i)
-		ft_exit_mess(18);
 	if (g_op_tab[index].nb_arg > i)
 		ft_exit_mess(19);
 	return (0);

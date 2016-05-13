@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/13 15:06:22 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:06:52 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		check_lbl(char *line, t_list **cmds, t_list **lbls)
 	label = NULL;
 	while (line[i] && ft_strchr(LABEL_CHARS, line[i]) != NULL)
 		i++;
-	if (line[i] == LABEL_CHAR)
+	if (i != 0 && line[i] == LABEL_CHAR)
 	{
 		if ((label = (t_lbl*)malloc(sizeof(*label))) == NULL)
 			exit(0);
@@ -51,7 +51,7 @@ int		ft_lbl_exist(t_list *lbls, char *str)
 			return (tmp->adress);
 		lbls = lbls->next;
 	}
-	ft_exit_mess(10);
+	ft_exit_mess(11);
 	return (-1);
 }
 
