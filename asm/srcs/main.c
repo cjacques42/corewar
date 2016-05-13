@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 12:48:17 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/13 16:07:08 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 16:20:18 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_data	g_data;
 
-void		global_init(void)
+static void	global_init(void)
 {
 	g_data.line = 0;
 	g_data.addr = 0;
 }
 
-char		*change_name(char *str)
+static char	*change_name(char *str)
 {
 	int		len;
 	char	*tmp;
@@ -32,7 +32,7 @@ char		*change_name(char *str)
 	return (tmp);
 }
 
-int			ft_count_arg(char **str, char **av, int ac)
+static int	ft_count_arg(char **str, char **av, int ac)
 {
 	int		i;
 	int		arg;
