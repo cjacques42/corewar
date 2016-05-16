@@ -130,10 +130,8 @@ void			parse_file(int fd, char *str, int arg)
 
 	(void)str;
 	(void)arg;
-	next_token(fd, &line);
-	printf("%s\n", line);
-	next_token(fd, &line);
-	printf("%s\n", line);
-	next_token(fd, &line);
-	printf("%s\n", line);
+	while (next_token(fd, &line) != END)
+	{
+		printf("%s\n", line);
+	}
 }

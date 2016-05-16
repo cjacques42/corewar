@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ../asm
+NAME = asm
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 OBJ_PATH = obj/

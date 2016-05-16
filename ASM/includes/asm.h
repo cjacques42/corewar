@@ -31,6 +31,7 @@ typedef enum		e_error
 
 typedef enum		e_token
 {
+	LABEL,
 	DIRECT,
 	DIRECT_LABEL,
 	REGISTER,
