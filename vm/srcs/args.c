@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 18:24:07 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/13 14:00:19 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/16 12:08:13 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void		store_id(int *val, int *n)
 
 static void		dump(char **args, int *nb_args, int *i)
 {
-	g_data->arg |= 1;
+	if (ft_strcmp(args[*i + 1], ft_itoa(ft_atoi(args[*i + 1]))))
+		usage();
+	if (!(g_data->arg & 1))
+		g_data->arg |= 1;
 	g_data->dump = ft_atoi(args[*i + 1]);
 	*nb_args -= 2;
 	*i += 2;
@@ -29,10 +32,24 @@ static void		dump(char **args, int *nb_args, int *i)
 
 static void		put_player_id(char **args, int *j, int *nb_args, int *i)
 {
-	g_data->arg |= 1 << 1;
-	g_data->n[*j] = ft_atoi(args[*i + 1]);
+	int val;
+	int i2;
+
+	i2 = 0;
+	if (ft_strcmp(args[*i + 1], ft_itoa(ft_atoi(args[*i + 1]))) || *j >= 4)
+		usage();
+	if (!(g_data->arg & 2))
+		g_data->arg |= 1 << 1;
+	val = ft_atoi(args[*i + 1]);
+	while (i2 < *j)
+	{
+		if (g_data->n[i2] == val)
+			err_exit("Put a different number for each player");
+		i2++;
+	}
+	g_data->n[*j] = val;
 	*nb_args -= 2;
-	*i += 2;
+	*i += 3;
 	(*j)++;
 }
 
@@ -40,14 +57,15 @@ static void		enable_ncurse(int *nb_args, int *i)
 {
 	g_data->ncurse = 1;
 	*nb_args -= 1;
-	*i += 2;
+	*i += 1;
 }
 
 static void		verbose(int *nb_args, int *i)
 {
-	g_data->arg |= 1 << 2;
+	if (!(g_data->arg & 4))
+		g_data->arg |= 1 << 2;
 	*nb_args -= 1;
-	*i += 2;
+	*i += 1;
 }
 
 void			store_args(int *nb_args, char **args)

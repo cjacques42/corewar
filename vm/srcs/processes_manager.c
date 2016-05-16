@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:06:14 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 15:40:46 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/16 14:28:41 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,16 @@ t_processes		*create_process(int pc, t_processes *parent, t_op *op, int pid)
 		result->carry = parent->carry;
 		result->player_id = parent->player_id;
 		copy_tab(parent->reg, result->reg);
-		result->live = parent->live;
 	}
 	else
 	{
 		result->player_id = pid;
 		result->carry = 0;
 		result->reg[0] = result->player_id;
-		result->live = 0;
 	}
 	result->cycle_left = 0;
 	result->id = g_data->id_processes;
+	result->cycle_live = 0;
 	g_data->nb_processes++;
 	g_data->id_processes++;
 	return (result);

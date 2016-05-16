@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/13 14:39:01 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/16 12:08:08 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void		load_player(t_player *player)
 	int		i;
 	int		player_pos;
 	int		j;
+
 	player_pos = MEM_SIZE / (g_data->nb_player) * ((player->pos) - 1);
 	i = player_pos;
 	j = 0;
@@ -68,6 +69,23 @@ static void		setup_player(t_player *player, int r)
 	load_player(player);
 }
 
+static void		parse_args(char ***players)
+{
+	while (**players && (!ft_strcmp(**players, "-dump") ||
+	!ft_strcmp(**players, "-n") || !ft_strcmp(**players, "-v") ||
+	!ft_strcmp(**players, "-nc")))
+	{
+		if (**players && !ft_strcmp(**players, "-dump"))
+			*players += 2;
+		if (**players && !ft_strcmp(**players, "-n"))
+			*players += 2;
+		if (**players)
+			*players += (!ft_strcmp(**players, "-v")) ? 1 : 0;
+		if (**players)
+			*players += (!ft_strcmp(**players, "-nc")) ? 1 : 0;
+	}
+}
+
 void			init_player(int nb_player, char **players)
 {
 	int			i;
@@ -84,14 +102,7 @@ void			init_player(int nb_player, char **players)
 	players++;
 	while (*players)
 	{
-		if (*players && !ft_strcmp(*players, "-dump"))
-			players += 2;
-		if (*players && !ft_strcmp(*players, "-n"))
-			players += 2;
-		if (*players)
-			players += (!ft_strcmp(*players, "-v")) ? 1 : 0;
-		if (*players)
-			players += (!ft_strcmp(*players, "-nc")) ? 1 : 0;
+		parse_args(&players);
 		if (!*players)
 			break ;
 		if ((fd = open(*players, O_RDONLY)) == -1)

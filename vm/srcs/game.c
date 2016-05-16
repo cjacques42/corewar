@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:02:31 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/13 13:51:36 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/16 15:28:57 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void		check_processes_alive(t_list *elem)
 	t_processes		*proc;
 
 	proc = (t_processes *)elem->content;
-	if (proc->live == 0)
+	if (proc->cycle_live >= g_data->cycle_die)
 	{
 		if (elem->next != NULL)
 			elem->next->previous = elem->previous;
@@ -25,6 +25,8 @@ static void		check_processes_alive(t_list *elem)
 			elem->previous->next = elem->next;
 		else
 			g_data->processes = elem->next;
+		if (g_data->arg & 4)
+			ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", proc->id + 1, proc->cycle_live, g_data->cycle_die);
 		free(proc);
 		proc = 0;
 		free(elem);
@@ -32,7 +34,6 @@ static void		check_processes_alive(t_list *elem)
 		g_data->nb_processes--;
 		return ;
 	}
-	proc->live = 0;
 }
 
 static void		play_processes(t_list *elem)
@@ -41,6 +42,7 @@ static void		play_processes(t_list *elem)
 	t_op			*new_op;
 
 	proc = (t_processes *)elem->content;
+	proc->cycle_live += 1;
 	if (proc->print == 0)
 	{
 		ncur_print_char(proc->pc, 1, 1);
@@ -53,13 +55,16 @@ static void		play_processes(t_list *elem)
 		if (new_op != NULL)
 			proc->cycle_left = proc->op->cycle_cost - 1;
 		if (new_op == NULL && (proc->print = 0) == 0)
+		{
 			proc->pc++;
+			proc->pc %= MEM_SIZE;
+		}
 	}
 	else if (--proc->cycle_left == 0)
 	{
 		ncur_print_char(proc->pc, 0, 1);
 		proc->print = 0;
-		exe_op(proc->op, proc);
+			exe_op(proc->op, proc);
 		proc->op = NULL;
 	}
 }
@@ -77,8 +82,10 @@ void			game(void)
 	{
 		ncur_print_data(cycles);
 		cycles++;
-		if (g_data->arg & 1 && cycles >= g_data->dump)
+		if (g_data->arg & 1 && cycles > g_data->dump)
 			return ;
+		if (g_data->arg & 4)
+			ft_printf("It is now cycle %d\n", cycles);
 		ft_lstiter(g_data->processes, play_processes);
 		if (g_data->cycle_die != 0 && i >= g_data->cycle_die)
 		{
@@ -92,6 +99,8 @@ void			game(void)
 			{
 				g_data->cycle_die -= CYCLE_DELTA;
 				g_data->check_left = MAX_CHECKS;
+				if (g_data->arg & 4)
+					ft_printf("Cycle to die is now %d\n", g_data->cycle_die);
 			}
 			g_data->t_live = 0;
 		}

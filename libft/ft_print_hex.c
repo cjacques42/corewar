@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjacques <cjacques@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:13:03 by cjacques          #+#    #+#             */
-/*   Updated: 2016/01/20 16:27:00 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/13 18:32:06 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int				ft_print_hex(va_list *list_args, t_args *arg)
 	(arg->field < arg->precis) ? arg->field = arg->precis : 0;
 	if (!arg->val_minus && arg->val_field && (arg->val_prec || !arg->val_z))
 		ft_printnchar(arg->field - arg->precis, ' ');
-	(arg->type == 'x' && arg->val_ht && nb > 0) ? ft_putstr("0x") : 0;
-	(arg->type == 'X' && arg->val_ht && nb > 0) ? ft_putstr("0X") : 0;
+	(arg->type == 'x' && arg->val_ht) ? ft_putstr("0x") : 0;
+	(arg->type == 'X' && arg->val_ht) ? ft_putstr("0X") : 0;
 	if (!arg->val_minus && arg->val_z && arg->val_prec == 0)
 		ft_printnchar(arg->field - arg->precis, '0');
 	ft_printnchar(arg->precis - ret, '0');

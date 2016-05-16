@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/12 15:39:52 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/13 14:03:17 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/13 19:35:21 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ unsigned char	get_vm_value(int *place, int add)
 void			debug_op(t_processes *current, int place, int adv)
 {
 	if (g_data->arg & 4)
-		ft_printf("ADV %d (%#06x -> ", adv, current->pc);
-	current->pc = place + 1;
+	{
+		if (current->pc - (adv - 1) == 0)
+			ft_printf("ADV %d (%#04x -> ", adv, current->pc - (adv - 1));
+		else
+			ft_printf("ADV %d (%#06x -> ", adv, current->pc - (adv - 1));
+	}
+	place = 0;
+	current->pc += 1;
 	current->pc %= MEM_SIZE;
 	if (g_data->arg & 4)
 	{

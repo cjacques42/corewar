@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:05:42 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/13 14:19:13 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/16 15:05:19 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add(t_processes *current)
 	int		place;
 
 	place = current->pc;
-	ocp = g_data->vm[place += 1];
+	ocp = get_vm_value(&place, 1);
 	if (ocp == 84)
 	{
 		p1 = check_ocp(ocp, 6, &place, 0);
@@ -36,5 +36,6 @@ void	add(t_processes *current)
 		if (g_data->arg & 4)
 			ft_printf("P%5d | add r%d r%d r%d\n", current->id + 1, p1, p2, p3);
 	}
+	current->pc = place;
 	debug_op(current, place, 5);
 }

@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 14:57:46 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 17:22:48 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/16 14:25:51 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct		s_processes
 	t_op			*op;
 	int				carry;
 	int				reg[REG_NUMBER];
-	char			live;
+	int				cycle_live;
 	int				cycle_left;
 	char			print;
 }					t_processes;
