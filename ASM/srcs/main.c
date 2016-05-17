@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 12:48:17 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/16 17:51:03 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 18:33:07 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_data	g_data;
 
 void		global_init(void)
 {
-	g_data.line = 0;
+	g_data.line = 1;
+	g_data.col = 0;
 	g_data.addr = 0;
 }
 

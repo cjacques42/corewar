@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 12:21:30 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 18:26:39 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ static t_mess		g_err[] =
 typedef struct		s_data
 {
 	int			line;
+	int			col;
 	int			addr;
 	int			fd;
 }					t_data;
@@ -153,4 +154,5 @@ t_token				next_token(int fd, char **str);
 char				*ft_beg_trim(char *str);
 int					ft_separator(char c);
 
+void				ft_lexixal_error(void);
 #endif

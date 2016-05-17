@@ -6,11 +6,21 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 09:45:11 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 18:26:00 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void		ft_lexixal_error(void)
+{
+	ft_puterr("Lexical error at [");
+	ft_putnbr_fd(g_data.line, 2);
+	ft_puterr(":");
+	ft_putnbr_fd(g_data.col, 2);
+	ft_puterr("]\n");
+	exit(0);
+}
 
 void		ft_exit_error(t_error err, char *str)
 {
