@@ -1,8 +1,13 @@
-.name .comment "zork"
+.name  "z
+o
+r
+k"
+
 .comment "I'M ALIIIIVE"
 
-l2:		sti r1, %:live, %1
-		and r1, %0, r1
+l:
+l2:zjmp%:live
+	and r11, %1, r1
 
-live:	live %1
-		zjmp %:live
+live:live %11
+		zjmp%:live

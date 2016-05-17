@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/16 18:31:57 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 12:21:30 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef enum		e_token
 	COMMAND_COMMENT,
 	STRING,
 	SEPARATOR,
-	INSTRUUCTION,
+	INSTRUCTION,
 	NONE
 }					t_token;
 

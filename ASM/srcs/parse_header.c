@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/16 18:24:54 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 11:47:28 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,12 @@ t_header		*parse_header(int fd)
 void			parse_file(int fd, char *str, int arg)
 {
 	char	*line;
+	t_token	tok;
 
 	(void)str;
 	(void)arg;
-	while (next_token(fd, &line) != END)
+	while ((tok = next_token(fd, &line)) != END)
 	{
-		printf("%s\n", line);
+		printf("%s %d\n", line, tok);
 	}
 }
