@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 18:34:36 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:16:39 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 				return (1);
 			}
 		}
-		else if (ft_isdigit((*line)[i]) == 1)
+		else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 		{
+			i++;
 			while (ft_isdigit((*line)[i]) == 1)
 				i++;
 			if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
@@ -106,8 +107,9 @@ int			is_indirect(t_token *token, char **line, int fd, char **str)
 			return (1);
 		}
 	}
-	else if (ft_isdigit((*line)[i]) == 1)
+	else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 	{
+		i++;
 		while (ft_isdigit((*line)[i]) == 1)
 			i++;
 		if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
@@ -204,6 +206,7 @@ int			is_instru(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
 	int		size;
+
 	(void)fd;
 	i = 0;
 	size = 0;

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 18:29:26 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 18:52:08 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ t_header		*parse_header(int fd)
 	ft_lstdel(&lbls, free_lbl);
 	ft_lstdel(&cmds, free_cmd);
 }*/
+
 void			parse_file(int fd, char *str, int arg)
 {
 	char	*line;
@@ -137,5 +138,6 @@ void			parse_file(int fd, char *str, int arg)
 			printf("%s %d\n", line, tok);
 		else
 			ft_lexixal_error();
+		free(line);
 	}
 }
