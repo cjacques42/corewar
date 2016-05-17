@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 12:24:50 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:43:43 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,49 @@ int			is_end(t_token *token, char **line, int fd, char **str)
 	}
 	return (0);
 }
+
+int			is_direct(t_token *token, char **line, int fd, char **str)
+{
+	int		i;
+
+	i = 1;
+	(void)fd;
+	if (**line == DIRECT_CHAR)
+	{
+		if ((*line)[i] == LABEL_CHAR)
+		{
+			while ((*line)[i] && ft_strchr(LABEL_CHARS, (*line)[i]) != NULL)
+				i++;
+			if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
+					|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
+					|| (*line)[i] == DIRECT_CHAR)
+			{
+				*str = ft_strsub(*line, 0, i);
+				*line += i;
+				*token = DIRECT_LABEL;
+				return (1);
+			}
+			return (0);
+		}
+		else if (ft_isdigit((*line)[i]) == 1)
+		{
+			while (ft_isdigit((*line)[i]) == 1)
+				i++;
+			if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
+					|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
+					|| (*line)[i] == DIRECT_CHAR)
+			{
+				*str = ft_strsub(*line, 0, i);
+				*line += i;
+				*token = DIRECT;
+				return (1);
+			}
+			return (0);
+		}
+	}
+	return (0);
+}
+
 int			is_selector(t_token *token, char **line, int fd, char **str)
 {
 	(void)fd;
@@ -77,22 +120,27 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 int			is_instru(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
-	int		len;
 
 	(void)fd;
 	i = 0;
+	while ((*line)[i] && !ft_isspace((*line)[i])
+			&& !ft_comment((*line)[i]) && (*line)[i] != '"'
+			&& (*line)[i] != SEPARATOR_CHAR && (*line)[i] != DIRECT_CHAR)
+		i++;
+	*str = ft_strsub(*line, 0, i);
 	while (g_op_tab[i].label != NULL)
 	{
-		len = ft_strlen(g_op_tab[i].label);
-		if (ft_strncmp(g_op_tab[i].label, *line, len) == 0
-				&& ft_isspace((*line)[len]))
+		if (ft_strcmp(g_op_tab[i].label, *str) == 0)
 		{
 			*token = INSTRUCTION;
-			*str = ft_strsub(*line, 0, len);
+			*line += i;
+			printf("%s\n", *line);
 			return (1);
 		}
 		i++;
 	}
+	free(*str);
+	*str = NULL;
 	return (0);
 }
 
@@ -144,13 +192,13 @@ void		load_funct(int (**ptr_function)(t_token *token, char **line
 	ptr_function[2] = &is_string;
 	ptr_function[3] = &is_command;
 	ptr_function[4] = &is_instru;
-	ptr_function[4] = &is_other;
+	ptr_function[5] = &is_other;
 }
 
 t_token		next_token(int fd, char **str)
 {
 	int				i;
-	int				(*ptr_function[5])(t_token *, char **, int, char **);
+	int				(*ptr_function[6])(t_token *, char **, int, char **);
 	t_token			token;
 	static char		*line = NULL;
 
@@ -165,7 +213,7 @@ t_token		next_token(int fd, char **str)
 			return (END);
 		}
 	line = ft_beg_trim(line);
-	while (i < 5)
+	while (i < 6)
 	{
 		if ((*ptr_function[i])(&token, &line, fd, str) == 1)
 			return (token);
