@@ -50,7 +50,7 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 	state = 0;
 	i = 0;
 	if ((cmd = init_cmd(cmds, str)) == NULL)
-		ft_tok_error(INSTRUCTION, str);
+		ft_tok_error(INSTRUCTION, str, NULL, 0);
 	while ((tok = next_token(fd, &tmp)) != ENDLINE)
 	{
 		if (state % 2 == 0 && tok > 0 && tok < 6)
@@ -62,9 +62,12 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 		else if (state % 2 && tok == SEPARATOR && g_op_tab[cmd->nbr].nb_arg >= i)
 			state++;
 		else
-			ft_tok_error(tok, str);
+			ft_tok_error(tok, str, NULL, 0);
 	}
 	if (g_op_tab[cmd->nbr].nb_arg != i)
-		ft_tok_error(tok, str);
+		ft_tok_error(tok, str, NULL, 0);
+	if (g_op_tab[cmd->nbr].ocp == 0)
+		cmd->size++;
+	g_data.addr += cmd->size;
 	return (cmd);
 }

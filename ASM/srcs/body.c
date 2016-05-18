@@ -12,19 +12,18 @@
 
 #include "asm.h"
 
-static int		ft_lbl_exist(t_list *lbls, char *str)
+static int		ft_lbl_exist(t_list *lbls, t_arg *arg)
 {
 	t_lbl	*tmp;
 
 	while (lbls != NULL)
 	{
 		tmp = lbls->content;
-		if (ft_strcmp(str, tmp->lbl_name) == 0)
+		if (ft_strcmp(arg->str, tmp->lbl_name) == 0)
 			return (tmp->adress);
 		lbls = lbls->next;
 	}
-	ft_puterr("No label with this name\n");
-	exit(0);
+	ft_tok_error(arg->token, arg->key, arg->str, 1);
 	return (0);
 }
 
@@ -64,7 +63,7 @@ static void		ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
 			{
 				addr_cur = ((t_cmd*)(cmds->content))->addr;
 				g_data.line = ((t_cmd*)(cmds->content))->line;
-				arg->nb = ft_lbl_exist(lbls, arg->str) - addr_cur;
+				arg->nb = ft_lbl_exist(lbls, arg) - addr_cur;
 			}
 			i -= 2;
 			tmp = tmp->next;
@@ -80,6 +79,7 @@ static int		ft_lbl(t_list **lbls, char *str)
 	label = NULL;
 	if ((label = (t_lbl*)malloc(sizeof(*label))) == NULL)
 		return (0);
+	str[ft_strlen(str) - 1] = 0;
 	label->lbl_name = str;
 	label->adress = g_data.addr;
 	ft_lstaddback(lbls, ft_lstnew((void*)label, sizeof(label)));

@@ -16,7 +16,7 @@ for file in examples/*.s
 do
 	echo "file: $file"
 	./examples/asm -a $file > r1
-	../asm -a $file > r2
+	./asm -a $file > r2
 	ret=$(diff -s r1 r2)
 	if [ "$ret" = "Files r1 and r2 are identical" ]
 	then

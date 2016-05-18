@@ -22,9 +22,15 @@ void		ft_lexixal_error(void)
 	exit(0);
 }
 
-void		ft_tok_error(t_token tok, char *str)
+void		ft_tok_error(t_token tok, char *s1, char *s2, int errno)
 {
-	ft_puterr("Syntax error at token [TOKEN][");
+	if (errno == 0)
+		ft_puterr("Syntax error at");
+	else if (errno == 1)
+		ft_printf("No such label %s while attempting to dereference", s2);
+	else
+		ft_puterr("Invalid instruction at");
+	ft_puterr("token [TOKEN][");
 	ft_printf("%03d", g_data.line);
 	ft_puterr(":");
 	ft_printf("%03d", g_data.col);
@@ -34,7 +40,7 @@ void		ft_tok_error(t_token tok, char *str)
 		ft_puterr(" ");
 		ft_puterr(g_err[tok].str);
 		ft_puterr(" \"");
-		ft_puterr(str);
+		ft_puterr(s1);
 		ft_puterr("\"");
 	}
 	ft_puterr("\n");

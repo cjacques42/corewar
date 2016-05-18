@@ -25,6 +25,7 @@ static t_arg	*init_arg(char *str, t_token tok)
 		arg->type = T_IND;
 	else
 		arg->type = T_DIR;
+	arg->token = tok;
 	arg->nb = 0;
 	arg->str = NULL;
 	arg->key = str;
@@ -39,7 +40,7 @@ static int		ft_size(t_cmd *cmd, t_arg *arg)
 	type_arg = arg->type;
 	if (type_arg == T_DIR)
 	{
-		if (g_op_tab[cmd->nbr + 1].dir_size == 1)
+		if (g_op_tab[cmd->nbr].dir_size == 1)
 			size = 2;
 		else
 			size = 4;
@@ -60,20 +61,17 @@ int				ft_arg(t_cmd *cmd, int index, t_token tok, char *str)
 
 	arg = init_arg(str, tok);
 	if (tok == 1 || tok == 2)
-		ft_dir(tok, arg);
+		ft_dir(tok, cmd, arg);
 	else if (tok == 3)
 		ft_reg(tok, arg);
 	else
-		ft_ind(tok, arg);
+		ft_ind(tok, cmd, arg);
 	type_arg = arg->type;
-	type_op = g_op_tab[cmd->nbr + 1].type[index];
+	type_op = g_op_tab[cmd->nbr].type[index];
 	if ((type_op & type_arg))
 		ft_lstaddback(&(cmd->arg), ft_lstnew(arg, sizeof(arg)));
 	else
-		ft_puterr("Wrong\n");
-	if (g_op_tab[cmd->nbr].ocp == 0)
-		cmd->size++;
+		ft_tok_error(tok, str, NULL, 0);
 	ft_size(cmd, arg);
-	g_data.addr += cmd->size;
 	return (1);
 }

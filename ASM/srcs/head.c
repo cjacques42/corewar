@@ -49,7 +49,7 @@ static int			ft_name(int fd, t_header *header)
 		else if (state == 1 && tok == ENDLINE)
 			state++;
 		else
-			ft_tok_error(tok, str);
+			ft_tok_error(tok, str, NULL, 0);
 		if (state == 2)
 			return (1);
 	}
@@ -81,7 +81,7 @@ static int			ft_comm(int fd, t_header *header)
 		else if (state == 1 && tok == ENDLINE)
 			state++;
 		else
-			ft_tok_error(tok, str);
+			ft_tok_error(tok, str, NULL, 0);
 		free(str);
 		if (state == 2)
 			return (1);
@@ -109,16 +109,13 @@ static t_header		*ft_head(int fd)
 			else if (comment == 0 && tok == COMMAND_COMMENT)
 				comment += ft_comm(fd, header);
 			else
-				ft_tok_error(tok, str);
+				ft_tok_error(tok, str, NULL, 0);
 			free(str);
 		}
 		if (name == 1 && comment == 1)
-		{
-			ft_printf("OK\n");
 			return (header);
-		}
 	}
-	ft_tok_error(tok, str);
+	ft_tok_error(tok, str, NULL, 0);
 	free(header);
 	return (header);
 }
@@ -128,24 +125,20 @@ void			parse_file(int fd, char *str, int arg)
 	t_header	*header;
 	t_list		*lbls;
 	t_list		*cmds;
-//	t_token		tok;
-//	char		*tmp;
 
-	(void)str;
-	(void)arg;
 	lbls = NULL;
 	cmds = NULL;
 	header = ft_head(fd);
 	ft_body(fd, header, &lbls, &cmds);
 	if (cmds == NULL)
-		ft_tok_error(END, ft_strdup("(null)"));
+		ft_tok_error(END, ft_strdup("(null)"), NULL, 0);
 	if (arg > 0)
 		print_information(header, lbls, cmds);
 	else
 		binary(header, cmds, str);
 	free_header(header);
-//	ft_lstdel(&lbls, free_lbl);
-//	ft_lstdel(&cmds, free_cmd);
+	ft_lstdel(&lbls, free_lbl);
+	ft_lstdel(&cmds, free_cmd);
 }
 
 

@@ -17,7 +17,7 @@ do
 	echo file: $file
 	./examples/asm $file >/dev/null
 	hexdump examples/`basename $file .s`.cor > r1
-	../asm $file >/dev/null
+	./asm $file >/dev/null
 	hexdump examples/`basename $file .s`.cor > r2
 	ret=$(diff -s r1 r2)
 	if [ "$ret" = "Files r1 and r2 are identical" ]

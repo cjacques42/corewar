@@ -23,7 +23,7 @@ int				ft_reg(t_token tok, t_arg *arg)
 	{
 		total = total * 10 + (arg->key[i] - '0');
 		if (total < 1 || total > 16)
-			ft_tok_error(tok, arg->key);
+			ft_tok_error(tok, arg->key, NULL, 0);
 		i++;
 	}
 	arg->nb = total;

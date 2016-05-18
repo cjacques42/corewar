@@ -60,6 +60,7 @@ typedef struct		s_lbl
 
 typedef struct		s_arg
 {
+	t_token		token;
 	char		*key;
 	int			type;
 	long		nb;
@@ -107,13 +108,16 @@ extern t_data		g_data;
 
 t_token				next_token(int fd, char **str);
 
+void				parse_file(int fd, char *str, int arg);
 void				ft_body(int fd, t_header *header, t_list **lbls
 		, t_list **cmds);
 t_cmd				*ft_cmd(int fd, t_list **cmds, char *str);
 int                 ft_arg(t_cmd *cmd, int index, t_token tok, char *str);
-int					ft_dir(t_token tok, t_arg *arg);
-int					ft_ind(t_token tok, t_arg *arg);
+int					ft_dir(t_token tok, t_cmd *cmd, t_arg *arg);
+int					ft_ind(t_token tok, t_cmd *cmd, t_arg *arg);
 int					ft_reg(t_token tok, t_arg *arg);
+int					ft_search(t_cmd *cmd, t_arg *arg, t_token tok, int index);
+int					check_nbr(char *str, long nbr, int index);
 
 char				*ft_beg_trim(char *str);
 char				*ft_freejoin(char *s1, char *s2, int arg1, int arg2);
@@ -122,11 +126,9 @@ int					ft_isspace(int c);
 int					ft_comment(int c);
 
 void				ft_exit_error(t_error err, char *str);
-void				ft_tok_error(t_token tok, char *str);
+void				ft_tok_error(t_token tok, char *s1, char *s2, int errno);
 void				ft_lexixal_error(void);
 
-//int					check_nbr(char **str, long nbr, int errno, int *index);
-//int					ft_search(char **line, t_list *cmd, t_arg *arg, int index);
 void				print_information(t_header *header, t_list *lbls
 		, t_list *cmds);
 
