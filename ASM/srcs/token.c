@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 19:27:15 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 12:47:17 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,9 @@ int			is_selector(t_token *token, char **line, int fd, char **str)
 int			is_string(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
+	char	*tmp;
 
+	tmp = NULL;
 	if (**line == '"')
 	{
 		i = 1;
@@ -180,24 +182,30 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 				if (*str == NULL)
 					*str = ft_strdup(*line);
 				else
-					*str = ft_strjoin(*str, *line);
-				if (get_next_line(fd, line) < 1)
-					ft_puterr("Lexical error");
-				*str = ft_strjoin(*str, "\n");
+					*str = ft_freejoin(*str, *line, 1, 0);
+				if (read_line(fd, &tmp, line) < 1)
+					return (1);
+				*str = ft_freejoin(*str, "\n", 1, 0);
 			}
 			i++;
 		}
 		if ((*line)[i] == '"')
 		{
 			if (*str == NULL)
+			{
 				*str = ft_strsub(*line, 0, i + 1);
+				*line += i + 1;
+			}
 			else
-				*str = ft_strjoin(*str, ft_strsub(*line, 0, i + 1));
-			*line += i + 1;
+			{
+				tmp = *line;
+				*str = ft_freejoin(*str, ft_strsub(*line, 0, i + 1), 1, 1);
+				*line = ft_strdup((*line) + i + 1);
+				free(tmp);
+			}
 			*token = STRING;
-			return (1);
 		}
-		ft_puterr("Lexical error");
+		return (1);
 	}
 	return (0);
 }
@@ -291,13 +299,14 @@ t_token		next_token(int fd, char **str)
 	int				(*ptr_function[10])(t_token *, char **, int, char **);
 	t_token			token;
 	static char		*line = NULL;
+	static char		*tmp = NULL;
 
 	i = 0;
 	*str = NULL;
 	token = NONE;
 	load_funct(ptr_function);
 	if (line == NULL)
-		if (get_next_line(fd, &line) < 1)
+		if (read_line(fd, &tmp, &line) < 1)
 		{
 			*str = ft_strdup("(null)");
 			return (END);
@@ -306,9 +315,17 @@ t_token		next_token(int fd, char **str)
 	while (i < 10)
 		if ((*ptr_function[i++])(&token, &line, fd, str) == 1)
 		{
-			if (token == ENDLINE)
-				g_data.line++;
+			if (token == STRING && ft_strchr(*str, '\n') != NULL)
+			{
+				free(tmp);
+				tmp = line;
+			}
+			if (token == NONE)
+				ft_lexixal_error();
 			return (token);
 		}
+	free(tmp);
+	if (token == NONE)
+		ft_lexixal_error();
 	return (token);
 }

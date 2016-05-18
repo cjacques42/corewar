@@ -1,4 +1,5 @@
-.name  "zork"
+.comment "I'M ALIIIIVE"
+.name    "zzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzorkzkzorkzor"
 
 .comment "I'M ALIIIIVE"
 

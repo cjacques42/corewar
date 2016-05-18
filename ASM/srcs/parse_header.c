@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:04 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 18:52:08 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 12:51:15 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@ char			*ft_beg_trim(char *str)
 	index = 0;
 	while ((str[index] == ' ' || str[index] == '\t'
 		|| str[index] == '\n') && str[index])
+	{
 		index++;
+		if (str[index] == '\t')
+			g_data.col += 4;
+		else
+			g_data.col += 1;
+	}
 	return (str + index);
 }
-
+/*
 int				ft_head_cpy(char *str, char **tmp, int len, int fd)
 {
 	int		i;
@@ -103,7 +109,7 @@ t_header		*parse_header(int fd)
 	return (header);
 }
 
-/*void			parse_file(int fd, char *str, int arg)
+void			parse_file(int fd, char *str, int arg)
 {
 	t_header	*header;
 	t_list		*lbls;
@@ -125,13 +131,113 @@ t_header		*parse_header(int fd)
 	ft_lstdel(&cmds, free_cmd);
 }*/
 
+int				ft_name(int fd, t_header *header)
+{
+	t_token		tok;
+	char		*str;
+	int			state;
+
+	state = 0;
+	while ((tok = next_token(fd, &str)) != END)
+	{
+		if (state == 0 && tok == STRING)
+		{
+			if (ft_strlen(str) > PROG_NAME_LENGTH + 2)
+			{
+				ft_puterr("Champion name too long (MAX length ");
+				ft_putnbr_fd(PROG_NAME_LENGTH, 2);
+				ft_puterr(")\n");
+				free(header);
+				exit(0);
+			}
+			ft_strncpy(header->prog_name, str + 1, ft_strlen(str) - 2);
+			state++;
+		}
+		else if (state == 1 && tok == ENDLINE)
+			state++;
+		else
+			ft_tok_error(tok, str);
+		if (state == 2)
+			return (1);
+	}
+	return (0);
+}
+
+int				ft_comm(int fd, t_header *header)
+{
+	t_token		tok;
+	char		*str;
+	int			state;
+
+	state = 0;
+	while ((tok = next_token(fd, &str)) != END)
+	{
+		if (state == 0 && tok == STRING)
+		{
+			if (ft_strlen(str) > COMMENT_LENGTH + 2)
+			{
+				ft_puterr("Champion name too long (MAX length ");
+				ft_putnbr_fd(COMMENT_LENGTH, 2);
+				ft_puterr(")\n");
+				free(header);
+				exit(0);
+			}
+			ft_strncpy(header->comment, str + 1, ft_strlen(str) - 2);
+			state++;
+		}
+		else if (state == 1 && tok == ENDLINE)
+			state++;
+		else
+			ft_tok_error(tok, str);
+		free(str);
+		if (state == 2)
+			return (1);
+	}
+	return (0);
+}
+
+t_header		*ft_head(int fd)
+{
+	t_header	*header;
+	int			name;
+	int			comment;
+	t_token		tok;
+	char		*str;
+
+	name = 0;
+	comment = 0;
+	header = init_header();
+	while ((tok = next_token(fd, &str)) != END)
+	{
+		if (tok != ENDLINE)
+		{
+			if (name == 0 && tok == COMMAND_NAME)
+				name += ft_name(fd, header);
+			else if (comment == 0 && tok == COMMAND_COMMENT)
+				comment += ft_comm(fd, header);
+			else
+				ft_tok_error(tok, str);
+			free(str);
+		}
+		if (name == 1 && comment == 1)
+			return (header);
+	}
+	ft_tok_error(tok, str);
+	free(header);
+	return (header);
+}
+
 void			parse_file(int fd, char *str, int arg)
 {
 	char	*line;
+	t_header	*header;
 	t_token	tok;
 
 	(void)str;
 	(void)arg;
+	header = ft_head(fd);
+	ft_printf("%s\n", header->prog_name);
+	ft_printf("%s\n", header->comment);
 	while ((tok = next_token(fd, &line)) != END)
 	{
 		if (tok != NONE)

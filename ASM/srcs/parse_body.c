@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/13 15:06:22 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 09:31:04 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,15 @@ void	parse_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 	int		ret_lbl;
 
 	line = NULL;
-	while (read_line(fd, &line) > 0)
-	{
+	(void)fd;
+//	while (read_line(fd, &line) > 0)
+//	{
 		ret_line = check_line(line, cmds, lbls);
 		ret_lbl = check_lbl(line, cmds, lbls);
 		if (ft_empty(line) == 0 && ret_lbl == 0 && ret_line == 0)
 			ft_exit_mess(8);
 		free(line);
-	}
+//	}
 	ft_refresh_lbl_addr(*lbls, *cmds);
 	header->prog_size = g_data.addr;
 }

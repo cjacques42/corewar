@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/17 18:26:00 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 11:56:35 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,24 @@
 void		ft_lexixal_error(void)
 {
 	ft_puterr("Lexical error at [");
-	ft_putnbr_fd(g_data.line, 2);
+	ft_printf("%03d", g_data.line);
 	ft_puterr(":");
-	ft_putnbr_fd(g_data.col, 2);
+	ft_printf("%03d", g_data.col);
 	ft_puterr("]\n");
+	exit(0);
+}
+
+void		ft_tok_error(t_token tok, char *str)
+{
+	ft_puterr("Syntax error at token [TOKEN][");
+	ft_printf("%03d", g_data.line);
+	ft_puterr(":");
+	ft_printf("%03d", g_data.col);
+	ft_puterr("] ");
+	ft_puterr(g_err[tok].str);
+	ft_puterr(" \"");
+	ft_puterr(str);
+	ft_puterr("\"\n");
 	exit(0);
 }
 

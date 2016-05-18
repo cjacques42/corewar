@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/17 12:25:21 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/18 10:47:43 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,19 +20,10 @@ LIB = ../libft/
 
 SRC_NAME =	main.c			\
 			error.c			\
-			parse_header.c	\
-			parse_body.c	\
 			utils.c			\
-			check.c			\
-			args.c			\
-			check_reg.c		\
-			check_dir.c		\
-			check_ind.c		\
-			print.c			\
-			binary.c		\
-			bin_header.c	\
-			free.c			\
-			token.c
+			token.c			\
+			parse_header.c	\
+			free.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))

@@ -6,12 +6,12 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 09:56:34 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/16 15:59:18 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 10:50:24 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
+/*
 static void		free_arg(void *args, size_t size)
 {
 	t_arg	*arg;
@@ -48,7 +48,7 @@ void			free_lbl(void *lbls, size_t size)
 	free(lbl->lbl_name);
 	free(lbl);
 }
-
+*/
 t_header		*init_header(void)
 {
 	t_header	*header;
