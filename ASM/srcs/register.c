@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_dir.c                                        :+:      :+:    :+:   */
+/*   register.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/10 09:11:39 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/12 11:11:47 by cjacques         ###   ########.fr       */
+/*   Created: 2016/05/18 17:01:03 by cjacques          #+#    #+#             */
+/*   Updated: 2016/05/18 17:49:39 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void		check_dir(char **line, t_list **args, t_list **cmds)
+int				ft_reg(t_token tok, t_arg *arg)
 {
-	t_arg	*arg;
-	t_list	*tmp;
-	int		index;
+	size_t		i;
+	int			total;
 
-	index = 1;
-	tmp = *cmds;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	arg = ft_addarg(args, T_DIR);
-	ft_search(line, tmp, arg, index);
+	total = 0;
+	i = 1;
+	while (arg->key[i] >= '0' && arg->key[i] <= '9')
+	{
+		total = total * 10 + (arg->key[i] - '0');
+		if (total < 1 || total > 16)
+			ft_tok_error(tok, arg->key);
+		i++;
+	}
+	arg->nb = total;
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 12:47:17 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 15:56:12 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int			is_instru(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
 	int		size;
+//	int		len;
 
 	(void)fd;
 	i = 0;
@@ -236,22 +237,6 @@ int			is_instru(t_token *token, char **line, int fd, char **str)
 	free(*str);
 	*str = NULL;
 	return (0);
-}
-
-int			is_other(t_token *token, char **line, int fd, char **str)
-{
-	int		i;
-
-	(void)token;
-	(void)fd;
-	i = 0;
-	while ((*line)[i] && !ft_isspace((*line)[i])
-			&& !ft_comment((*line)[i]) && (*line)[i] != '"'
-			&& (*line)[i] != SEPARATOR_CHAR)
-		i++;
-	*str = ft_strsub(*line, 0, i);
-	*line += i;
-	return (1);
 }
 
 int			is_command(t_token *token, char **line, int fd, char **str)
@@ -290,7 +275,6 @@ void		load_funct(int (**ptr_function)(t_token *token, char **line
 	ptr_function[6] = &is_indirect;
 	ptr_function[7] = &is_label;
 	ptr_function[8] = &is_reg;
-	ptr_function[9] = &is_other;
 }
 
 t_token		next_token(int fd, char **str)
@@ -312,7 +296,7 @@ t_token		next_token(int fd, char **str)
 			return (END);
 		}
 	line = ft_beg_trim(line);
-	while (i < 10)
+	while (i < 9)
 		if ((*ptr_function[i++])(&token, &line, fd, str) == 1)
 		{
 			if (token == STRING && ft_strchr(*str, '\n') != NULL)

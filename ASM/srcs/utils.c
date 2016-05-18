@@ -6,11 +6,28 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 17:28:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 11:15:21 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:17:07 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+char	*ft_beg_trim(char *str)
+{
+	int			index;
+
+	index = 0;
+	while ((str[index] == ' ' || str[index] == '\t'
+		|| str[index] == '\n') && str[index])
+	{
+		index++;
+		if (str[index] == '\t')
+			g_data.col += 4;
+		else
+			g_data.col += 1;
+	}
+	return (str + index);
+}
 
 int		read_line(int fd, char **tmp, char **line)
 {
@@ -50,23 +67,4 @@ char	*ft_freejoin(char *s1, char *s2, int arg1, int arg2)
 	if (arg2 == 1)
 		free(s2);
 	return (ptr);
-}
-/*
-void	check_eol(char *line)
-{
-	while (*line)
-	{
-		if (ft_comment(*line) == 1)
-			return ;
-		if (ft_isspace(*line) != 1)
-			ft_exit_mess(9);
-		line++;
-	}
-}*/
-
-int		ft_separator(char c)
-{
-	if (ft_isspace(c) || ft_comment(c) || c == SEPARATOR_CHAR || c == '"')
-		return (1);
-	return (0);
 }

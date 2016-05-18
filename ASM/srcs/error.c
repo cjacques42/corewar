@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 11:56:35 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 16:17:21 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,16 @@ void		ft_tok_error(t_token tok, char *str)
 	ft_printf("%03d", g_data.line);
 	ft_puterr(":");
 	ft_printf("%03d", g_data.col);
-	ft_puterr("] ");
-	ft_puterr(g_err[tok].str);
-	ft_puterr(" \"");
-	ft_puterr(str);
-	ft_puterr("\"\n");
+	ft_puterr("]");
+	if (tok != ENDLINE)
+	{
+		ft_puterr(" ");
+		ft_puterr(g_err[tok].str);
+		ft_puterr(" \"");
+		ft_puterr(str);
+		ft_puterr("\"");
+	}
+	ft_puterr("\n");
 	exit(0);
 }
 

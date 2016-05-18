@@ -1,46 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_body.c                                       :+:      :+:    :+:   */
+/*   body.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/09 09:42:50 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 09:31:04 by cjacques         ###   ########.fr       */
+/*   Created: 2016/05/18 17:00:14 by cjacques          #+#    #+#             */
+/*   Updated: 2016/05/18 17:32:57 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		check_lbl(char *line, t_list **cmds, t_list **lbls)
-{
-	int		i;
-	int		ret;
-	t_lbl	*label;
-
-	i = 0;
-	label = NULL;
-	while (line[i] && ft_strchr(LABEL_CHARS, line[i]) != NULL)
-		i++;
-	if (line[i] == LABEL_CHAR)
-	{
-		if ((label = (t_lbl*)malloc(sizeof(*label))) == NULL)
-			exit(0);
-		label->lbl_name = ft_strsub(line, 0, i);
-		label->adress = g_data.addr;
-		ft_lstaddback(lbls, ft_lstnew((void*)label, sizeof(label)));
-		line = ft_strtrim(line + i + 1);
-		if (ft_empty(line) == 1)
-			ret = 1;
-		else
-			ret = check_line(line, cmds, lbls);
-		free(line);
-		return (ret);
-	}
-	return (0);
-}
-
-int		ft_lbl_exist(t_list *lbls, char *str)
+static int		ft_lbl_exist(t_list *lbls, char *str)
 {
 	t_lbl	*tmp;
 
@@ -51,11 +23,12 @@ int		ft_lbl_exist(t_list *lbls, char *str)
 			return (tmp->adress);
 		lbls = lbls->next;
 	}
-	ft_exit_mess(10);
-	return (-1);
+	ft_puterr("No label with this name\n");
+	exit(0);
+	return (0);
 }
 
-void	ft_opc(t_cmd *cmd, t_arg *arg, int decal)
+static void		ft_opc(t_cmd *cmd, t_arg *arg, int decal)
 {
 	unsigned char		reg;
 	unsigned char		dir;
@@ -72,7 +45,7 @@ void	ft_opc(t_cmd *cmd, t_arg *arg, int decal)
 		cmd->opc = cmd->opc | (ind << decal);
 }
 
-void	ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
+static void		ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
 {
 	t_list	*tmp;
 	t_arg	*arg;
@@ -100,22 +73,34 @@ void	ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
 	}
 }
 
-void	parse_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
+static int		ft_lbl(t_list **lbls, char *str)
 {
-	char	*line;
-	int		ret_line;
-	int		ret_lbl;
+	t_lbl	*label;
 
-	line = NULL;
-	(void)fd;
-//	while (read_line(fd, &line) > 0)
-//	{
-		ret_line = check_line(line, cmds, lbls);
-		ret_lbl = check_lbl(line, cmds, lbls);
-		if (ft_empty(line) == 0 && ret_lbl == 0 && ret_line == 0)
-			ft_exit_mess(8);
-		free(line);
-//	}
+	label = NULL;
+	if ((label = (t_lbl*)malloc(sizeof(*label))) == NULL)
+		return (0);
+	label->lbl_name = str;
+	label->adress = g_data.addr;
+	ft_lstaddback(lbls, ft_lstnew((void*)label, sizeof(label)));
+	return (1);
+}
+
+void	ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
+{
+	char		*str;
+	t_token		tok;
+	int			state;
+	t_cmd		*cmd;
+
+	state = 0;
+	while ((tok = next_token(fd, &str)) != END)
+	{
+		if (state == 0 && tok == LABEL)
+			ft_lbl(lbls, str);
+		else if ((state == 0 || state == 1) && tok == INSTRUCTION)
+			cmd = ft_cmd(fd, cmds, str);
+	}
 	ft_refresh_lbl_addr(*lbls, *cmds);
 	header->prog_size = g_data.addr;
 }

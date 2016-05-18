@@ -6,12 +6,12 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 09:56:34 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 10:50:24 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:35:14 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-/*
+
 static void		free_arg(void *args, size_t size)
 {
 	t_arg	*arg;
@@ -47,16 +47,4 @@ void			free_lbl(void *lbls, size_t size)
 	(void)size;
 	free(lbl->lbl_name);
 	free(lbl);
-}
-*/
-t_header		*init_header(void)
-{
-	t_header	*header;
-
-	header = (t_header*)malloc(sizeof(*header));
-	header->magic = COREWAR_EXEC_MAGIC;
-	header->prog_size = 0;
-	ft_bzero(header->prog_name, PROG_NAME_LENGTH);
-	ft_bzero(header->comment, COMMENT_LENGTH);
-	return (header);
 }
