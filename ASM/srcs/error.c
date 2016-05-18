@@ -30,7 +30,7 @@ void		ft_tok_error(t_token tok, char *s1, char *s2, int errno)
 		ft_printf("No such label %s while attempting to dereference", s2);
 	else
 		ft_puterr("Invalid instruction at");
-	ft_puterr("token [TOKEN][");
+	ft_puterr(" token [TOKEN][");
 	ft_printf("%03d", g_data.line);
 	ft_puterr(":");
 	ft_printf("%03d", g_data.col);

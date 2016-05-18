@@ -214,7 +214,6 @@ int			is_instru(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
 	int		size;
-//	int		len;
 
 	(void)fd;
 	i = 0;

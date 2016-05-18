@@ -59,10 +59,10 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 			state++;
 			i++;
 		}
-		else if (state % 2 && tok == SEPARATOR && g_op_tab[cmd->nbr].nb_arg >= i)
+		else if (state % 2 && tok == SEPARATOR && g_op_tab[cmd->nbr].nb_arg != i)
 			state++;
 		else
-			ft_tok_error(tok, str, NULL, 0);
+			ft_tok_error(tok, tmp, NULL, 0);
 	}
 	if (g_op_tab[cmd->nbr].nb_arg != i)
 		ft_tok_error(tok, str, NULL, 0);
