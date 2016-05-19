@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:14 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:51:49 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 17:58:50 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		ft_lbl_exist(t_list *lbls, t_arg *arg)
 			return (tmp->adress);
 		lbls = lbls->next;
 	}
-	ft_tok_error(arg->token, arg->key, arg->str, 1);
+	ft_tok_error(arg->token, ft_strdup(arg->key), arg->str, 1);
 	return (0);
 }
 
@@ -63,6 +63,7 @@ static void		ft_refresh_lbl_addr(t_list *lbls, t_list *cmds)
 			{
 				addr_cur = ((t_cmd*)(cmds->content))->addr;
 				g_data.line = ((t_cmd*)(cmds->content))->line;
+				g_data.col = arg->col;
 				arg->nb = ft_lbl_exist(lbls, arg) - addr_cur;
 			}
 			i -= 2;
@@ -100,6 +101,8 @@ void			ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 			ft_lbl(lbls, str);
 		else if ((state == 0 || state == 1) && tok == INSTRUCTION)
 			cmd = ft_cmd(fd, cmds, str);
+		else if (tok != ENDLINE)
+			ft_tok_error(tok, str, NULL, 0);
 	}
 	free(str);
 	ft_refresh_lbl_addr(*lbls, *cmds);

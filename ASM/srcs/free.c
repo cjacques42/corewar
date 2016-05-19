@@ -6,13 +6,13 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 09:56:34 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 17:35:14 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:25:18 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static void		free_arg(void *args, size_t size)
+void			free_arg(void *args, size_t size)
 {
 	t_arg	*arg;
 

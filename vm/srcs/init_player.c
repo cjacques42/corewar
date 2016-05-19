@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 16:52:49 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/16 12:08:08 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/19 18:56:13 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void		setup_player(t_player *player, int r)
 	malloc_player(player);
 	while (++i < r)
 		if (i < 4)
-			i = i + 0;
+			check_magic(player, i);
 		else if (i < 4 + PROG_NAME_LENGTH)
 			player->name[i - 4] = player->raw[i];
 		else if (i < 4 + PROG_NAME_LENGTH + 8)
@@ -65,7 +65,7 @@ static void		setup_player(t_player *player, int r)
 			break ;
 		}
 	if (player->size > CHAMP_MAX_SIZE)
-		err_exit("One of the player are too heavy to play");
+		err_exit("One of the players is too heavy to play");
 	load_player(player);
 }
 
@@ -73,7 +73,8 @@ static void		parse_args(char ***players)
 {
 	while (**players && (!ft_strcmp(**players, "-dump") ||
 	!ft_strcmp(**players, "-n") || !ft_strcmp(**players, "-v") ||
-	!ft_strcmp(**players, "-nc")))
+	!ft_strcmp(**players, "-nc") || !ft_strcmp(**players, "-hl") ||
+	!ft_strcmp(**players, "-ha")))
 	{
 		if (**players && !ft_strcmp(**players, "-dump"))
 			*players += 2;
@@ -83,6 +84,10 @@ static void		parse_args(char ***players)
 			*players += (!ft_strcmp(**players, "-v")) ? 1 : 0;
 		if (**players)
 			*players += (!ft_strcmp(**players, "-nc")) ? 1 : 0;
+		if (**players)
+			*players += (!ft_strcmp(**players, "-hl")) ? 1 : 0;
+		if (**players)
+			*players += (!ft_strcmp(**players, "-ha")) ? 1 : 0;
 	}
 }
 
@@ -99,24 +104,17 @@ void			init_player(int nb_player, char **players)
 	g_data->nb_player = nb_player;
 	if (nb_player > MAX_PLAYERS)
 		err_exit("Too many players");
-	players++;
-	while (*players)
+	while (*(++players))
 	{
 		parse_args(&players);
 		if (!*players)
 			break ;
 		if ((fd = open(*players, O_RDONLY)) == -1)
-			err_exit("error when open player file");
+			err_exit("Can't read source file");
 		if ((r = read(fd, line, 5000)) == -1)
 			err_exit("read error");
-		player.raw = (unsigned char*)line;
-		player.id = -(g_data->n[i]);
-		player.pos = i + 1;
-		if (close(fd) == -1)
-			err_exit("error when close player file");
+		create_player(&player, line, i, fd);
 		setup_player(&player, r);
-		g_data->players[i] = player;
-		i++;
-		players++;
+		g_data->players[i++] = player;
 	}
 }

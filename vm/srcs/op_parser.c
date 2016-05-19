@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 17:13:59 by jcornill          #+#    #+#             */
-/*   Updated: 2016/04/27 15:43:38 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:57:17 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,26 @@
 
 void	exe_op(t_op *op, t_processes *proc)
 {
-	if (op->opcode == 1)
-		live(proc);
-	else if (op->opcode == 2)
-		ld(proc);
-	else if (op->opcode == 3)
-		st(proc);
-	else if (op->opcode == 4)
-		add(proc);
-	else if (op->opcode == 5)
-		sub(proc);
-	else if (op->opcode == 6)
-		and(proc);
-	else if (op->opcode == 7)
-		or(proc);
-	else if (op->opcode == 8)
-		xor(proc);
-	else if (op->opcode == 9)
-		zjmp(proc);
-	else if (op->opcode == 10)
-		ldi(proc);
-	else if (op->opcode == 11)
-		sti(proc);
-	else if (op->opcode == 12)
-		op_fork(proc);
-	else if (op->opcode == 13)
-		lld(proc);
-	else if (op->opcode == 14)
-		lldi(proc);
-	else if (op->opcode == 15)
-		lfork(proc);
-	else if (op->opcode == 16)
-		aff(proc);
+	void (*op_tab[16])(t_processes *proc);
+
+	op_tab[0] = live;
+	op_tab[1] = ld;
+	op_tab[2] = st;
+	op_tab[3] = add;
+	op_tab[4] = sub;
+	op_tab[5] = and;
+	op_tab[6] = or;
+	op_tab[7] = xor;
+	op_tab[8] = zjmp;
+	op_tab[9] = ldi;
+	op_tab[10] = sti;
+	op_tab[11] = op_fork;
+	op_tab[12] = lld;
+	op_tab[13] = lldi;
+	op_tab[14] = lfork;
+	op_tab[15] = aff;
+	if (op->opcode > 0 && op->opcode < 17)
+		op_tab[op->opcode - 1](proc);
 }
 
 t_op	*parse_op(int addr)

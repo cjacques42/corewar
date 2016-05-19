@@ -6,11 +6,26 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/12 14:28:09 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 15:58:22 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:21:52 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void			setup_print_data(int j)
+{
+	move(1, 200);
+	printw("Cycles :");
+	move(2, 200);
+	printw("Processes :");
+	move(3, 200);
+	printw("Cycles die :");
+	move(4, 200);
+	printw("Check left :");
+	move(5, 200);
+	printw("Cycles par seconds :");
+	move(j, 1);
+}
 
 static void		print_data(void)
 {

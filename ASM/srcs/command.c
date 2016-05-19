@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:20 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:16:14 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:42:09 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 
 	state = 0;
 	i = 0;
-	if ((cmd = init_cmd(cmds, str)) == NULL)
-		ft_tok_error(INSTRUCTION, str, NULL, 0);
+	cmd = init_cmd(cmds, str);
 	while ((tok = next_token(fd, &tmp)) != ENDLINE)
 	{
 		if (state % 2 == 0 && tok > 0 && tok < 6)
@@ -65,12 +64,16 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 		else if (state % 2 && tok == SEPARATOR
 				&& g_op_tab[cmd->nbr].nb_arg != i)
 			free(tmp);
-		else
+		else if (state % 2)
 			ft_tok_error(tok, tmp, NULL, 0);
+		else
+			ft_tok_error(tok, ft_strdup(cmd->str), NULL, 2);
 		state++;
 	}
-	if (g_op_tab[cmd->nbr].nb_arg != i)
-		ft_tok_error(tok, str, NULL, 0);
+	if (g_op_tab[cmd->nbr].nb_arg > i && state % 2 == 0)
+		ft_tok_error(tok, ft_strdup(str), NULL, 0);
+	if (g_op_tab[cmd->nbr].nb_arg > i)
+		ft_tok_error(tok, ft_strdup(str), NULL, 3);
 	ft_add_size_to_addr(cmd);
 	return (cmd);
 }

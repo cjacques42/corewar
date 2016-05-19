@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:34:59 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/16 11:50:26 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:34:12 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static void		print_winner(void)
 	t_player	winner;
 
 	winner = g_data->last_live;
-	ft_printf("The winner is player %d, %s : %s\n", -winner.id, winner.name,
-	winner.comment);
+	ft_printf("Le joueur %d(%s) a gagne\n", -winner.id, winner.name);
 }
 
 void			err_exit(char *comment)
@@ -31,13 +30,15 @@ void			err_exit(char *comment)
 
 void			usage(void)
 {
-	ft_putendl("Usage: ./corewar [-dump N -n N -v -nc] <champion1.cor> <...>");
+	ft_putstr("Usage: ./corewar [-dump N -n N -v -nc -ha -hl] ");
+	ft_putendl("<champion1.cor> <...>");
 	ft_putstr("#### TEXT OUTPUT MODE#########################################");
 	ft_putstr("#################\n-dump N      : Dumps memory after N cycles ");
 	ft_putstr("then exits\n-v           : Show cycles, operations, deaths and");
 	ft_putstr(" PC movements (Except for jumps)\n-nc          : Ncurses ");
 	ft_putstr("output mode\n-n N         : Put N as the id of the next ");
-	ft_putstr("player\n###################");
+	ft_putstr("player\n-ha          : Hides output from \"aff\"\n");
+	ft_putstr("-hl          : Hides output from \"live\"\n###################");
 	ft_putendl("#############################################################");
 	exit(1);
 }
@@ -50,14 +51,15 @@ int				main(int ac, char **av)
 		err_exit("malloc error");
 	g_data->pause = 0;
 	g_data->ncurse = 0;
-	g_data->cycle_seconds = 50000;
+	g_data->cycle_seconds = 200;
 	init_player(ac - 1, av);
 	g_data->last_live = g_data->players[0];
 	create_ncurse(g_data->ncurse);
 	game();
-	if (g_data->arg & 1)
+	if (g_data->arg & 1 && g_data->nb_processes != 0)
 		print();
-	print_winner();
+	else
+		print_winner();
 	if (g_data->ncurse)
 	{
 		timeout(-1);

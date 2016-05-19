@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:21:02 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:37:49 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,35 @@
 
 void		ft_lexixal_error(void)
 {
-	ft_puterr("Lexical error at [");
-	ft_printf("%03d", g_data.line);
-	ft_puterr(":");
-	ft_printf("%03d", g_data.col);
-	ft_puterr("]\n");
+	ft_printf("Lexical error at [%d:%d]\n", g_data.line, g_data.col);
 	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
+	free(g_data.str);
 	exit(0);
 }
 
-void		ft_tok_error(t_token tok, char *s1, char *s2, int errno)
+void		ft_tok_error(t_token tok, void *s1, void *s2, int errno)
 {
+	if (s1)
+		g_data.col -= ft_strlen(s1);
 	if (errno == 0)
-		ft_puterr("Syntax error at");
-	else if (errno == 1)
-		ft_printf("No such label %s while attempting to dereference", s2);
-	else
-		ft_puterr("Invalid instruction at");
-	ft_puterr(" token [TOKEN][");
-	ft_printf("%03d", g_data.line);
-	ft_puterr(":");
-	ft_printf("%03d", g_data.col);
-	ft_puterr("]");
-	if (tok != ENDLINE)
 	{
-		ft_puterr(" ");
-		ft_puterr(g_err[tok].str);
-		ft_puterr(" \"");
-		ft_puterr(s1);
-		ft_puterr("\"");
+		if (tok == ENDLINE)
+			ft_printf(g_err[2].str, g_data.line, g_data.col, g_tok[tok].str);
+		else
+			ft_printf(g_err[0].str, g_data.line, g_data.col, g_tok[tok].str
+					, s1);
 	}
-	ft_puterr("\n");
+	else if (errno == 1)
+		ft_printf(g_err[1].str, s2, g_data.line, g_data.col, g_tok[tok].str
+				, s1);
+	else if (errno == 2)
+		ft_printf(g_err[3].str, s1);
+	else if (errno == 3)
+		ft_printf(g_err[4].str, s1);
 	free(s1);
+	free(g_data.str);
 	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
@@ -80,9 +75,11 @@ void		ft_exit_error(t_error err, char *str)
 	exit(1);
 }
 
-void		ft_head_error(int len, t_header *header)
+void		ft_head_error(int len, t_header *header, char *str)
 {
-	ft_puterr("Champion name too long (MAX length ");
+	ft_puterr("Champion ");
+	ft_puterr(str);
+	ft_puterr(" too long (Max length ");
 	ft_putnbr_fd(len, 2);
 	ft_puterr(")\n");
 	free(header);

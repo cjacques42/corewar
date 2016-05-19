@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2016/05/12 18:25:23 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/19 18:56:24 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@
 
 # define REG_NUMBER					16
 
-# define CYCLE_TO_DIE				1536  // default 1536
-# define CYCLE_DELTA				50   // default : 50
+# define CYCLE_TO_DIE				1536
+# define CYCLE_DELTA				50
 # define NBR_LIVE					21
-# define MAX_CHECKS					10   // default : 10
+# define MAX_CHECKS					10
 
 typedef char		t_arg_type;
 

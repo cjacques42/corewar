@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 20:19:00 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/19 18:49:22 by jcornill         ###   ########.fr       */
+/*   Created: 2016/05/18 18:28:19 by jcornill          #+#    #+#             */
+/*   Updated: 2016/05/19 19:30:41 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "corewar.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+void	lstiter(t_list *lst, t_list *(*f)(t_list *elem))
 {
 	t_list	**begin;
 	t_list	*src;
@@ -23,8 +23,15 @@ void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 		return ;
 	while (src->next != NULL)
 	{
-		f(src);
-		src = src->next;
+		src = f(src);
 	}
 	f(src);
+}
+
+int		change_carry(int val)
+{
+	if (val == 0)
+		return (1);
+	else
+		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 13:14:57 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 15:18:51 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				is_instru(t_token *token, char **line, int fd, char **str)
 		{
 			*token = INSTRUCTION;
 			*line += i;
-			return (1);
+			return (i);
 		}
 		size++;
 	}

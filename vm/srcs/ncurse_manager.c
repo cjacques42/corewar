@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:04 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/12 18:05:43 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:28:04 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		reset_color(unsigned short color_code)
 		attroff(COLOR_PAIR(4));
 }
 
-static int		setup_color(unsigned short color_code)
+static int		setup_color(unsigned short color_code, int cursor)
 {
 	unsigned char	color;
 
@@ -42,6 +42,7 @@ static int		setup_color(unsigned short color_code)
 		attron(COLOR_PAIR(4));
 	else
 		return (0);
+	printw("%02x ", g_data->vm[cursor]);
 	return (1);
 }
 
@@ -54,19 +55,14 @@ void			ncur_print_char(int cursor, int font, int move)
 	{
 		move(cursor * 3 / (64 * 3) + 1, cursor * 3 % (64 * 3) + 1);
 		if (font == 0)
-		{
-			if (setup_color(g_data->vm_color[cursor]))
-			{
-				printw("%02x ", g_data->vm[cursor]);
+			if (setup_color(g_data->vm_color[cursor], cursor))
 				reset_color(g_data->vm_color[cursor]);
-			}
 			else
 			{
 				attron(COLOR_PAIR(6));
 				printw("%02x ", g_data->vm[cursor]);
 				attroff(COLOR_PAIR(6));
 			}
-		}
 		else
 		{
 			attron(COLOR_PAIR(7));
@@ -82,26 +78,13 @@ static void		print_vm(void)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 1;
-	move(1, 200);
-	printw("Cycles :");
-	move(2, 200);
-	printw("Processes :");
-	move(3, 200);
-	printw("Cycles die :");
-	move(4, 200);
-	printw("Check left :");
-	move(5, 200);
-	printw("Cycles par seconds :");
-	move(j, 1);
-	while (i < MEM_SIZE)
+	setup_print_data(j);
+	while (++i < MEM_SIZE)
 	{
-		if (setup_color(g_data->vm_color[i]))
-		{
-			printw("%02x ", g_data->vm[i]);
+		if (setup_color(g_data->vm_color[i], i))
 			reset_color(g_data->vm_color[i]);
-		}
 		else
 		{
 			attron(COLOR_PAIR(6));
@@ -110,7 +93,6 @@ static void		print_vm(void)
 		}
 		if (i % 64 == 63)
 			move(++j, 1);
-		i++;
 		refresh();
 	}
 }

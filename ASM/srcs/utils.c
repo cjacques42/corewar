@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 17:28:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 12:45:10 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 13:36:34 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ char	*ft_beg_trim(char *str)
 		|| str[index] == '\n') && str[index])
 	{
 		index++;
-		if (str[index] == '\t')
-			g_data.col += 4;
-		else
-			g_data.col += 1;
+		g_data.col += 1;
 	}
 	return (str + index);
 }
@@ -38,6 +35,7 @@ int		read_line(int fd, char **tmp, char **line)
 	if (ret > 0)
 	{
 		g_data.line++;
+		g_data.col = 1;
 		*line = *tmp;
 	}
 	return (ret);

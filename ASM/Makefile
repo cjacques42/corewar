@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/19 11:16:37 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/19 13:20:04 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,12 +53,6 @@ clean:
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-save:
-	@make -C ../ fclean
-	git pull
-	git add --all
-	git commit -m "ASM Norm"
-	git push
 
 re: fclean all
 

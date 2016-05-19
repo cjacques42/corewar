@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   args2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 20:19:00 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/19 18:49:22 by jcornill         ###   ########.fr       */
+/*   Created: 2016/05/16 16:09:59 by stoussay          #+#    #+#             */
+/*   Updated: 2016/05/18 17:29:38 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "corewar.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+void		verbose(int *nb_args, int *i)
 {
-	t_list	**begin;
-	t_list	*src;
+	if (!(g_data->arg & 4))
+		g_data->arg |= 1 << 2;
+	*nb_args -= 1;
+	*i += 1;
+}
 
-	begin = &lst;
-	src = *begin;
-	if (!src)
-		return ;
-	while (src->next != NULL)
-	{
-		f(src);
-		src = src->next;
-	}
-	f(src);
+void		hide(int *nb_args, int *i, char *str)
+{
+	if (!ft_strcmp(str, "-hl"))
+		if (!(g_data->arg & 8))
+			g_data->arg |= 1 << 3;
+	if (!ft_strcmp(str, "-ha"))
+		if (!(g_data->arg & 16))
+			g_data->arg |= 1 << 4;
+	*nb_args -= 1;
+	*i += 1;
 }

@@ -6,7 +6,7 @@
 /*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 16:42:13 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 16:01:42 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/19 16:58:25 by stoussay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 void	sub(t_processes *current)
 {
 	long	ocp;
-	int		p1;
-	int		p2;
-	int		p3;
-	int		place;
+	int		p[4];
+	int		adv;
 
-	place = current->pc;
-	ocp = g_data->vm[place += 1];
-	if (ocp == 84)
+	adv = 0;
+	ocp = 0;
+	if (!current->op->ocp)
+		ocp = get_vm_value(&adv, 1, current->pc);
+	p[1] = check_ocp(ocp, 1, &adv, current);
+	p[2] = check_ocp(ocp, 2, &adv, current);
+	p[3] = check_ocp(ocp, 3, &adv, current);
+	if (check_all_reg(ocp, p) && test_ocp(current->op, ocp))
 	{
-		p1 = check_ocp(ocp, 6, &place, 0);
-		p2 = check_ocp(ocp, 4, &place, 0);
-		p3 = check_ocp(ocp, 2, &place, 0);
-		if (check_reg(p1) && check_reg(p2) && check_reg(p3))
-		{
-			current->reg[p3 - 1] = current->reg[p1 - 1] - current->reg[p2 - 1];
-			current->carry = change_carry(current->reg[p1 - 1] - current->reg[p2 - 1]);
-		}
+		current->reg[p[3] - 1] = current->reg[p[1] - 1] -
+		current->reg[p[2] - 1];
+		current->carry =
+		change_carry(current->reg[p[1] - 1] - current->reg[p[2] - 1]);
+		if (g_data->arg & 4 && !g_data->ncurse)
+			ft_printf("P%5d | sub r%d r%d r%d\n",
+			current->id + 1, p[1], p[2], p[3]);
 	}
-	current->pc = place + 1;
-	current->pc %= MEM_SIZE;
+	debug_op(current, adv);
 }

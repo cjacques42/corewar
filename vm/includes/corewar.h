@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 15:35:32 by jcornill          #+#    #+#             */
-/*   Updated: 2016/05/16 10:58:52 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:30:21 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void				game(void);
 void				init_player(int nb_player, char **players);
 
 /*
+**	init_player_utils.c
+*/
+
+void				create_player(t_player *player, char *line, int i, int fd);
+void				check_magic(t_player *player, int i);
+
+/*
 **	processes_manager.c
 */
 
@@ -63,12 +70,39 @@ void				print(void);
 void				store_args(int *nb_args, char **args);
 
 /*
+**	args2.c
+*/
+
+void				verbose(int *nb_args, int *i);
+void				hide(int *nb_args, int *i, char *str);
+
+/*
+**	utils.c
+*/
+
+int					check_reg(int p);
+char				check_type(int ocp, int p_place);
+int					check_ocp(int ocp, int n_param, int *adv,
+					t_processes *current);
+int					get_val_from_addr(int p, char mod, t_processes *current);
+void				write_val(int pc, int nbr, int player_id);
+
+/*
 **	utils2.c
 */
 
+unsigned char		get_vm_value(int *adv, int add, int pc);
+int					char_to_nbr(int *adv, const int len, int pc);
+int					test_ocp(t_op *op, int ocp);
+int					check_all_reg(int ocp, int p[4]);
+void				debug_op(t_processes *current, int adv);
+
+/*
+**	utils3.c
+*/
+
 int					change_carry(int val);
-unsigned char		get_vm_value(int *place, int add);
-int					char_to_nbr(int *place, const int len);
+void				lstiter(t_list *lst, t_list *(*f)(t_list *elem));
 
 /*
 **	ncurse_manager.c
@@ -83,7 +117,7 @@ void				ncur_print_char(int cursor, int font, int move);
 
 void				ncur_print_data(int cycles);
 void				ncur_init_color(void);
-
+void				setup_print_data(int j);
 /*
 **	Global variable
 */

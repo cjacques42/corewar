@@ -3,34 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   lld.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 21:22:25 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 15:59:21 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/19 18:56:02 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void lld(t_processes *current)
+void	lld(t_processes *current)
 {
-	int				p1;
-	int				p2;
-	int				place;
+	int				p[4];
+	int				adv;
 	unsigned long	ocp;
 
-	place = current->pc;
-	ocp = g_data->vm[place += 1];
-	p1 = check_ocp(ocp, 6, &place, 0);
-	if (check_type(ocp, 6) == 'i')
-		p1 = get_val_from_addr(p1, 0, current);
-	p2 = check_ocp(ocp, 4, &place, 0);
-	if (check_type(ocp, 6) != 'r' && check_type(ocp, 6) != 0 &&
-	check_type(ocp, 4) == 'r' && check_reg(p2))
+	adv = 0;
+	ocp = 0;
+	if (!current->op->ocp)
+		ocp = get_vm_value(&adv, 1, current->pc);
+	p[1] = check_ocp(ocp, 1, &adv, current);
+	p[2] = check_ocp(ocp, 2, &adv, current);
+	p[3] = 0;
+	if (check_all_reg(ocp, p) && test_ocp(current->op, ocp))
 	{
-		current->reg[p2 - 1] = p1;
-		current->carry = change_carry(p1);
+		if (check_type(ocp, 6) == 'i')
+			p[1] = get_val_from_addr(p[1], 0, current);
+		current->reg[p[2] - 1] = p[1];
+		current->carry = change_carry(p[1]);
+		if (g_data->arg & 4 && !g_data->ncurse)
+			ft_printf("P%5d | lld %d r%d\n", current->id + 1, p[1], p[2]);
 	}
-	current->pc = place + 1;
-	current->pc %= MEM_SIZE;
+	debug_op(current, adv);
 }

@@ -6,7 +6,7 @@
 /*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 19:09:48 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/12 19:20:11 by jcornill         ###   ########.fr       */
+/*   Updated: 2016/05/18 18:30:18 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,28 @@ int		check_reg(int p)
 
 int		get_val_from_addr(int p, char mod, t_processes *current)
 {
+	p -= 1;
 	if (mod == 1)
 		p %= IDX_MOD;
-	p += current->pc;
-	p %= MEM_SIZE;
-	while (p < 0)
-		p += MEM_SIZE;
-	return (char_to_nbr(&p, 4));
+	return (char_to_nbr(&p, 4, current->pc));
 }
 
-int		check_ocp(int ocp, int place_p, int *place, char dir)
+int		check_ocp(int ocp, int n_param, int *adv, t_processes *current)
 {
 	int		param;
+	int		place_p;
 
+	place_p = 8 - (n_param * 2);
 	if (check_type(ocp, place_p) == 'r')
-		param = get_vm_value(place, 1);
+		param = get_vm_value(adv, 1, current->pc);
 	else if (check_type(ocp, place_p) == 'i')
-	{
-		param = (int)(short)char_to_nbr(place, 2);
-	}
+		param = (int)(short)char_to_nbr(adv, 2, current->pc);
 	else if (check_type(ocp, place_p) == 'd')
 	{
-		if (dir == 1)
-		{
-			param = (int)(short)char_to_nbr(place, 2);
-		}
+		if (current->op->dir_size == 1)
+			param = (int)(short)char_to_nbr(adv, 2, current->pc);
 		else
-		{
-			param = (int)char_to_nbr(place, 4);
-		}
+			param = (int)char_to_nbr(adv, 4, current->pc);
 	}
 	else
 		return (0);

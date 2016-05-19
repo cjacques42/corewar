@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 12:49:07 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:41:32 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_lbl
 typedef struct		s_arg
 {
 	t_token		token;
+	int			col;
 	char		*key;
 	int			type;
 	long		nb;
@@ -78,7 +79,7 @@ typedef struct		s_cmd
 	int			line;
 }					t_cmd;
 
-static t_mess		g_err[] =
+static t_mess		g_tok[] =
 {
 	{"LABEL"},
 	{"DIRECT"},
@@ -96,6 +97,18 @@ static t_mess		g_err[] =
 	{0}
 };
 
+static t_mess		g_err[] =
+{
+	{"Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n"},
+	{"No such label %s while attempting to dereference token [TOKEN][%03d:%03d]\
+ %s \"%s\"\n"},
+	{"Syntax error at token [TOKEN][%03d:%03d] %s\n"},
+	{"Invalid parameter type for instruction %s\n"},
+	{"Invalid parameter count for instruction %s\n"},
+	{"Invalid instruction at token [TOKEN][%03d:%03d]\n"},
+	{0}
+};
+
 typedef struct		s_data
 {
 	int			line;
@@ -105,6 +118,7 @@ typedef struct		s_data
 	t_header	**header;
 	t_list		**cmds;
 	t_list		**lbls;
+	char		*str;
 }					t_data;
 
 extern t_data		g_data;
@@ -141,10 +155,11 @@ int					is_indirect(t_token *token, char **line, int fd
 int					is_reg(t_token *token, char **line, int fd, char **str);
 
 void				ft_exit_error(t_error err, char *str);
-void				ft_tok_error(t_token tok, char *s1, char *s2, int errno);
+void				ft_tok_error(t_token tok, void *s1, void *s2, int errno);
 void				ft_lexixal_error(void);
-void				ft_head_error(int len, t_header *header);
+void				ft_head_error(int len, t_header *header, char *str);
 
+void				free_arg(void *args, size_t size);
 void				print_information(t_header *header, t_list *lbls
 		, t_list *cmds);
 

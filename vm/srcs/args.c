@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stoussay <stoussay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcornill <jcornill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 18:24:07 by stoussay          #+#    #+#             */
-/*   Updated: 2016/05/16 12:08:13 by stoussay         ###   ########.fr       */
+/*   Updated: 2016/05/18 17:29:26 by jcornill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ static void		enable_ncurse(int *nb_args, int *i)
 	*i += 1;
 }
 
-static void		verbose(int *nb_args, int *i)
-{
-	if (!(g_data->arg & 4))
-		g_data->arg |= 1 << 2;
-	*nb_args -= 1;
-	*i += 1;
-}
-
 void			store_args(int *nb_args, char **args)
 {
 	int i;
@@ -80,13 +72,14 @@ void			store_args(int *nb_args, char **args)
 	id = 1;
 	tmp = *nb_args;
 	while (i <= tmp)
-	{
 		if (!ft_strcmp(args[i], "-dump") && args[i + 1])
 			dump(args, nb_args, &i);
 		else if (!ft_strcmp(args[i], "-n") && args[i + 1])
 			put_player_id(args, &j, nb_args, &i);
 		else if (!ft_strcmp(args[i], "-nc"))
 			enable_ncurse(nb_args, &i);
+		else if (!ft_strcmp(args[i], "-hl") || !ft_strcmp(args[i], "-ha"))
+			hide(nb_args, &i, args[i]);
 		else if (!ft_strcmp(args[i], "-v"))
 			verbose(nb_args, &i);
 		else
@@ -94,5 +87,4 @@ void			store_args(int *nb_args, char **args)
 			store_id(&id, &j);
 			i++;
 		}
-	}
 }

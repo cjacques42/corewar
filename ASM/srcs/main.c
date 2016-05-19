@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 12:48:17 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 12:49:19 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 18:38:40 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int			main(int ac, char **av)
 		ft_exit_error(ER_FORMAT, NULL);
 	}
 	str = change_name(str);
+	g_data.str = str;
 	parse_file(fd, str, arg);
 	if (close(fd) == -1)
 		ft_exit_error(ER_CLOSE, NULL);

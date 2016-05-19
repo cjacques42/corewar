@@ -1,5 +1,0 @@
-make && ./corewar ../ressources/champions/examples/fluttershy.cor -n 12 ../ressources/champions/examples/fluttershy.cor ../ressources/champions/examples/fluttershy.cor -n 22 ../ressources/champions/examples/fluttershy.cor -dump
-make && ./corewar ../ressources/champions/examples/fluttershy.cor -n 12 ../ressources/champions/examples/fluttershy.cor ../ressources/champions/examples/fluttershy.cor -n 22 ../ressources/champions/examples/fluttershy.cor -v
-make && ./corewar ../ressources/champions/examples/fluttershy.cor -n 12 ../ressources/champions/examples/fluttershy.cor ../ressources/champions/examples/fluttershy.cor -n 22 ../ressources/champions/examples/fluttershy.cor -n 5
-make && ./corewar -dump 500 ../ressources/champions/examples/fluttershy.cor -n 12 ../ressources/champions/examples/fluttershy.cor ../ressources/champions/examples/fluttershy.cor -n 22 ../ressources/champions/examples/fluttershy.cor
-make && ./corewar -dump 500 -v ../ressources/champions/examples/fluttershy.cor -n 12 ../ressources/champions/examples/fluttershy.cor ../ressources/champions/examples/fluttershy.cor -n 22 ../ressources/champions/examples/fluttershy.cor

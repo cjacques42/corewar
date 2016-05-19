@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/19 10:47:41 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:47:48 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 19:25:23 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_arg	*init_arg(char *str, t_token tok)
 	arg->nb = 0;
 	arg->str = NULL;
 	arg->key = str;
+	arg->col = g_data.col;
 	return (arg);
 }
 
@@ -71,7 +72,10 @@ int				ft_arg(t_cmd *cmd, int index, t_token tok, char *str)
 	if ((type_op & type_arg))
 		ft_lstaddback(&(cmd->arg), ft_lstnew(arg, sizeof(arg)));
 	else
-		ft_tok_error(tok, str, NULL, 0);
+	{
+		free_arg(arg, 0);
+		ft_tok_error(tok, ft_strdup(cmd->str), NULL, 2);
+	}
 	ft_size(cmd, arg);
 	return (1);
 }

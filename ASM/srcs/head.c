@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:44 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:23:30 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 17:19:49 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int			ft_name(int fd, t_header *header)
 		if (state == 0 && tok == STRING)
 		{
 			if (ft_strlen(str) > PROG_NAME_LENGTH + 2)
-				ft_head_error(PROG_NAME_LENGTH, header);
+				ft_head_error(PROG_NAME_LENGTH, header, NAME_CMD_STRING + 1);
 			ft_strncpy(header->prog_name, str + 1, ft_strlen(str) - 2);
 			state++;
 		}
@@ -63,7 +63,7 @@ static int			ft_comm(int fd, t_header *header)
 		if (state == 0 && tok == STRING)
 		{
 			if (ft_strlen(str) > COMMENT_LENGTH + 2)
-				ft_head_error(COMMENT_LENGTH, header);
+				ft_head_error(COMMENT_LENGTH, header, COMMENT_CMD_STRING + 1);
 			ft_strncpy(header->comment, str + 1, ft_strlen(str) - 2);
 			state++;
 		}

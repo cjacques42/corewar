@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/19 10:54:41 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 12:38:20 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 15:30:40 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static int	ft_direct_token(char **line, int *i, char **str, t_token *token)
 {
+	int		index;
+
+	index = *i;
 	if ((*line)[1] == LABEL_CHAR)
 		while ((*line)[*i] && ft_strchr(LABEL_CHARS, (*line)[*i]) != NULL)
 			(*i)++;
@@ -24,6 +27,8 @@ static int	ft_direct_token(char **line, int *i, char **str, t_token *token)
 			|| (*line)[*i] == '"' || (*line)[*i] == SEPARATOR_CHAR
 			|| (*line)[*i] == DIRECT_CHAR)
 	{
+		if (index == *i)
+			return (0);
 		*str = ft_strsub(*line, 0, *i);
 		if ((*line)[1] == LABEL_CHAR)
 			*token = DIRECT_LABEL;
@@ -50,7 +55,8 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 		}
 		else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 		{
-			i++;
+			if ((*line)[i] == '-')
+				i++;
 			return (ft_direct_token(line, &i, str, token));
 		}
 	}
@@ -59,6 +65,9 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 
 static int	ft_indirect_token(char **line, int *i, char **str, t_token *token)
 {
+	int		index;
+
+	index = *i;
 	if ((*line)[0] == LABEL_CHAR)
 		while ((*line)[*i] && ft_strchr(LABEL_CHARS, (*line)[*i]) != NULL)
 			(*i)++;
@@ -69,6 +78,8 @@ static int	ft_indirect_token(char **line, int *i, char **str, t_token *token)
 			|| (*line)[*i] == '"' || (*line)[*i] == SEPARATOR_CHAR
 			|| (*line)[*i] == DIRECT_CHAR)
 	{
+		if (index == *i)
+			return (0);
 		*str = ft_strsub(*line, 0, *i);
 		if ((*line)[0] == LABEL_CHAR)
 			*token = INDIRECT_LABEL;
@@ -93,7 +104,8 @@ int			is_indirect(t_token *token, char **line, int fd, char **str)
 	}
 	else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 	{
-		i++;
+		if ((*line)[i] == '-')
+			i++;
 		return (ft_indirect_token(line, &i, str, token));
 	}
 	return (0);
