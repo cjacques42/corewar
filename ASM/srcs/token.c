@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:06:04 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:46:16 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			is_label(t_token *token, char **line, int fd, char **str)
 		*token = LABEL;
 		*str = ft_strsub(*line, 0, i + 1);
 		*line += i + 1;
-		return (1);
+		return (i + 1);
 	}
 	return (0);
 }
@@ -64,7 +64,7 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 				*str = ft_strsub(*line, 0, i);
 				*line += i;
 				*token = DIRECT_LABEL;
-				return (1);
+				return (i);
 			}
 		}
 		else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
@@ -79,7 +79,7 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 				*str = ft_strsub(*line, 0, i);
 				*line += i;
 				*token = DIRECT;
-				return (1);
+				return (i);
 			}
 		}
 	}
@@ -104,7 +104,7 @@ int			is_indirect(t_token *token, char **line, int fd, char **str)
 			*str = ft_strsub(*line, 0, i);
 			*line += i;
 			*token = INDIRECT_LABEL;
-			return (1);
+			return (i);
 		}
 	}
 	else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
@@ -119,7 +119,7 @@ int			is_indirect(t_token *token, char **line, int fd, char **str)
 			*str = ft_strsub(*line, 0, i);
 			*line += i;
 			*token = INDIRECT;
-			return (1);
+			return (i);
 		}
 	}
 	return (0);
@@ -144,7 +144,7 @@ int			is_reg(t_token *token, char **line, int fd, char **str)
 				*str = ft_strsub(*line, 0, i);
 				*line += i;
 				*token = REGISTER;
-				return (1);
+				return (i);
 			}
 		}
 		return (0);
@@ -205,7 +205,7 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 			}
 			*token = STRING;
 		}
-		return (1);
+		return (i + 1);
 	}
 	return (0);
 }
@@ -229,7 +229,7 @@ int			is_instru(t_token *token, char **line, int fd, char **str)
 		{
 			*token = INSTRUCTION;
 			*line += i;
-			return (1);
+			return (i);
 		}
 		size++;
 	}
@@ -249,7 +249,7 @@ int			is_command(t_token *token, char **line, int fd, char **str)
 		*str = ft_strsub(*line, 0, len);
 		*token = COMMAND_NAME;
 		*line += len;
-		return (1);
+		return (len);
 	}
 	len = ft_strlen(COMMENT_CMD_STRING);
 	if (ft_strncmp(*line, COMMENT_CMD_STRING, len) == 0)
@@ -257,7 +257,7 @@ int			is_command(t_token *token, char **line, int fd, char **str)
 		*str = ft_strsub(*line, 0, len);
 		*token = COMMAND_COMMENT;
 		*line += len;
-		return (1);
+		return (len);
 	}
 	return (0);
 }
@@ -279,6 +279,7 @@ void		load_funct(int (**ptr_function)(t_token *token, char **line
 t_token		next_token(int fd, char **str)
 {
 	int				i;
+	int				index;
 	int				(*ptr_function[10])(t_token *, char **, int, char **);
 	t_token			token;
 	static char		*line = NULL;
@@ -296,8 +297,9 @@ t_token		next_token(int fd, char **str)
 		}
 	line = ft_beg_trim(line);
 	while (i < 9)
-		if ((*ptr_function[i++])(&token, &line, fd, str) == 1)
+		if ((index = (*ptr_function[i++])(&token, &line, fd, str)) >= 1)
 		{
+			g_data.col += index;
 			if (token == STRING && ft_strchr(*str, '\n') != NULL)
 			{
 				free(tmp);
