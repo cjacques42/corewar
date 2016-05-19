@@ -6,11 +6,58 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:25:02 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 12:41:51 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+int				is_instru(t_token *token, char **line, int fd, char **str)
+{
+	int		i;
+	int		size;
+
+	(void)fd;
+	i = 0;
+	size = 0;
+	while ((*line)[i] && !ft_isspace((*line)[i])
+			&& !ft_comment((*line)[i]) && (*line)[i] != '"'
+			&& (*line)[i] != SEPARATOR_CHAR && (*line)[i] != DIRECT_CHAR)
+		i++;
+	*str = ft_strsub(*line, 0, i);
+	while (g_op_tab[size].label != NULL)
+	{
+		if (ft_strcmp(g_op_tab[size].label, *str) == 0)
+		{
+			*token = INSTRUCTION;
+			*line += i;
+			return (1);
+		}
+		size++;
+	}
+	free(*str);
+	*str = NULL;
+	return (0);
+}
+
+int				is_label(t_token *token, char **line, int fd, char **str)
+{
+	int		i;
+
+	(void)str;
+	(void)fd;
+	i = 0;
+	while ((*line)[i] && ft_strchr(LABEL_CHARS, (*line)[i]) != NULL)
+		i++;
+	if (i > 0 && (*line)[i] == LABEL_CHAR)
+	{
+		*token = LABEL;
+		*str = ft_strsub(*line, 0, i + 1);
+		*line += i + 1;
+		return (i + 1);
+	}
+	return (0);
+}
 
 static void		load_funct(int (**ptr_function)(t_token *token, char **line
 		, int fd, char **str))

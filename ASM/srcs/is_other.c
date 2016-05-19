@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/19 10:56:24 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:02:41 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 11:45:28 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,29 @@ int			is_selector(t_token *token, char **line, int fd, char **str)
 	return (0);
 }
 
+void		ft_end_string(char **line, int i, t_token *tok, char **str)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if ((*line)[i] == '"')
+	{
+		if (*str == NULL)
+		{
+			*str = ft_strsub(*line, 0, i + 1);
+			*line += i + 1;
+		}
+		else
+		{
+			tmp = *line;
+			*str = ft_freejoin(*str, ft_strsub(*line, 0, i + 1), 1, 1);
+			*line = ft_strdup((*line) + i + 1);
+			free(tmp);
+		}
+		*tok = STRING;
+	}
+}
+
 int			is_string(t_token *token, char **line, int fd, char **str)
 {
 	int		i;
@@ -46,8 +69,8 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 	tmp = NULL;
 	if (**line == '"')
 	{
-		i = 1;
-		while ((*line)[i] != '"')
+		i = 0;
+		while ((*line)[++i] != '"')
 		{
 			if ((*line)[i] == 0)
 			{
@@ -60,54 +83,10 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 					return (1);
 				*str = ft_freejoin(*str, "\n", 1, 0);
 			}
-			i++;
 		}
-		if ((*line)[i] == '"')
-		{
-			if (*str == NULL)
-			{
-				*str = ft_strsub(*line, 0, i + 1);
-				*line += i + 1;
-			}
-			else
-			{
-				tmp = *line;
-				*str = ft_freejoin(*str, ft_strsub(*line, 0, i + 1), 1, 1);
-				*line = ft_strdup((*line) + i + 1);
-				free(tmp);
-			}
-			*token = STRING;
-		}
+		ft_end_string(line, i, token, str);
 		return (i + 1);
 	}
-	return (0);
-}
-
-int			is_instru(t_token *token, char **line, int fd, char **str)
-{
-	int		i;
-	int		size;
-
-	(void)fd;
-	i = 0;
-	size = 0;
-	while ((*line)[i] && !ft_isspace((*line)[i])
-			&& !ft_comment((*line)[i]) && (*line)[i] != '"'
-			&& (*line)[i] != SEPARATOR_CHAR && (*line)[i] != DIRECT_CHAR)
-		i++;
-	*str = ft_strsub(*line, 0, i);
-	while (g_op_tab[size].label != NULL)
-	{
-		if (ft_strcmp(g_op_tab[size].label, *str) == 0)
-		{
-			*token = INSTRUCTION;
-			*line += i;
-			return (i);
-		}
-		size++;
-	}
-	free(*str);
-	*str = NULL;
 	return (0);
 }
 

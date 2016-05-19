@@ -6,27 +6,31 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/19 10:54:41 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:02:42 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 12:38:20 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int			is_label(t_token *token, char **line, int fd, char **str)
+static int	ft_direct_token(char **line, int *i, char **str, t_token *token)
 {
-	int		i;
-
-	(void)str;
-	(void)fd;
-	i = 0;
-	while ((*line)[i] && ft_strchr(LABEL_CHARS, (*line)[i]) != NULL)
-		i++;
-	if (i > 0 && (*line)[i] == LABEL_CHAR)
+	if ((*line)[1] == LABEL_CHAR)
+		while ((*line)[*i] && ft_strchr(LABEL_CHARS, (*line)[*i]) != NULL)
+			(*i)++;
+	else
+		while (ft_isdigit((*line)[*i]) == 1)
+			(*i)++;
+	if (!(*line)[*i] || ft_isspace((*line)[*i]) || ft_comment((*line)[*i])
+			|| (*line)[*i] == '"' || (*line)[*i] == SEPARATOR_CHAR
+			|| (*line)[*i] == DIRECT_CHAR)
 	{
-		*token = LABEL;
-		*str = ft_strsub(*line, 0, i + 1);
-		*line += i + 1;
-		return (i + 1);
+		*str = ft_strsub(*line, 0, *i);
+		if ((*line)[1] == LABEL_CHAR)
+			*token = DIRECT_LABEL;
+		else
+			*token = DIRECT;
+		*line += *i;
+		return (*i);
 	}
 	return (0);
 }
@@ -42,33 +46,36 @@ int			is_direct(t_token *token, char **line, int fd, char **str)
 		if ((*line)[i] == LABEL_CHAR)
 		{
 			i++;
-			while ((*line)[i] && ft_strchr(LABEL_CHARS, (*line)[i]) != NULL)
-				i++;
-			if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
-					|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
-					|| (*line)[i] == DIRECT_CHAR)
-			{
-				*str = ft_strsub(*line, 0, i);
-				*line += i;
-				*token = DIRECT_LABEL;
-				return (i);
-			}
+			return (ft_direct_token(line, &i, str, token));
 		}
 		else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 		{
 			i++;
-			while (ft_isdigit((*line)[i]) == 1)
-				i++;
-			if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
-					|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
-					|| (*line)[i] == DIRECT_CHAR)
-			{
-				*str = ft_strsub(*line, 0, i);
-				*line += i;
-				*token = DIRECT;
-				return (i);
-			}
+			return (ft_direct_token(line, &i, str, token));
 		}
+	}
+	return (0);
+}
+
+static int	ft_indirect_token(char **line, int *i, char **str, t_token *token)
+{
+	if ((*line)[0] == LABEL_CHAR)
+		while ((*line)[*i] && ft_strchr(LABEL_CHARS, (*line)[*i]) != NULL)
+			(*i)++;
+	else
+		while (ft_isdigit((*line)[*i]) == 1)
+			(*i)++;
+	if (!(*line)[*i] || ft_isspace((*line)[*i]) || ft_comment((*line)[*i])
+			|| (*line)[*i] == '"' || (*line)[*i] == SEPARATOR_CHAR
+			|| (*line)[*i] == DIRECT_CHAR)
+	{
+		*str = ft_strsub(*line, 0, *i);
+		if ((*line)[0] == LABEL_CHAR)
+			*token = INDIRECT_LABEL;
+		else
+			*token = INDIRECT;
+		*line += *i;
+		return (*i);
 	}
 	return (0);
 }
@@ -82,32 +89,12 @@ int			is_indirect(t_token *token, char **line, int fd, char **str)
 	if ((*line)[i] == LABEL_CHAR)
 	{
 		i++;
-		while ((*line)[i] && ft_strchr(LABEL_CHARS, (*line)[i]) != NULL)
-			i++;
-		if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
-				|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
-				|| (*line)[i] == DIRECT_CHAR)
-		{
-			*str = ft_strsub(*line, 0, i);
-			*line += i;
-			*token = INDIRECT_LABEL;
-			return (i);
-		}
+		return (ft_indirect_token(line, &i, str, token));
 	}
 	else if (ft_isdigit((*line)[i]) == 1 || (*line)[i] == '-')
 	{
 		i++;
-		while (ft_isdigit((*line)[i]) == 1)
-			i++;
-		if (!(*line)[i] || ft_isspace((*line)[i]) || ft_comment((*line)[i])
-				|| (*line)[i] == '"' || (*line)[i] == SEPARATOR_CHAR
-				|| (*line)[i] == DIRECT_CHAR)
-		{
-			*str = ft_strsub(*line, 0, i);
-			*line += i;
-			*token = INDIRECT;
-			return (i);
-		}
+		return (ft_indirect_token(line, &i, str, token));
 	}
 	return (0);
 }
