@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:25:13 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 12:49:07 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct		s_data
 	int			col;
 	int			addr;
 	int			fd;
-	char		**str;
 	t_header	**header;
 	t_list		**cmds;
 	t_list		**lbls;

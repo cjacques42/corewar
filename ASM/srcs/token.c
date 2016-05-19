@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/16 17:57:38 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 12:41:51 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 13:14:57 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,25 @@ static void		load_funct(int (**ptr_function)(t_token *token, char **line
 	ptr_function[8] = &is_reg;
 }
 
+static void		ft_col(t_token *token, char **line, int fd, char **str)
+{
+	int		i;
+	int		index;
+	int		(*ptr_function[10])(t_token *, char **, int, char **);
+
+	i = 0;
+	load_funct(ptr_function);
+	while (i < 9)
+		if ((index = (*ptr_function[i++])(token, line, fd, str)) >= 1)
+		{
+			g_data.col += index;
+			return ;
+		}
+}
+
 t_token			next_token(int fd, char **str)
 {
 	int				i;
-	int				index;
-	int				(*ptr_function[10])(t_token *, char **, int, char **);
 	t_token			token;
 	static char		*line = NULL;
 	static char		*tmp = NULL;
@@ -85,7 +99,6 @@ t_token			next_token(int fd, char **str)
 	i = 0;
 	*str = NULL;
 	token = NONE;
-	load_funct(ptr_function);
 	if (line == NULL)
 		if (read_line(fd, &tmp, &line) < 1)
 		{
@@ -93,20 +106,11 @@ t_token			next_token(int fd, char **str)
 			return (END);
 		}
 	line = ft_beg_trim(line);
-	while (i < 9)
-		if ((index = (*ptr_function[i++])(&token, &line, fd, str)) >= 1)
-		{
-			g_data.col += index;
-			if (token == STRING && ft_strchr(*str, '\n') != NULL)
-			{
-				free(tmp);
-				tmp = line;
-			}
-			if (token == NONE)
-				ft_lexixal_error();
-			return (token);
-		}
-	free(tmp);
+	ft_col(&token, &line, fd, str);
+	if ((token == STRING && ft_strchr(*str, '\n') != NULL) || (token == NONE))
+		free(tmp);
+	if (token == STRING && ft_strchr(*str, '\n') != NULL)
+		tmp = line;
 	if (token == NONE)
 		ft_lexixal_error();
 	return (token);
