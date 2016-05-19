@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 11:05:13 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 11:25:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int					is_reg(t_token *token, char **line, int fd, char **str);
 void				ft_exit_error(t_error err, char *str);
 void				ft_tok_error(t_token tok, char *s1, char *s2, int errno);
 void				ft_lexixal_error(void);
+void				ft_head_error(int len, t_header *header);
 
 void				print_information(t_header *header, t_list *lbls
 		, t_list *cmds);

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:44 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:53:03 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 11:23:30 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,7 @@ static int			ft_name(int fd, t_header *header)
 		if (state == 0 && tok == STRING)
 		{
 			if (ft_strlen(str) > PROG_NAME_LENGTH + 2)
-			{
-				ft_puterr("Champion name too long (MAX length ");
-				ft_putnbr_fd(PROG_NAME_LENGTH, 2);
-				ft_puterr(")\n");
-				free(header);
-				exit(0);
-			}
+				ft_head_error(PROG_NAME_LENGTH, header);
 			ft_strncpy(header->prog_name, str + 1, ft_strlen(str) - 2);
 			state++;
 		}
@@ -69,13 +63,7 @@ static int			ft_comm(int fd, t_header *header)
 		if (state == 0 && tok == STRING)
 		{
 			if (ft_strlen(str) > COMMENT_LENGTH + 2)
-			{
-				ft_puterr("Champion name too long (MAX length ");
-				ft_putnbr_fd(COMMENT_LENGTH, 2);
-				ft_puterr(")\n");
-				free(header);
-				exit(0);
-			}
+				ft_head_error(COMMENT_LENGTH, header);
 			ft_strncpy(header->comment, str + 1, ft_strlen(str) - 2);
 			state++;
 		}
@@ -102,7 +90,6 @@ static t_header		*ft_head(int fd)
 	comment = 0;
 	header = init_header();
 	while ((tok = next_token(fd, &str)) != END)
-	{
 		if (tok != ENDLINE)
 		{
 			if (name == 0 && tok == COMMAND_NAME)
@@ -112,10 +99,9 @@ static t_header		*ft_head(int fd)
 			else
 				ft_tok_error(tok, str, NULL, 0);
 			free(str);
+			if (name == 1 && comment == 1)
+				return (header);
 		}
-		if (name == 1 && comment == 1)
-			return (header);
-	}
 	ft_tok_error(tok, str, NULL, 0);
 	free(header);
 	return (header);

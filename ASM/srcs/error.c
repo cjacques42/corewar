@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:05:01 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 11:21:02 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,13 @@ void		ft_exit_error(t_error err, char *str)
 	}
 	ft_puterr("\n");
 	exit(1);
+}
+
+void		ft_head_error(int len, t_header *header)
+{
+	ft_puterr("Champion name too long (MAX length ");
+	ft_putnbr_fd(len, 2);
+	ft_puterr(")\n");
+	free(header);
+	exit(0);
 }
