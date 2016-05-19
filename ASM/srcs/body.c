@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:14 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 17:32:57 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 09:13:50 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 		else if ((state == 0 || state == 1) && tok == INSTRUCTION)
 			cmd = ft_cmd(fd, cmds, str);
 	}
+	free(str);
 	ft_refresh_lbl_addr(*lbls, *cmds);
 	header->prog_size = g_data.addr;
 }

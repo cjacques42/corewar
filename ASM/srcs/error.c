@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 09:43:12 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 16:17:21 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:05:01 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void		ft_lexixal_error(void)
 	ft_puterr(":");
 	ft_printf("%03d", g_data.col);
 	ft_puterr("]\n");
+	free_header(*(g_data.header));
+	ft_lstdel(g_data.lbls, free_lbl);
+	ft_lstdel(g_data.cmds, free_cmd);
 	exit(0);
 }
 
@@ -44,6 +47,10 @@ void		ft_tok_error(t_token tok, char *s1, char *s2, int errno)
 		ft_puterr("\"");
 	}
 	ft_puterr("\n");
+	free(s1);
+	free_header(*(g_data.header));
+	ft_lstdel(g_data.lbls, free_lbl);
+	ft_lstdel(g_data.cmds, free_cmd);
 	exit(0);
 }
 
@@ -69,16 +76,6 @@ void		ft_exit_error(t_error err, char *str)
 		ft_puterr("Instead of creating a .cor file, outputs a stripped");
 		ft_puterr("and annotated version of the code to the standard output\n");
 	}
-	ft_puterr("\n");
-	exit(1);
-}
-
-void		ft_exit_mess(int errno)
-{
-	ft_puterr("Error at line ");
-	ft_putnbr_fd(g_data.line, 2);
-	ft_puterr(": ");
-	ft_puterr(g_err[errno].str);
 	ft_puterr("\n");
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 12:48:17 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 11:56:19 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 09:24:33 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void		global_init(void)
 	g_data.line = 0;
 	g_data.col = 1;
 	g_data.addr = 0;
+	g_data.cmds = NULL;
+	g_data.lbls = NULL;
 }
 
 char		*change_name(char *str)

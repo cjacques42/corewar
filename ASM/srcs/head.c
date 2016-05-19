@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:44 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 17:37:43 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 09:27:52 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int			ft_name(int fd, t_header *header)
 			state++;
 		else
 			ft_tok_error(tok, str, NULL, 0);
+		free(str);
 		if (state == 2)
 			return (1);
 	}
@@ -126,8 +127,12 @@ void			parse_file(int fd, char *str, int arg)
 	t_list		*lbls;
 	t_list		*cmds;
 
+	header = NULL;
 	lbls = NULL;
 	cmds = NULL;
+	g_data.header = &header;
+	g_data.cmds = &cmds;
+	g_data.lbls = &lbls;
 	header = ft_head(fd);
 	ft_body(fd, header, &lbls, &cmds);
 	if (cmds == NULL)
@@ -140,5 +145,3 @@ void			parse_file(int fd, char *str, int arg)
 	ft_lstdel(&lbls, free_lbl);
 	ft_lstdel(&cmds, free_cmd);
 }
-
-

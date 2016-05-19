@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:20 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 17:18:23 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 09:22:23 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 			i++;
 		}
 		else if (state % 2 && tok == SEPARATOR && g_op_tab[cmd->nbr].nb_arg != i)
+		{
 			state++;
+			free(tmp);
+		}
 		else
 			ft_tok_error(tok, tmp, NULL, 0);
 	}
