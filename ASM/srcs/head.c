@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:44 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 09:27:52 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:53:03 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static t_header		*ft_head(int fd)
 	return (header);
 }
 
-void			parse_file(int fd, char *str, int arg)
+void				parse_file(int fd, char *str, int arg)
 {
 	t_header	*header;
 	t_list		*lbls;

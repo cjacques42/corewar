@@ -6,7 +6,7 @@
 #    By: cjacques <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 10:02:34 by cjacques          #+#    #+#              #
-#    Updated: 2016/05/18 17:03:41 by cjacques         ###   ########.fr        #
+#    Updated: 2016/05/19 11:16:37 by cjacques         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRC_NAME =	argument.c		\
 			free.c			\
 			head.c			\
 			indirect.c		\
+			is_arg.c		\
+			is_other.c		\
 			main.c			\
 			print.c			\
 			register.c		\
@@ -55,7 +57,7 @@ save:
 	@make -C ../ fclean
 	git pull
 	git add --all
-	git commit -m "ASM update"
+	git commit -m "ASM Norm"
 	git push
 
 re: fclean all

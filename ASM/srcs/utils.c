@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 17:28:27 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:01:27 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:50:41 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_beg_trim(char *str)
 
 int		read_line(int fd, char **tmp, char **line)
 {
-	int             ret;
+	int			ret;
 
 	free(*tmp);
 	ret = get_next_line(fd, tmp);

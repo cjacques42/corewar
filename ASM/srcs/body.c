@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:14 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 09:13:50 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:51:49 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int		ft_lbl(t_list **lbls, char *str)
 	return (1);
 }
 
-void	ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
+void			ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 {
 	char		*str;
 	t_token		tok;

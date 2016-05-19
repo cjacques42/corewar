@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:47:21 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 11:05:13 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,18 @@ char				*ft_freejoin(char *s1, char *s2, int arg1, int arg2);
 int					read_line(int fd, char **tmp, char **line);
 int					ft_isspace(int c);
 int					ft_comment(int c);
+
+int					is_end(t_token *token, char **line, int fd, char **str);
+int					is_selector(t_token *token, char **line, int fd
+		, char **str);
+int					is_string(t_token *token, char **line, int fd, char **str);
+int					is_instru(t_token *token, char **line, int fd, char **str);
+int					is_command(t_token *token, char **line, int fd, char **str);
+int					is_label(t_token *token, char **line, int fd, char **str);
+int					is_direct(t_token *token, char **line, int fd, char **str);
+int					is_indirect(t_token *token, char **line, int fd
+		, char **str);
+int					is_reg(t_token *token, char **line, int fd, char **str);
 
 void				ft_exit_error(t_error err, char *str);
 void				ft_tok_error(t_token tok, char *s1, char *s2, int errno);
