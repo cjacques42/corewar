@@ -6,7 +6,7 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 11:32:33 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/19 10:01:55 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:47:21 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void				parse_file(int fd, char *str, int arg);
 void				ft_body(int fd, t_header *header, t_list **lbls
 		, t_list **cmds);
 t_cmd				*ft_cmd(int fd, t_list **cmds, char *str);
-int                 ft_arg(t_cmd *cmd, int index, t_token tok, char *str);
+int					ft_arg(t_cmd *cmd, int index, t_token tok, char *str);
 int					ft_dir(t_token tok, t_cmd *cmd, t_arg *arg);
 int					ft_ind(t_token tok, t_cmd *cmd, t_arg *arg);
 int					ft_reg(t_token tok, t_arg *arg);

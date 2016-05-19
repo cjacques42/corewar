@@ -6,13 +6,13 @@
 /*   By: cjacques <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:00:34 by cjacques          #+#    #+#             */
-/*   Updated: 2016/05/18 17:50:31 by cjacques         ###   ########.fr       */
+/*   Updated: 2016/05/19 10:48:07 by cjacques         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int				check_nbr(char *str, long nbr, int index)
+int			check_nbr(char *str, long nbr, int index)
 {
 	long		total;
 	int			neg;
