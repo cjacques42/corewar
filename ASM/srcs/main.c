@@ -21,6 +21,7 @@ void		global_init(void)
 	g_data.addr = 0;
 	g_data.cmds = NULL;
 	g_data.lbls = NULL;
+	g_data.tmp = NULL;
 }
 
 char		*change_name(char *str)

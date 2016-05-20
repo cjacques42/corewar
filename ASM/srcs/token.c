@@ -96,6 +96,7 @@ t_token			next_token(int fd, char **str)
 	static char		*line = NULL;
 	static char		*tmp = NULL;
 
+	g_data.tmp = &tmp;
 	i = 0;
 	*str = NULL;
 	token = NONE;

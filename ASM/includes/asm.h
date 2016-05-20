@@ -119,6 +119,7 @@ typedef struct		s_data
 	t_list		**cmds;
 	t_list		**lbls;
 	char		*str;
+	char		**tmp;
 }					t_data;
 
 extern t_data		g_data;

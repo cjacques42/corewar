@@ -18,6 +18,7 @@ void		ft_lexixal_error(void)
 	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
+	free(*(g_data.tmp));
 	free(g_data.str);
 	exit(0);
 }
@@ -42,6 +43,7 @@ void		ft_tok_error(t_token tok, void *s1, void *s2, int errno)
 	else if (errno == 3)
 		ft_printf(g_err[4].str, s1);
 	free(s1);
+	free(*(g_data.tmp));
 	free(g_data.str);
 	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);

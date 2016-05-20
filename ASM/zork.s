@@ -5,7 +5,7 @@
   
 ;mdr
 l2:		sti r1, %:lie,r1 ;haha
-		sti r1, %123412341234123, r1 ;FUUUCJ
+		sti r1, %123412341234123, r1 ;FUUUCJlooooool
 		st r16, 1
 		st r16, 11
 l1:
