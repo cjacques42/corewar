@@ -12,16 +12,12 @@
 
 #include "asm.h"
 
-static t_header		*init_header(void)
+static void			init_header(t_header *header)
 {
-	t_header	*header;
-
-	header = (t_header*)malloc(sizeof(*header));
 	header->magic = COREWAR_EXEC_MAGIC;
 	header->prog_size = 0;
 	ft_bzero(header->prog_name, PROG_NAME_LENGTH);
 	ft_bzero(header->comment, COMMENT_LENGTH);
-	return (header);
 }
 
 static int			ft_name(int fd, t_header *header)
@@ -78,9 +74,8 @@ static int			ft_comm(int fd, t_header *header)
 	return (0);
 }
 
-static t_header		*ft_head(int fd)
+static void			*ft_head(int fd, t_header *header)
 {
-	t_header	*header;
 	int			name;
 	int			comment;
 	t_token		tok;
@@ -88,7 +83,7 @@ static t_header		*ft_head(int fd)
 
 	name = 0;
 	comment = 0;
-	header = init_header();
+	init_header(header);
 	while ((tok = next_token(fd, &str)) != END)
 		if (tok != ENDLINE)
 		{
@@ -109,25 +104,22 @@ static t_header		*ft_head(int fd)
 
 void				parse_file(int fd, char *str, int arg)
 {
-	t_header	*header;
+	t_header	header;
 	t_list		*lbls;
 	t_list		*cmds;
 
-	header = NULL;
 	lbls = NULL;
 	cmds = NULL;
-	g_data.header = &header;
 	g_data.cmds = &cmds;
 	g_data.lbls = &lbls;
-	header = ft_head(fd);
-	ft_body(fd, header, &lbls, &cmds);
+	ft_head(fd, &header);
+	ft_body(fd, &header, &lbls, &cmds);
 	if (cmds == NULL)
 		ft_tok_error(END, ft_strdup("(null)"), NULL, 0);
 	if (arg > 0)
-		print_information(header, lbls, cmds);
+		print_information(&header, lbls, cmds);
 	else
-		binary(header, cmds, str);
-	free_header(header);
+		binary(&header, cmds, str);
 	ft_lstdel(&lbls, free_lbl);
 	ft_lstdel(&cmds, free_cmd);
 }

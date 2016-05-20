@@ -23,11 +23,6 @@ void			free_arg(void *args, size_t size)
 	free(arg);
 }
 
-void			free_header(t_header *header)
-{
-	free(header);
-}
-
 void			free_cmd(void *cmds, size_t size)
 {
 	t_cmd	*cmd;

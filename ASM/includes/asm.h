@@ -13,9 +13,6 @@
 #ifndef ASM_H
 # define ASM_H
 
-# define TRUE		1
-# define FALSE		0
-
 # include "get_next_line.h"
 # include "ft_printf.h"
 # include "libft.h"
@@ -115,7 +112,6 @@ typedef struct		s_data
 	int			col;
 	int			addr;
 	int			fd;
-	t_header	**header;
 	t_list		**cmds;
 	t_list		**lbls;
 	char		*str;
@@ -171,7 +167,6 @@ void				bin_uint(unsigned int nb, int fd);
 void				bin_uchar_f_int(int var, int fd);
 void				bin_uchar_f_long(long var, int len, int fd);
 
-void				free_header(t_header *header);
 void				free_cmd(void *cmds, size_t size);
 void				free_lbl(void *lbls, size_t size);
 

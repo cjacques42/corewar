@@ -1,4 +1,4 @@
-	.name												"zork    " 
+	"lol".name												"zork    " 
  .comment                      "I'M ALIIIIVEI"					
 			
 #lLLol         

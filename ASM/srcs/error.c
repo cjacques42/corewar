@@ -15,7 +15,6 @@
 void		ft_lexixal_error(void)
 {
 	ft_printf("Lexical error at [%d:%d]\n", g_data.line, g_data.col);
-	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
 	free(g_data.str);
@@ -44,7 +43,6 @@ void		ft_tok_error(t_token tok, void *s1, void *s2, int errno)
 	free(s1);
 	free(*(g_data.tmp));
 	free(g_data.str);
-	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
 	exit(0);
