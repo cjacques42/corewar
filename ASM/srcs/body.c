@@ -96,14 +96,20 @@ void			ft_body(int fd, t_header *header, t_list **lbls, t_list **cmds)
 
 	state = 0;
 	while ((tok = next_token(fd, &str)) != END)
-	{
 		if (state == 0 && tok == LABEL)
+		{
 			ft_lbl(lbls, str);
-		else if ((state == 0 || state == 1) && tok == INSTRUCTION)
+			state++;
+		}
+		else if (tok == INSTRUCTION)
+		{
 			cmd = ft_cmd(fd, cmds, str);
+			state = 0;
+		}
 		else if (tok != ENDLINE)
 			ft_tok_error(tok, str, NULL, 0);
-	}
+		else
+			state = 0;
 	free(str);
 	ft_refresh_lbl_addr(*lbls, *cmds);
 	header->prog_size = g_data.addr;

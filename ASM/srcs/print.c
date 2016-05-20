@@ -14,8 +14,16 @@
 
 void		print_first(t_arg *arg, int opc)
 {
+	int		len;
+
 	(void)opc;
-	ft_printf("%-18s", arg->key);
+	len = ft_strlen(arg->key);
+	ft_putstr(arg->key);
+	while (len < 18)
+	{
+		ft_putchar(' ');
+		len++;
+	}
 }
 
 void		print_second(t_arg *arg, int opc)
