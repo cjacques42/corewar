@@ -18,7 +18,6 @@ void		ft_lexixal_error(void)
 	free_header(*(g_data.header));
 	ft_lstdel(g_data.lbls, free_lbl);
 	ft_lstdel(g_data.cmds, free_cmd);
-	free(*(g_data.tmp));
 	free(g_data.str);
 	exit(0);
 }

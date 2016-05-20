@@ -46,6 +46,14 @@ static void		ft_add_size_to_addr(t_cmd *cmd)
 	g_data.addr += cmd->size;
 }
 
+static void		ft_err_arg(t_cmd *cmd, int state, char *str, t_token tok)
+{
+	if (g_op_tab[cmd->nbr].nb_arg > state / 2 && state % 2 == 0)
+		ft_tok_error(tok, ft_strdup(str), NULL, 0);
+	if (g_op_tab[cmd->nbr].nb_arg > (state + 1) / 2)
+		ft_tok_error(tok, ft_strdup(str), NULL, 3);
+}
+
 t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 {
 	int			state;
@@ -70,10 +78,7 @@ t_cmd			*ft_cmd(int fd, t_list **cmds, char *str)
 			ft_tok_error(tok, ft_strdup(cmd->str), NULL, 2);
 		state++;
 	}
-	if (g_op_tab[cmd->nbr].nb_arg > i && state % 2 == 0)
-		ft_tok_error(tok, ft_strdup(str), NULL, 0);
-	if (g_op_tab[cmd->nbr].nb_arg > i)
-		ft_tok_error(tok, ft_strdup(str), NULL, 3);
+	ft_err_arg(cmd, state, str, tok);
 	ft_add_size_to_addr(cmd);
 	return (cmd);
 }

@@ -67,11 +67,9 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 	char	*tmp;
 
 	tmp = NULL;
-	if (**line == '"')
+	if (**line == '"' && !(i = 0))
 	{
-		i = 0;
 		while ((*line)[++i] != '"')
-		{
 			if ((*line)[i] == 0)
 			{
 				i = 0;
@@ -80,10 +78,12 @@ int			is_string(t_token *token, char **line, int fd, char **str)
 				else
 					*str = ft_freejoin(*str, *line, 1, 0);
 				if (read_line(fd, &tmp, line) < 1)
+				{
+					free(*str);
 					return (1);
+				}
 				*str = ft_freejoin(*str, "\n", 1, 0);
 			}
-		}
 		ft_end_string(line, i, token, str);
 		return (i + 1);
 	}

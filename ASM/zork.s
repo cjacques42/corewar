@@ -4,10 +4,10 @@
 #lLLol         
   
 ;mdr
-l2:		sti r1, %:lie,r1 ;haha
-		sti r1, %123412341234123, r1 ;FUUUCJlooooool
+l2:		sti r1, %:live,r1 ;haha
+		sti r1, %123412341234123, %1"  ;FUUUCJlooooool
+		st r1, 1
 		st r16, 1
-		st r16, 11
 l1:
 						#Buff
 
