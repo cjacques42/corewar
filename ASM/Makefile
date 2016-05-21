@@ -12,7 +12,7 @@
 
 NAME = asm
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -O3
 OBJ_PATH = obj/
 SRC_PATH = srcs/
 SHELL = /bin/bash
