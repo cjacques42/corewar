@@ -38,4 +38,4 @@ then
 else
 	echo "\033[31mKO\033[0m"
 fi
-rm r1 r2
+#rm r1 r2

@@ -50,7 +50,7 @@ static int	ft_ret_str(va_list *list_args, t_args *arg)
 				ft_printnchar(arg->field - ret, ' ');
 		}
 		ft_putstr(str);
-		if (arg->val_field == 1 && arg->val_minus == 1)
+		if (arg->val_field == 1 && arg->val_minus == 1 && ret < arg->field)
 			ft_printnchar(arg->field - ft_strlen(str), ' ');
 	}
 	else
